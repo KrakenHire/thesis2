@@ -1,27 +1,19 @@
-const mysql = require('mysql2')
-const mysqlConfig = require('./config.js')
+const { Sequelize } = require("sequelize");
+const modelinit=require("./models/init-models")
+const sequelize = new Sequelize("kraken", "root", "95134505Yy*", {
+  host: "localhost",
+  dialect: "mysql",
+  define: {
+    timestamps: false,
+  },
+});
+sequelize
+  .authenticate()
+  .then((res) => console.log("Connection has been established successfully."))
+  .catch((error) => {
+    console.error("Unable to connect to the database:", error);
+  });
 
-//IMPORTANT!!!
-//Created a connection that is using promise
-const connection = mysql.createConnection(mysqlConfig).promise()
-
-connection
-  .connect()
-  .then(() => {
-    console.log('Connected to MySQL!')
-  })
-  .catch((err) => {
-    console.log(err)
-  })
-
-// Your Database Queries Here!!
-
-
-  
-
-
-// Don't forget to export your functions!
-module.exports
-
-
-// hetha code farouk test
+ module.exports.modelinit=modelinit(sequelize)
+ sequelize.sync()
+module.exports = sequelize;
