@@ -1,16 +1,16 @@
 export default [
     {
         image: require('./assets/service1.png'),
-        description:"aaaaaaaaaaaaaa",
+        description:"We provide professional service at a friendly price",
     },
 
     {
         image: require('./assets/service2.png'),
-        description:"llllllllllll",
+        description:"The best results and your satisfaction is our Top priority",
     },
 
     {
         image: require('./assets/service3.png'),
-        description:"gggggggggggggg",
+        description:"Let's make some changes to your home",
     }
 ]
