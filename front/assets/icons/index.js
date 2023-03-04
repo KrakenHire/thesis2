@@ -1,2 +1,23 @@
 export const chatB= require ('./chat.png');
-export default {chatB,}
+export const profile=require('./profile.png')
+export const notification=require('./notification.png')
+export const bookMark=require('./mark.png')
+export const homeh=require('./page.jpg')
+export const greeting=require('./greeting.jpg')
+export const cleaning=require('./cleaning.jpg')
+export const painting=require('./painting.png')
+export const repair=require('./repair.png')
+export const elec=require('./elec.png')
+export const hair=require('./hair.png')
+export const plumbing=require('./plumping.png')
+export const home=require('./home.png')
+export const calender=require('./calender.png')
+export const imbox=require('./imbox.png')
+export const avatar=require('./av.png')
+export const booking=require('./booking.png')
+export const adress=require('./adress.png')
+export const edit=require('./edit.png')
+export const clean1=require('./clean.jpg')
+export const clean2=require('./clean2.webp')
+
+export default {chatB,profile,notification,bookMark,homeh,greeting,cleaning,painting,repair,hair,adress,elec,edit,plumbing,booking,home,calender,imbox,avatar,clean1,clean2}

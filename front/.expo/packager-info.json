@@ -1,0 +1,9 @@
+{
+  "expoServerPort": 19001,
+  "packagerPort": 19001,
+  "expoServerNgrokUrl": "https://w4-8wp.anonymous.front.exp.direct",
+  "packagerNgrokUrl": "https://w4-8wp.anonymous.front.exp.direct",
+  "ngrokPid": 1312,
+  "packagerPid": null,
+  "webpackServerPort": null
+}
