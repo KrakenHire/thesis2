@@ -10,7 +10,7 @@ const Choises =()=>{
       <View style={styles.container}>
       <Image source={require('../assets/amic.png')} style={styles.image}/>
       <Text style={styles.text}>If you are loking for job</Text>
-      <Button style={styles.button} onPress={() =>navigation.navigate("AuthSP")}
+      <Button style={styles.button} onPress={() =>navigation.navigate("LoginScreenPro")}
       >Apply Now</Button>
 
 </View>
@@ -18,7 +18,7 @@ const Choises =()=>{
 
 <Image source={require('../assets/amico.png')} style={styles.image}/>
 <Text style={styles.text}>If you are loking for service</Text>
-      <Button style={styles.button} onPress={() =>navigation.navigate("Authuser")}
+      <Button style={styles.button} onPress={() =>navigation.navigate("LoginScreenUser")}
       >Get your service</Button>
 </View>
    </View>

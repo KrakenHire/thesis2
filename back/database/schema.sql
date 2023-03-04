@@ -21,20 +21,18 @@ USE `kraken` ;
 -- Table `kraken`.`providers`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kraken`.`providers` (
-  `idproviders` INT NOT NULL AUTO_INCREMENT,
+  `idproviders` VARCHAR(255) NOT NULL,
   `service` VARCHAR(255) NOT NULL,
   `username` VARCHAR(255) NOT NULL,
-  `FirstName` VARCHAR(255) NOT NULL,
+  `FirstName` VARCHAR(255) NULL DEFAULT '',
   `LastName` VARCHAR(255) NOT NULL,
   `Age` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
   `experience` VARCHAR(255) NOT NULL,
   `city` VARCHAR(255) NOT NULL,
   `region` VARCHAR(255) NOT NULL,
   `price` INT NOT NULL,
   PRIMARY KEY (`idproviders`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -42,12 +40,11 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `kraken`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kraken`.`users` (
-  `iduser` INT NOT NULL AUTO_INCREMENT,
+  `iduser` VARCHAR(255) NOT NULL,
   `username` VARCHAR(255) NOT NULL,
   `FirstName` VARCHAR(255) NOT NULL,
   `LastName` VARCHAR(255) NOT NULL,
   `Age` INT NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
   `longitude` INT NOT NULL,
   `latitude` INT NOT NULL,
   PRIMARY KEY (`iduser`))
@@ -64,8 +61,8 @@ CREATE TABLE IF NOT EXISTS `kraken`.`booking` (
   `end_date` TIMESTAMP NOT NULL,
   `status` ENUM('pending', 'confirmed', 'cancelled') NOT NULL,
   `rating` INT NOT NULL,
-  `users_iduser` INT NOT NULL,
-  `providers_idproviders` INT NOT NULL,
+  `users_iduser` VARCHAR(255) NOT NULL,
+  `providers_idproviders` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`idbooking`),
   INDEX `fk_booking_users1_idx` (`users_iduser` ASC) VISIBLE,
   INDEX `fk_booking_providers1_idx` (`providers_idproviders` ASC) VISIBLE,
@@ -87,8 +84,8 @@ CREATE TABLE IF NOT EXISTS `kraken`.`posts` (
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `description` VARCHAR(255) NOT NULL,
   `title` VARCHAR(255) NOT NULL,
-  `Bookmark` INT NOT NULL,
-  `providers_idproviders` INT NOT NULL,
+  `Bookmark` VARCHAR(255) NOT NULL,
+  `providers_idproviders` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`idposts`),
   INDEX `fk_posts_normalUser1_idx` (`Bookmark` ASC) VISIBLE,
   INDEX `fk_posts_providers1_idx` (`providers_idproviders` ASC) VISIBLE,
@@ -109,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `kraken`.`comments` (
   `idcomments` INT NOT NULL AUTO_INCREMENT,
   `content` VARCHAR(255) NOT NULL,
   `created_at` TIMESTAMP NOT NULL,
-  `users_iduser` INT NOT NULL,
+  `users_iduser` VARCHAR(255) NOT NULL,
   `posts_idposts` INT NOT NULL,
   PRIMARY KEY (`idcomments`),
   INDEX `fk_comments_users1_idx` (`users_iduser` ASC) VISIBLE,
@@ -128,12 +125,12 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `kraken`.`followers`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kraken`.`followers` (
-  `users_iduser` INT NOT NULL,
-  `providers_idproviders` INT NOT NULL,
-  PRIMARY KEY (`users_iduser`, `providers_idproviders`),
-  INDEX `fk_users_has_providers_providers1_idx` (`providers_idproviders` ASC) VISIBLE,
+  `users_iduser` VARCHAR(255) NOT NULL,
+  `providers_idproviders` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`users_iduser`),
   INDEX `fk_users_has_providers_users1_idx` (`users_iduser` ASC) VISIBLE,
-  CONSTRAINT `fk_users_has_providers_providers1`
+  INDEX `fk_followers_providers1_idx` (`providers_idproviders` ASC) VISIBLE,
+  CONSTRAINT `fk_followers_providers1`
     FOREIGN KEY (`providers_idproviders`)
     REFERENCES `kraken`.`providers` (`idproviders`),
   CONSTRAINT `fk_users_has_providers_users1`
@@ -164,7 +161,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kraken`.`likes` (
   `idlikes` INT NOT NULL AUTO_INCREMENT,
-  `users_iduser` INT NOT NULL,
+  `users_iduser` VARCHAR(255) NOT NULL,
   `posts_idposts` INT NOT NULL,
   PRIMARY KEY (`idlikes`),
   INDEX `fk_likes_users1_idx` (`users_iduser` ASC) VISIBLE,
