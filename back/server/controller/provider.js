@@ -15,6 +15,7 @@ module.exports={
     }
   },
   postPro : async (req, res) => {
+    console.log(req.body);
     try {
       const provider = await Provider.create(req.body);
       res.json(provider);
