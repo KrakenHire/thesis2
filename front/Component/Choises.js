@@ -8,7 +8,7 @@ const Choises =()=>{
   const navigation=useNavigation()
    return <View style={styles.con}>
       <View style={styles.container}>
-      <Image source={require('C:/Users/user/Desktop/thesis2/front/assets/amic.png')} style={styles.image}/>
+      <Image source={require('../assets/amic.png')} style={styles.image}/>
       <Text style={styles.text}>If you are loking for job</Text>
       <Button style={styles.button} onPress={() =>navigation.navigate("AuthSP")}
       >Apply Now</Button>
@@ -16,7 +16,7 @@ const Choises =()=>{
 </View>
 <View style={styles.cont}>
 
-<Image source={require('C:/Users/user/Desktop/thesis2/front/assets/amico.png')} style={styles.image}/>
+<Image source={require('../assets/amico.png')} style={styles.image}/>
 <Text style={styles.text}>If you are loking for service</Text>
       <Button style={styles.button} onPress={() =>navigation.navigate("Authuser")}
       >Get your service</Button>
