@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View } from 'react-native';
+
 
 import React from 'react';
 import { StyleSheet, Text, View,Image } from 'react-native';
@@ -7,8 +7,11 @@ import Onboardscreen from './Component/Onboardscreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Choises from './Component/Choises.js';
-import AuthSP from './Component/AuthSP.js';
-import Authuser from './Component/Authuser.js';
+import LoginScreenPro from './Component/LoginScreenPro.js';
+import LoginScreenUser from './Component/LoginScreenUser.js';
+import forgetPass from "./Component/forgetPass.js"
+import SignUpPro from "./Component/SignUpPro.js"
+import HomeScreenPro from './Component/HomeScreenPro.js';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -19,8 +22,11 @@ export default function App() {
        
         <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} />
         <Stack.Screen name="choises" component={Choises} />
-        <Stack.Screen name="AuthSP" component={AuthSP} />
-        <Stack.Screen name="Authuser" component={Authuser} />
+        <Stack.Screen name="LoginScreenPro" component={LoginScreenPro} />
+        <Stack.Screen name="LoginScreenUser" component={LoginScreenUser} />
+        <Stack.Screen name="forgetPass" component={forgetPass} />
+        <Stack.Screen name="SignUpPro" component={SignUpPro} />
+        <Stack.Screen name="Home" component={HomeScreenPro} />
    
     </Stack.Navigator>
     </NavigationContainer>

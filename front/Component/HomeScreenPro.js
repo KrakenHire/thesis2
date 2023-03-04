@@ -11,7 +11,7 @@ const HomeScreenPro = () => {
     auth
       .signOut()
       .then(() => {
-        navigation.replace("Login")
+        navigation.replace("LoginScreenPro")
       })
       .catch(error => alert(error.message))
   }

@@ -1,19 +1,10 @@
 {
-<<<<<<< HEAD
   "hostType": "lan",
   "lanType": "ip",
   "dev": true,
   "minify": false,
   "urlRandomness": null,
-  "https": false
-=======
-  "hostType": "tunnel",
-  "lanType": "ip",
-  "dev": true,
-  "minify": false,
-  "urlRandomness": "6v-uc5",
   "https": false,
   "scheme": null,
   "devClient": false
->>>>>>> 79d5f932f86513536a758d3e95f0f662656a63ca
 }
