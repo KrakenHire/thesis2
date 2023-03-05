@@ -17,3 +17,4 @@ sequelize
  module.exports.modelinit=modelinit(sequelize)
  sequelize.sync()
 module.exports = sequelize;
+
