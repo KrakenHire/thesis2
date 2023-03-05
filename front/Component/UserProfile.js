@@ -4,14 +4,14 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { auth } from '../firebase'
 
-const HomeScreenPro = () => {
+const UserProfile = () => {
   const navigation = useNavigation()
 
   const handleSignOut = () => {
     auth
       .signOut()
       .then(() => {
-        navigation.replace("LoginScreenPro")
+        navigation.replace("choises")
       })
       .catch(error => alert(error.message))
   }
@@ -30,7 +30,7 @@ const HomeScreenPro = () => {
   )
 }
 
-export default HomeScreenPro
+export default UserProfile
 
 const styles = StyleSheet.create({
   container: {
