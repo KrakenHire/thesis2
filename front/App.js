@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View ,Image,TouchableOpacity} from 'react-native';
-import Home from './components/Home.js'
+
 import ProviderProfile from './components/ProviderProfile.js';
 // import icons from './assets/icons/index';
 // import Zendesk from 'react-native-zendesk-messaging';
@@ -14,7 +14,11 @@ import LoginScreenPro from './Component/LoginScreenPro.js';
 import LoginScreenUser from './Component/LoginScreenUser.js';
 import forgetPass from "./Component/forgetPass.js"
 import SignUpPro from "./Component/SignUpPro.js"
-import HomeScreenPro from './Component/HomeScreenPro.js';
+// import HomeScreenPro from './component/Home.js';
+import Home from './components/Home.js'
+import Calendar from './components/Calendar.js';
+import UserProfile from './Component/UserProfile.js'; 
+import Chat from './Component/Chat.js';
 
 
 
@@ -64,7 +68,11 @@ export default function App() {
         <Stack.Screen name="LoginScreenUser" component={LoginScreenUser} />
         <Stack.Screen name="forgetPass" component={forgetPass} />
         <Stack.Screen name="SignUpPro" component={SignUpPro} />
-        <Stack.Screen name="Home" component={HomeScreenPro} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="ProviderProfile" component={ProviderProfile} />
+        <Stack.Screen name="Calendar" component={Calendar} />
+        <Stack.Screen name="UserProfile" component={UserProfile} />
+        <Stack.Screen name="Chat" component={Chat} />
    
     </Stack.Navigator>
     </NavigationContainer>

@@ -2,16 +2,23 @@
 import { StyleSheet, Text, View,Image, SafeAreaView,TextInput, TouchableOpacity } from 'react-native';
 import icons from '../assets/icons/index';
 import Search from './Search';
+import { useNavigation } from '@react-navigation/native';
+
 
 
 function Home() {
 
-  
+  const navigation=useNavigation()
   return (
     <View style={styles.container}>
       <SafeAreaView  >
     <View style={styles.header}>
+      <TouchableOpacity onPress={() =>
+   
+   navigation.navigate("UserProfile")
+ }>
       <Image style={styles.profile} source={icons.profile}/>
+      </TouchableOpacity>
       <View style={styles.name} >
       <Text >HELLO <Image style={styles.img} source={icons.greeting}/></Text>
       <Text style={{fontWeight: 'bold'}}>Name </Text>
@@ -32,10 +39,13 @@ function Home() {
     </View>
   
     <View style={styles.categories}>
-      <View style={styles.item}>
-      <Image style={styles.ic} source={icons.cleaning}/>
+      <TouchableOpacity style={styles.item} onPress={() =>
+   
+        navigation.navigate("ProviderProfile")
+      } >
+      <Image style={styles.ic} source={icons.cleaning}  />
       <Text style={styles.text}> Cleaning</Text>
-      </View>
+      </TouchableOpacity>
       <View style={styles.item}>
       <Image style={styles.ic} source={icons.repair}/>
       <Text style={styles.text}> Reparing</Text>
@@ -69,9 +79,16 @@ function Home() {
       <View style={styles.item}>
       <Image style={styles.ic} source={icons.home}/>
       </View>
+      <TouchableOpacity
+                onPress={() => 
+                  navigation.navigate("Chat")
+                  
+                }
+            >
        <View style={styles.item}>
       <Image style={styles.ic} source={icons.imbox}/>
       </View>
+      </TouchableOpacity>
       <View style={styles.item}>
       <Image style={styles.ic} source={icons.calender}/>
       </View>

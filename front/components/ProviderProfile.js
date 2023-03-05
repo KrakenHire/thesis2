@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
-import { StyleSheet, View,Image,Text,ScrollView  } from 'react-native';
+import { StyleSheet, View,Image,Text,ScrollView,Button   } from 'react-native';
 import icons from '../assets/icons/index';
 import { FontAwesome } from 'react-native-vector-icons';
 import Ratings from './Ratings.js';
 import Comments from './Comments.js';
+import { useNavigation } from '@react-navigation/native';
 
 
 function ProviderProfile() {
-
+  const navigation=useNavigation()
 
   return (
     <ScrollView>
    <View style={styles.container}>
       <Image style={styles.profile} source={icons.profile}/>
       <View style={styles.header}>
-      <Text style={{fontSize:28, fontWeight:'bold'}}>HAIR DRESSER</Text>
+      <Text style={{fontSize:28, fontWeight:'bold'}}>Cleaning Lady</Text>
       <Image style={styles.notification} source={icons.bookMark}/>
       </View>
       <View style={styles.name}>
@@ -53,6 +54,10 @@ function ProviderProfile() {
 <View style={styles.rate}>
 <Ratings/>
 <Text style={{fontSize:15, fontWeight:'bold'}}>55 Reviews</Text>
+<Button title="BOOK NOW"   style={{borderRadius:20}} onPress={() =>
+   
+   navigation.navigate("Calendar")
+ }/>
 </View>
 
 <Comments/>
