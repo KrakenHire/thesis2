@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet,Image,TextInput, Button} from 'react-native';
 import icons from '../assets/icons/index';
+import { CheckBox } from '@rneui/themed';
+
+
 
 
 
 function Comments() {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [comment, setComment] = useState('');
+    const [checked, setChecked] = useState(true);
+    const toggleCheckbox = () => setChecked(!checked);
 
 const toggleDropdown = () => {
   setDropdownVisible(!dropdownVisible);
@@ -21,7 +26,19 @@ function submitComment(comment) {
     <View style={styles.comment}>
     <Image style={styles.user} source={icons.profile}/>
     <View style={{width:320}}>
-    <Text style={{marginRight:40}}> comment great servive </Text>
+    <Text style={{marginRight:40}}> comment great servive  </Text> 
+    <View style={{ flexDirection: 'row', flex:1}}>
+     <CheckBox
+        style={{height:10,width:10}}
+        checked={checked}
+        checkedIcon="heart"
+        uncheckedIcon="heart-o"
+        checkedColor="red"
+        onPress={toggleCheckbox} 
+      />
+      <Text style={{marginTop:20}}> 2 Likes </Text>
+       </View>
+     
     </View>
   
       
@@ -125,7 +142,7 @@ icon:{
       },
       button:{
         borderRadius:10,
-        backgroundColor:'#7210FF',
+        backgroundColor:'#BA68C8',
        width:70,
         height:40,
       },

@@ -62,18 +62,18 @@ export default function App() {
        <Stack.Navigator>
     
        
-        <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} />
+        {/* <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} />
         <Stack.Screen name="choises" component={Choises} />
         <Stack.Screen name="LoginScreenPro" component={LoginScreenPro} />
         <Stack.Screen name="LoginScreenUser" component={LoginScreenUser} />
-        <Stack.Screen name="forgetPass" component={forgetPass} />
-        <Stack.Screen name="SignUpPro" component={SignUpPro} />
+        <Stack.Screen name="forgetPass" component={forgetPass} /> */}
+        {/* <Stack.Screen name="SignUpPro" component={SignUpPro} /> */}
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="ProviderProfile" component={ProviderProfile} />
         <Stack.Screen name="Calendar" component={Calendar} />
-        <Stack.Screen name="UserProfile" component={UserProfile} />
+        {/* <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="Chat" component={Chat} />
-   
+    */}
     </Stack.Navigator>
     </NavigationContainer>
   
@@ -83,7 +83,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    // backgroundColor: '#FFF',
     margin:0,
     alignItems: 'center',
     justifyContent: 'center',
