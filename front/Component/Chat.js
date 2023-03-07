@@ -70,7 +70,7 @@ export default function Chat() {
         user
       });
     }, []);
-
+ 
     return (
       <View></View>
       // <>
