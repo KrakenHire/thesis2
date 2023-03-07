@@ -3,12 +3,17 @@ import { StyleSheet, Text, View,Image, SafeAreaView,TextInput, TouchableOpacity 
 import icons from '../assets/icons/index';
 import Search from './Search';
 import { useNavigation } from '@react-navigation/native';
+import NavBar from './NavBar.js';
+import React, { useState } from 'react';
+
 
 
 
 function Home() {
 
   const navigation=useNavigation()
+  
+
   return (
     <View style={styles.container}>
       <SafeAreaView  >
@@ -26,18 +31,19 @@ function Home() {
       <View style={styles.icon}>
       <Image style={styles.notification} source={icons.notification}/>
       <Image style={styles.notification} source={icons.bookMark}/>
+    
     </View>
     </View>
     </SafeAreaView>    
  
    <Search/>
    <Image style={styles.home} source={icons.homeh}/>
-  
+
    <View style={styles.service} >
     <Text style={styles.bold}>Services</Text>
     <Text style={{fontSize:18, color: '#7210FF',   fontWeight: 'bold' }}>See All</Text>
     </View>
-  
+
     <View style={styles.categories}>
       <TouchableOpacity style={styles.item} onPress={() =>
    
@@ -74,29 +80,7 @@ function Home() {
       <View style={styles.tit} >
     <Text  style={styles.tet}>Most Popular Services</Text>
      </View>
-
-      <View style={styles.bar}>
-      <View style={styles.item}>
-      <Image style={styles.ic} source={icons.home}/>
-      </View>
-      <TouchableOpacity
-                onPress={() => 
-                  navigation.navigate("Chat")
-                  
-                }
-            >
-       <View style={styles.item}>
-      <Image style={styles.ic} source={icons.imbox}/>
-      </View>
-      </TouchableOpacity>
-      <View style={styles.item}>
-      <Image style={styles.ic} source={icons.calender}/>
-      </View>
-      <View style={styles.item}>
-      <Image style={styles.ic} source={icons.avatar}/>
-      </View>
-      </View>
-   
+     <NavBar/>
       </View>
   
    
@@ -118,7 +102,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between' ,
       alignItems:'center',
-      paddingTop:60,  
+      paddingTop:10,  
     },
     profile:{  
       // marginTop:70,
@@ -185,13 +169,15 @@ const styles = StyleSheet.create({
     },
     tet:{
       fontSize:20,
-      fontWeight:'bold'
+      fontWeight:'bold',
+      color:'#7210FF'
     },
     class:{
       marginBottom:20,
 
     },
     categories: {
+      
       paddingBottom:40,
       flexDirection: 'row',
       flex: 1,
@@ -201,6 +187,7 @@ const styles = StyleSheet.create({
 
     },
     categories2: {
+     
         flexDirection: 'row',
         flex: 1,
         paddingHorizontal:7,

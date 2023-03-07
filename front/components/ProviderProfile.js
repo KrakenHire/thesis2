@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { StyleSheet, View,Image,Text,ScrollView,Button   } from 'react-native';
+import { StyleSheet, View,Image,Text,ScrollView,TouchableOpacity  } from 'react-native';
 import icons from '../assets/icons/index';
 import { FontAwesome } from 'react-native-vector-icons';
 import Ratings from './Ratings.js';
 import Comments from './Comments.js';
 import { useNavigation } from '@react-navigation/native';
+import NavBar from './NavBar';
+import { CheckBox } from '@rneui/themed';
 
 
 function ProviderProfile() {
   const navigation=useNavigation()
+  const [checked, setState] = React.useState(true);
+  const toggleCheckbox = () => setState(!checked);
 
   return (
     <ScrollView>
@@ -51,21 +55,23 @@ function ProviderProfile() {
 <Image   style={styles.albumImage} source={icons.clean2}/>
 </View>
 </View>
+
 <View style={styles.rate}>
-<Ratings/>
-<Text style={{fontSize:15, fontWeight:'bold'}}>55 Reviews</Text>
-<Button title="BOOK NOW"   style={{borderRadius:20}} onPress={() =>
-   
-   navigation.navigate("Calendar")
- }/>
+ <Ratings/>
+ <Text style={{fontSize:15, fontWeight:'bold'}}>55 Reviews</Text>
 </View>
-
-<Comments/>
-
+ <Comments/>
+ <View style={styles.buttons}>
+ {/* <TouchableOpacity style={styles.button} >
+        <Text style={styles.buttonText}>MESSAGE</Text>
+   </TouchableOpacity> */}
+  <TouchableOpacity style={styles.button} onPress={() =>  navigation.navigate("Calendar")}>
+        <Text style={styles.buttonText}>BOOK NOW</Text>
+   </TouchableOpacity>
+  </View>
 </View>
-
-      </View>
-      
+<NavBar/>
+      </View>  
       </ScrollView>
   )
 }
@@ -134,7 +140,7 @@ const styles = StyleSheet.create({
          paddingLeft:10,
       },
       about:{ 
-        paddingBottom:210,
+        paddingBottom:80,
     },
     post:{
         paddingTop:10,
@@ -163,5 +169,29 @@ const styles = StyleSheet.create({
       height: 150,
       marginBottom: 10,
     },
+    buttons: {
+     marginTop:50,
+      borderRadius: 10,
+      marginLeft: 10,
+      flexDirection: 'row',
+      justifyContent: 'space-around' ,
+      alignItems:'center',
+    },
+    button: {
+      backgroundColor: '#7210FF',
+      borderRadius: 20,
+      marginLeft: 10,
+      paddingTop:10,
+      paddingBottom:10,
+      width:180,
+      height:50
+    },
+    buttonText: {
+      color: '#fff',
+      fontWeight: 'bold',
+      marginLeft:50,
+      marginTop:3
+   
+},
    
 })
