@@ -1,60 +1,109 @@
-
-import { StyleSheet, Text, View,Image, SafeAreaView,TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View,Image, SafeAreaView,TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import icons from '../assets/icons/index';
 import Search from './Search';
 import { useNavigation } from '@react-navigation/native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
 function Home() {
+  const navigation=useNavigation();
+  const [userr, setUserr] = useState(null);
+  const [name, setName] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const navigation=useNavigation()
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const userr = await AsyncStorage.getItem("userr");
+        if (userr !== null) {
+          setUserr(JSON.parse(userr));
+          return JSON.parse(userr);
+
+        }
+        return null;
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    };
+    
+    const fetchData = async () => {
+      const userId = await getUser();
+      if (userId !== null) {
+        try {
+          const response = await axios.get(`http://192.168.225.182:3000/user/${userId}`);
+          setName(response.data.username);
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error);
+          setIsLoading(false);
+        }
+      } else {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchData();
+  }, [userr]);
+  
+  const press = () => {
+    navigation.navigate("UserProfile");
+  };
+
+  if (isLoading) {
+    // Render a loading indicator
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      <SafeAreaView  >
-    <View style={styles.header}>
-      <TouchableOpacity onPress={() =>
-   
-   navigation.navigate("UserProfile")
- }>
-      <Image style={styles.profile} source={icons.profile}/>
-      </TouchableOpacity>
-      <View style={styles.name} >
-      <Text >HELLO <Image style={styles.img} source={icons.greeting}/></Text>
-      <Text style={{fontWeight: 'bold'}}>Name </Text>
-       </View>
-      <View style={styles.icon}>
-      <Image style={styles.notification} source={icons.notification}/>
-      <Image style={styles.notification} source={icons.bookMark}/>
-    </View>
-    </View>
-    </SafeAreaView>    
+      <SafeAreaView>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={press}>
+            <Image style={styles.profile} source={icons.profile} />
+          </TouchableOpacity>
+          <View style={styles.name}>
+            <Text>HELLO <Image style={styles.img} source={icons.greeting} /></Text>
+            {name !== null && <Text style={{ fontWeight: 'bold' }}>{name}</Text>}
+          </View>
+          <View style={styles.icon}>
+         
+    
+          </View>
+        </View>
+      </SafeAreaView>
  
-   <Search/>
-   <Image style={styles.home} source={icons.homeh}/>
+      <Search />
+      <Image style={styles.home} source={icons.homeh} />
   
-   <View style={styles.service} >
-    <Text style={styles.bold}>Services</Text>
-    <Text style={{fontSize:18, color: '#7210FF',   fontWeight: 'bold' }}>See All</Text>
-    </View>
+      <View style={styles.service}>
+        <Text style={styles.bold}>Services</Text>
+        <Text style={{ fontSize: 18, color: '#7210FF', fontWeight: 'bold' }}>See All</Text>
+      </View>
   
-    <View style={styles.categories}>
-      <TouchableOpacity style={styles.item} onPress={() =>
-   
-        navigation.navigate("ProviderProfile")
-      } >
-      <Image style={styles.ic} source={icons.cleaning}  />
-      <Text style={styles.text}> Cleaning</Text>
-      </TouchableOpacity>
-      <View style={styles.item}>
-      <Image style={styles.ic} source={icons.repair}/>
-      <Text style={styles.text}> Reparing</Text>
+      <View style={styles.categories}>
+        <TouchableOpacity style={styles.item} onPress={() =>
+          navigation.navigate("ProviderProfile")
+        } >
+          <Image style={styles.ic} source={icons.cleaning} />
+          <Text style={styles.text}> Cleaning</Text>
+        </TouchableOpacity>
+        <View style={styles.item}>
+          <Image style={styles.ic} source={icons.repair} />
+          <Text style={styles.text}> Reparing</Text>
+        </View>
+        <View style={styles.item}>
+          <Image style={styles.ic} source={icons.painting} />
+          <Text style={styles.text}> Panting</Text>
+        </View>
       </View>
-      <View style={styles.item}>
-      <Image style={styles.ic} source={icons.painting}/>
-      <Text style={styles.text}> Panting</Text>
-      </View>
-    </View>
+
     
     <View style={styles.categories2}>
       <View style={styles.item}>
@@ -77,7 +126,7 @@ function Home() {
 
       <View style={styles.bar}>
       <View style={styles.item}>
-      <Image style={styles.ic} source={icons.home}/>
+     
       </View>
       <TouchableOpacity
                 onPress={() => 
@@ -86,14 +135,14 @@ function Home() {
                 }
             >
        <View style={styles.item}>
-      <Image style={styles.ic} source={icons.imbox}/>
+      
       </View>
       </TouchableOpacity>
       <View style={styles.item}>
-      <Image style={styles.ic} source={icons.calender}/>
+     
       </View>
       <View style={styles.item}>
-      <Image style={styles.ic} source={icons.avatar}/>
+     
       </View>
       </View>
    

@@ -16,9 +16,10 @@ const UserProfile = () => {
       .catch(error => alert(error.message))
   }
 
+
   return (
     <View style={styles.container}>
-      <Text>Email: {auth.currentUser?.email}</Text>
+      <Text>Email:  {auth.currentUser?.email}</Text>
      
       <TouchableOpacity
         onPress={handleSignOut}

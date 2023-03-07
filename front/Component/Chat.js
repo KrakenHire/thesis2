@@ -24,52 +24,52 @@ export default function Chat() {
   const [messages, setMessages] = useState([]);
   const navigation = useNavigation();
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity
-          style={{
-            marginRight: 10
-          }}
-        >
-          <AntDesign name="logout" size={24} color={colors.gray} style={{marginRight: 10}}/>
-        </TouchableOpacity>
-      )
-    });
-  }, [navigation]);
+  // useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     headerRight: () => (
+  //       <TouchableOpacity
+  //         style={{
+  //           marginRight: 10
+  //         }}
+  //       >
+  //         <AntDesign name="logout" size={24} color={colors.gray} style={{marginRight: 10}}/>
+  //       </TouchableOpacity>
+  //     )
+  //   });
+  // }, [navigation]);
 
-  useLayoutEffect(() => {
+  // useLayoutEffect(() => {
 
-      const collectionRef = collection(database, 'chats');
-      const q = query(collectionRef, orderBy('createdAt', 'desc'));
+  //     const collectionRef = collection(database, 'chats');
+  //     const q = query(collectionRef, orderBy('createdAt', 'desc'));
 
-  const unsubscribe = onSnapshot(q, querySnapshot => {
-      console.log('querySnapshot unsusbscribe');
-        setMessages(
-          querySnapshot.docs.map(doc => ({
-            _id: doc.data()._id,
-            createdAt: doc.data().createdAt.toDate(),
-            text: doc.data().text,
-            user: doc.data().user
-          }))
-        );
-      });
-  return unsubscribe;
-    }, []);
+  // const unsubscribe = onSnapshot(q, querySnapshot => {
+  //     console.log('querySnapshot unsusbscribe');
+  //       setMessages(
+  //         querySnapshot.docs.map(doc => ({
+  //           _id: doc.data()._id,
+  //           createdAt: doc.data().createdAt.toDate(),
+  //           text: doc.data().text,
+  //           user: doc.data().user
+  //         }))
+  //       );
+  //     });
+  // return unsubscribe;
+  //   }, []);
 
-  const onSend = useCallback((messages = []) => {
-      setMessages(previousMessages =>
-        GiftedChat.append(previousMessages, messages)
-      );
-      // setMessages([...messages, ...messages]);
-      const { _id, createdAt, text, user } = messages[0];    
-      addDoc(collection(database, 'chats'), {
-        _id,
-        createdAt,
-        text,
-        user
-      });
-    }, []);
+  // const onSend = useCallback((messages = []) => {
+  //     setMessages(previousMessages =>
+  //       GiftedChat.append(previousMessages, messages)
+  //     );
+  //     // setMessages([...messages, ...messages]);
+  //     const { _id, createdAt, text, user } = messages[0];    
+  //     addDoc(collection(database, 'chats'), {
+  //       _id,
+  //       createdAt,
+  //       text,
+  //       user
+  //     });
+  //   }, []);
 
     return (
       <View></View>

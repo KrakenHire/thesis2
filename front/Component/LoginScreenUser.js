@@ -2,12 +2,16 @@ import { useNavigation } from '@react-navigation/native'
 import React, { Component, useEffect, useState } from 'react'
 import { KeyboardAvoidingView, Text, TextInput, View ,StyleSheet, TouchableOpacity} from 'react-native'
 import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuthStateChanged  } from '../firebase'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import axios from 'axios'
   const LoginScreenUser =()=> {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [userName, setUserName] = useState('')
     const [errorMessage, setErrorMessage] = useState(null);
+   
+   
 
     const navigation = useNavigation()
 
@@ -15,60 +19,53 @@ import axios from 'axios'
       const unsubscribe = onAuthStateChanged(auth, user => {
         if (user) {
           navigation.replace("Home")
+        
         }
       })
     
       return unsubscribe;
     }, [auth, navigation]);
 
-
-
-
-    const handleSubmit = () => {
+   
     
-        createUserWithEmailAndPassword( auth,email, password)
-        .then(userCredentials => {
-          const userr = userCredentials._tokenResponse.localId;
-          console.log( userCredentials,"firebase");
 
 
-          axios.post('http://192.168.136.182:3000/user', {
-            iduser:userr,
-            username:userName,
-           
-          })
-          .then(function (response) {
-            console.log(response.data,"response");
-          })
-          .catch(function (error) {
-            console.log(error,"error");
-          });
-        })
-        .catch( (error)=> {
-          switch (error.code) {
-            case 'auth/email-already-in-use':
-              setErrorMessage('Email already in use');
-              break;
-            case 'auth/invalid-email':
-              setErrorMessage('Invalid email address');
-              break;
-            case 'auth/weak-password':
-              setErrorMessage('Password should be at least 6 characters');
-              break;
-            default:
-              setErrorMessage('An unknown error occurred');
-              break;
-          }
-        })
-        // Send form data to backend 
-      
-        
-       
-      };
+    const handleSubmit = async () => {
+      try {
+        const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+        const userr = userCredentials._tokenResponse.localId;
+        console.log(userCredentials, "firebase");
+  
+        await AsyncStorage.setItem("userr", JSON.stringify(userCredentials._tokenResponse.localId));
+        await axios.post('http://192.168.225.182:3000/user', {
+          iduser: userr,
+          username: userName,
+        });
+        console.log(response.data, "responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+      } catch (error) {
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            setErrorMessage('Email already in use');
+            break;
+          case 'auth/invalid-email':
+            setErrorMessage('Invalid email address');
+            break;
+          case 'auth/weak-password':
+            setErrorMessage('Password should be at least 6 characters');
+            break;
+          default:
+            setErrorMessage('An unknown error occurred');
+            break;
+        }
+        console.log(error, "errorrrrrrrrrrrrrrrrrrrrrrrrr");
+      }
+     
+    };
+    
 
       const handleLogin = async () => {
         try {
-          await signInWithEmailAndPassword(auth ,email, password);
+         const user= await signInWithEmailAndPassword(auth ,email, password);
         } catch (error) {
           switch (error.code) {
             case 'auth/invalid-email':
@@ -137,6 +134,7 @@ import axios from 'axios'
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>{navigation.navigate('forgetPass')}}>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
+        
         </TouchableOpacity>
 
        </View>

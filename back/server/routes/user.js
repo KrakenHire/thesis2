@@ -6,6 +6,8 @@ const user= require ("../controller/user")
 
 router.post('/',user.post);
 
+router.get('/:iduser',user.getUserById);
+
 
 
 

@@ -1,6 +1,6 @@
 {
-  "expoServerPort": 19001,
-  "packagerPort": 19001,
+  "expoServerPort": 19000,
+  "packagerPort": 19000,
   "expoServerNgrokUrl": "https://w4-8wp.anonymous.front.exp.direct",
   "packagerNgrokUrl": "https://w4-8wp.anonymous.front.exp.direct",
   "ngrokPid": 1312,
