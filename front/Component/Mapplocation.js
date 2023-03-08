@@ -2,6 +2,8 @@ import React,{useState} from 'react';
 import MapView, { Marker,Callout, Circle,PROVIDER_GOOGLE,Polyline } from 'react-native-maps';
 import { Dimensions, StyleSheet,Text, View } from 'react-native';
 import * as Location from 'expo-location';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { GOOGLE_API_KEY } from '../environments';
 
 export default function Mapplocation() {
  const [pin, setpin] = React.useState({ latitude: 36.8189700,
@@ -41,6 +43,18 @@ export default function Mapplocation() {
     }}
    
     >
+      <GooglePlacesAutocomplete
+      styles={{ textInput: styles.input }}
+      placeholder='Search'
+      onPress={(data, details = null) => {
+        // 'details' is provided when fetchDetails = true
+        console.log(data, details);
+      }}
+      query={{
+        key: GOOGLE_API_KEY,
+        language: 'en',
+      }}
+    />
      
       <Marker 
         coordinate={pin} 
