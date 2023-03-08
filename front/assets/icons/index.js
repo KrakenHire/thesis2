@@ -19,5 +19,7 @@ export const adress=require('./adress.png')
 export const edit=require('./edit.png')
 export const clean1=require('./clean.jpg')
 export const clean2=require('./clean2.webp')
+export const star=require('./star.png')
 
-export default {chatB,profile,notification,bookMark,homeh,greeting,cleaning,painting,repair,hair,adress,elec,edit,plumbing,booking,home,calender,imbox,avatar,clean1,clean2}
+
+export default {chatB,profile,notification,bookMark,homeh,greeting,cleaning,painting,repair,hair,star,adress,elec,edit,plumbing,booking,home,calender,imbox,avatar,clean1,clean2}
