@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import MapView, { Marker,Callout, Circle } from 'react-native-maps';
+import MapView, { Marker,Callout, Circle,PROVIDER_GOOGLE,Polyline } from 'react-native-maps';
 import { Dimensions, StyleSheet,Text, View } from 'react-native';
 import * as Location from 'expo-location';
 
@@ -27,7 +27,8 @@ export default function Mapplocation() {
   return (
     <View style={styles.container}>
       <MapView 
-      style={styles.map}    
+      style={styles.map} 
+      provider={PROVIDER_GOOGLE}   
       initialRegion={{
           latitude: 36.8189700,
           longitude: 10.1657900,
