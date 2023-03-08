@@ -12,8 +12,7 @@ import {
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { Calendar } from 'react-native-calendars';
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
-
-
+import { useNavigation } from '@react-navigation/native';
 
 //   const [selectedDate, setSelectedDate] = useState(new Date('2023-03-31'));
 //   const [datePickerVisible, setDatePickerVisible] = useState(false);
@@ -66,6 +65,7 @@ import { setStatusBarBackgroundColor } from 'expo-status-bar';
 
 
   function CustomCalendar(props) {
+   
     const initDate = '2022-12-01';
     const [selected, setSelected] = useState(initDate);
     const marked = useMemo(() => ({
@@ -90,6 +90,7 @@ import { setStatusBarBackgroundColor } from 'expo-status-bar';
   }
   
   function BookingDate() {
+    const navigation=useNavigation()
     const [selectedDate, setSelectedDate] = useState(new Date('2023-03-31'));
     const [datePickerVisible, setDatePickerVisible] = useState(false);
 
@@ -145,7 +146,7 @@ import { setStatusBarBackgroundColor } from 'expo-status-bar';
         
        
        
-        onPress={() => Alert.alert('Your Booking was made')}></Button>
+        onPress={() => navigation.navigate("Map")}></Button>
          
         </View>
         

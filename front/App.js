@@ -19,7 +19,7 @@ import Home from './components/Home.js'
 import Calendar from './components/Calendar.js';
 import UserProfile from './Component/UserProfile.js'; 
 import Chat from './Component/Chat.js';
-
+import Mapplocation from './Component/Mapplocation.js'
 
 
 
@@ -62,18 +62,18 @@ export default function App() {
        <Stack.Navigator>
     
        
-        {/* <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} />
+        <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} />
         <Stack.Screen name="choises" component={Choises} />
         <Stack.Screen name="LoginScreenPro" component={LoginScreenPro} />
         <Stack.Screen name="LoginScreenUser" component={LoginScreenUser} />
-        <Stack.Screen name="forgetPass" component={forgetPass} /> */}
-        {/* <Stack.Screen name="SignUpPro" component={SignUpPro} /> */}
+        <Stack.Screen name="forgetPass" component={forgetPass} />
+        <Stack.Screen name="SignUpPro" component={SignUpPro} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="ProviderProfile" component={ProviderProfile} />
         <Stack.Screen name="Calendar" component={Calendar} />
-        {/* <Stack.Screen name="UserProfile" component={UserProfile} />
+        <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="Chat" component={Chat} />
-    */}
+        <Stack.Screen name="Map" component={Mapplocation} />
     </Stack.Navigator>
     </NavigationContainer>
   
