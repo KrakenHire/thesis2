@@ -5,35 +5,47 @@ import { FontAwesome } from 'react-native-vector-icons';
 import Ratings from './Ratings.js';
 import Comments from './Comments.js';
 import { useNavigation } from '@react-navigation/native';
-import NavBar from './NavBar';
+import NavBar from './NavBar'
 import { CheckBox } from '@rneui/themed';
 
 
-function ProviderProfile() {
+
+
+function ProviderProfile({route}) {
   const navigation=useNavigation()
-  const [checked, setState] = React.useState(true);
-  const toggleCheckbox = () => setState(!checked);
+  const [checked, setChecked] = useState(true);
+  const toggleCheckbox = () => setChecked(!checked);
+
+  const { provider } = route.params;
+
+  
 
   return (
     <ScrollView>
    <View style={styles.container}>
-      <Image style={styles.profile} source={icons.profile}/>
+      <Image style={styles.profile} source={{ uri:provider.image}}/>
       <View style={styles.header}>
-      <Text style={{fontSize:28, fontWeight:'bold'}}>Cleaning Lady</Text>
-      <Image style={styles.notification} source={icons.bookMark}/>
+      <Text style={{fontSize:28, fontWeight:'bold'}}>  {provider.service} Service</Text>
+      <CheckBox 
+  
+        checked={checked}
+        checkedIcon="bookmark"
+        uncheckedIcon="bookmark-o"
+        checkedColor="black"
+        onPress={toggleCheckbox}
+      />
       </View>
       <View style={styles.name}>
-      <Text style={styles.service}>RANIA ELOUNI</Text>
-      <FontAwesome name="star" solid style={{ color: '#ffc107', fontSize: 25 }} />
-      <Text> 4 (55 Reviews) </Text>
+      <Text style={styles.service}>{provider.username}   </Text>
+    <Text>  <FontAwesome name="star" solid style={{ color: '#ffc107', fontSize: 25 }} />  4 (55 Reviews) </Text>
       </View>
     <View style={styles.adress}>
         <Image style={styles.adressic} source={icons.adress}/>
-        <Text style={{fontSize: 15}}>113 Teboulba , Monastir </Text>
+        <Text style={{fontSize: 15}}>{provider.adress} </Text>
     </View>
     <View style={styles.about}>
    
-       <Text style={styles.price}> 20 DNT <Text style={{fontSize:15,color:'black'}}> (visit price)</Text> </Text>   
+       <Text style={styles.price}> {provider.price} DNT <Text style={{fontSize:15,color:'black'}}> (visit price)</Text> </Text>   
     <View style={{paddingLeft:10, paddingTop:10}}>
     <Text style={{fontSize:25, fontWeight:'bold' ,paddingBottom:10}}>About me </Text>
     <Text> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac quam
@@ -60,7 +72,17 @@ function ProviderProfile() {
  <Ratings/>
  <Text style={{fontSize:15, fontWeight:'bold'}}>55 Reviews</Text>
 </View>
- <Comments/>
+ 
+ <Comments
+ username='ghada'
+ profileImage = "icons.profile"
+ status="This is' a sample comment" 
+  likes={10} 
+  onLike={() => console.log('Like pressed')} 
+  onEdit={() => console.log('Edit pressed')} 
+  onDelete={() => console.log('Delete pressed')} 
+/>
+
  <View style={styles.buttons}>
  {/* <TouchableOpacity style={styles.button} >
         <Text style={styles.buttonText}>MESSAGE</Text>
@@ -82,21 +104,21 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width:400,  
+        backgroundColor:"#fff"
         },
  
     profile: {
-        width:300,
+        width:420,
         height:300,
-       marginTop:40,
+      
     },
     header:{
         flexDirection: 'row',
         justifyContent: 'space-between' ,
         alignItems:'center',
         paddingTop:20,  
-        width:380,
-        paddingLeft:20,
-        
+        width:400,
+      
       },
       notification: {
         paddingHorizontal:10,
@@ -107,7 +129,7 @@ const styles = StyleSheet.create({
       },
       name:{
         flexDirection: 'row',
-        justifyContent: 'space-between' ,
+        // justifyContent: 'space-between' ,
         alignItems:'center',
         paddingTop:10,  
         width:300,
@@ -156,7 +178,8 @@ const styles = StyleSheet.create({
   
     rate:{
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    paddingBottom:20,
     },
     albumContainer: {
       flexDirection: 'row',

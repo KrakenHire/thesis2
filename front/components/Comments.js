@@ -1,155 +1,172 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet,Image,TextInput, Button} from 'react-native';
-import icons from '../assets/icons/index';
+import { View, Text, Image, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import icons from '../assets/icons';
 import { CheckBox } from '@rneui/themed';
 
-
-
-
-
-function Comments() {
+const Comments = ({ profileImage, username, status, likes, onLike, onDelete, onEdit }) => {
+    
+  const [newComment, setNewComment] = useState('');
     const [dropdownVisible, setDropdownVisible] = useState(false);
-    const [comment, setComment] = useState('');
     const [checked, setChecked] = useState(true);
     const toggleCheckbox = () => setChecked(!checked);
-
-const toggleDropdown = () => {
+    
+    const toggleDropdown = () => {
   setDropdownVisible(!dropdownVisible);
 };
-function submitComment(comment) {
-    // Handle submission of comment here
+  const handleComment = () => {
+    // Handle adding a new comment here
+    setNewComment('');
   }
 
   return (
-    <View>
-    <View style={styles.iconContainer}>
-    <View style={styles.comment}>
-    <Image style={styles.user} source={icons.profile}/>
-    <View style={{width:320}}>
-    <Text style={{marginRight:40}}> comment great servive  </Text> 
-    <View style={{ flexDirection: 'row', flex:1}}>
-     <CheckBox
-        style={{height:10,width:10}}
+    <View style={styles.container}>
+      <Image source={icons.profile} style={styles.profileImage} />
+      <View style={styles.commentContainer}>
+        <View style={styles.header}>
+          <Text style={styles.username}>{username}</Text>
+          <TouchableOpacity onPress={toggleDropdown}>
+     <Image style={styles.icon} source={icons.edit}/>
+        </TouchableOpacity>
+      
+      {dropdownVisible && (
+        <View style={styles.dropdownContainer}>
+          <View style={styles.dropdown}>
+            <TouchableOpacity style={styles.item}>
+              <Text style={styles.itemText} onPress={onEdit}>Edit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.item}>
+              <Text style={styles.itemText} onPress={onDelete} >Delete</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+        
+        </View>
+        <Text style={styles.status}>{status}</Text>
+        <View style={styles.footer}>
+          <TouchableOpacity style={styles.actionButton} onPress={onLike}>
+          <CheckBox
+        style={{height:10,width:10, }}
         checked={checked}
         checkedIcon="heart"
         uncheckedIcon="heart-o"
         checkedColor="red"
         onPress={toggleCheckbox} 
       />
-      <Text style={{marginTop:20}}> 2 Likes </Text>
-       </View>
-     
-    </View>
-  
-      
-        <TouchableOpacity onPress={toggleDropdown}>
-        <Image style={styles.icon} source={icons.edit}/>
-        </TouchableOpacity>
-      </View>
-      {dropdownVisible && (
-        <View style={styles.dropdownContainer}>
-          <View style={styles.dropdown}>
-            <TouchableOpacity style={styles.item}>
-              <Text style={styles.itemText}>Edit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.item}>
-              <Text style={styles.itemText}>Delete</Text>
-            </TouchableOpacity>
-          </View>
+            <Text style={styles.actionText}>{likes} Likes</Text>
+          </TouchableOpacity>
         </View>
-      )}
-  </View>
-  <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Add a comment..."
-        value={comment}
-        onChangeText={text => setComment(text)}
-      />
-        <TouchableOpacity style={styles.button} onPress={() => submitComment(comment)}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
+        <View style={styles.commentInputContainer}>
+          <TextInput
+            style={styles.commentInput}
+            placeholder="Add a comment..."
+            value={newComment}
+            onChangeText={setNewComment}
+            onSubmitEditing={handleComment}
+          />
+          <TouchableOpacity style={styles.actionButton} onPress={handleComment}>
+            <Ionicons name="send-outline" size={20} color="#aaa" />
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
-  </View>
-  )
+  );
 }
 
-export default Comments
-
 const styles = StyleSheet.create({
-    comment:{
-        marginTop:20,
-        flexDirection: 'row',
-        flex:1,
-        justifyContent: 'space-between' ,
-    },
-    user: {
-      height:40 ,
-      width: 40,
-      borderRadius: 40,
-    },
-icon:{
-    height:25,
-    width:25,
-    // marginLeft:230}
-},
-    container: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        position: 'relative',
-      },
-      iconContainer: {
-        marginTop:20,
-        flexDirection: 'row',
-        flex:1,
-        justifyContent: 'space-between',
-      },
-      dropdownContainer: {
-        position: 'absolute',
-        top: 30,
-        right: 0,
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-      },
-      dropdown: {
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderColor: 'gray',
-        borderRadius: 5,
-        padding: 5,
-        marginRight: 10,
-      },
-      item: {
-        padding: 5,
-      },
-      itemText: {
-        fontSize: 16,
-      },
-      container: {
-        marginTop:30,
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        backgroundColor: '#F5F5F7',
-        borderRadius: 20,
-      },
-      input: {
-        flex: 1,
-        fontSize: 16,
-        marginLeft: 5,
-      },
-      button:{
-        borderRadius:10,
-        backgroundColor:'#BA68C8',
-       width:70,
-        height:40,
-      },
-      buttonText:{
-      color:'white', 
-      fontWeight: 'bold',
-      paddingTop:8,
-      paddingLeft:8}
+  container: {
+    flexDirection: 'row',
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginBottom:8,
+  },
+  profileImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+  commentContainer: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 2,
+    justifyContent: 'space-between',
+  },
+  username: {
+    fontWeight: 'bold',
+    marginRight: 5,
+    fontSize: 16,
+    color: '#444',
+  },
+  status: {
     
-})
+    fontSize: 16,
+    color: '#555',
+  },
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  actionButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+ 
+  },
+  actionText: {
+    marginLeft: 5,
+    color: '#777',
+    fontSize: 14,
+  },
+  commentInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  commentInput: {
+    flex: 1,
+    height: 40,
+    marginRight: 5,
+    fontSize: 16,
+    color: '#333',
+    borderWidth: 1,
+    borderRadius: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  dropdownContainer: {
+            position: 'absolute',
+            top: 30,
+            right: 0,
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end',
+          },
+          dropdown: {
+            backgroundColor: 'white',
+            borderWidth: 1,
+            borderColor: 'gray',
+            borderRadius: 5,
+            padding: 5,
+            marginRight: 10,
+          },
+          item: {
+            padding: 5,
+          },
+          itemText: {
+            fontSize: 16,
+          },
+          icon:{
+                height:25,
+                width:25,
+                // marginLeft:230}
+            },
+});
+
+export default Comments;
