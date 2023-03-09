@@ -14,6 +14,7 @@ import LoginScreenPro from './Component/LoginScreenPro.js';
 import LoginScreenUser from './Component/LoginScreenUser.js';
 import forgetPass from "./Component/forgetPass.js"
 import SignUpPro from "./Component/SignUpPro.js"
+// import HomeScreenPro from './component/Home.js';
 import Home from './components/Home.js'
 import Calendar from './components/Calendar.js';
 import UserProfile from './Component/UserProfile.js'; 
@@ -46,7 +47,6 @@ export default function App() {
 
   //   </TouchableOpacity>
   // )
-  
 
   return (
  
@@ -64,18 +64,18 @@ export default function App() {
        <Stack.Navigator>
     
        
-        <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} />
+         <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} />
         <Stack.Screen name="choises" component={Choises} />
         <Stack.Screen name="LoginScreenPro" component={LoginScreenPro} />
         <Stack.Screen name="LoginScreenUser" component={LoginScreenUser} />
         <Stack.Screen name="forgetPass" component={forgetPass} />
-        <Stack.Screen name="SignUpPro" component={SignUpPro} /> 
-         <Stack.Screen name="Home" component={Home} />
-         <Stack.Screen name="list" component={ProviderList} />
-        <Stack.Screen name="ProviderProfile" component={ProviderProfile} />
-        <Stack.Screen name="Calendar" component={Calendar} /> 
-        <Stack.Screen name="UserProfile" component={UserProfile} />
-        <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="SignUpPro" component={SignUpPro} />
+        <Stack.Screen name="Home" component={Home} /> 
+        <Stack.Screen name="list" component={ProviderList} /> 
+         <Stack.Screen name="ProviderProfile" component={ProviderProfile} />  
+        <Stack.Screen name="Booking Details" component={Calendar} />
+         <Stack.Screen name="UserProfile" component={UserProfile} />
+        <Stack.Screen name="Chat" component={Chat} /> 
    
     </Stack.Navigator>
     </NavigationContainer>
@@ -86,29 +86,27 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#FFF',
+    backgroundColor: '#FFF',
     margin:0,
     alignItems: 'center',
-    justifyContent: 'center',
- 
-   
+    justifyContent: 'center'
   }, 
     
-  //   btn :{
-  //     position: 'absolute',
-  //     botton:20,
-  //     right: 10,
-  //     height:60 ,
-  //     width: 60,
-  //     backgroundColor: 'white',
-  //     borderRadius: 30,
-  //         }
-  //       ,
-  //       bot : {
-  //         height:50 ,
-  //     width: 50,
+    btn :{
+      position: 'absolute',
+      botton:20,
+      right: 10,
+      height:60 ,
+      width: 60,
+      backgroundColor: 'white',
+      borderRadius: 30,
+          }
+        ,
+        bot : {
+          height:50 ,
+      width: 50,
       
-  //       }
-  // },
+        }
+  }
   
-});
+)
