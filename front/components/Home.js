@@ -7,71 +7,49 @@ import NavBar from './NavBar.js';
 import React, { useEffect,useState } from 'react';
 import axios from 'axios';
 
-
-
 // const providers = [
 //   {
-//       name: 'rania',
-//       avatar:
+//       username: 'rania',
+//       image:
 //         'https://fac.img.pmdstatic.net/fit/https.3A.2F.2Fi.2Epmdstatic.2Enet.2Ffac.2F2022.2F08.2F29.2F9fecc4ef-2adb-4778-8987-0bd19806480d.2Ejpeg/1200x900/quality/80/crop-from/center/focus-point/1016%2C797/4-sites-pour-trouver-une-femme-de-menage.jpeg',
 //      review:22,
-//      price:' 20 DNT',
-//     service: 'cleaning'
+//      price:' 20',
+//     service: 'Cleaning',
+//     adress:'133 tboulba Monastir'
 //       },
 //   {
-//       name: 'ines',
-//       avatar:
+//       username: 'ines',
+//       image:
 //         'https://www.shutterstock.com/image-photo/young-african-woman-degergent-basket-260nw-2054513045.jpg',
 //      review:22,
-//      price:' 20 DNT',
-//     service: 'cleaning'
+//      price:' 30 ',
+//     service: 'Cleaning'
 //       },
 //   {
-//       name: 'farouk',
-//       avatar:
-//         'https://www.bossecheztoi.com/wp-content/uploads/2017/02/embaucher-femme-menage-800x500_c.jpg',
+//       username: 'farouk',
+//       image:
+//         'https://www.plumbingbyjake.com/wp-content/uploads/2015/11/VIGILANT-plumber-fixing-a-sink-shutterstock_132523334-e1448389230378.jpg',
 //      review:22,
 //      price:' 20 DNT',
-//      service: 'cleaning'
+//      service: 'Plumbing'
 //       },
 //   {
-//       name: 'ghada',
-//       avatar:
-//         'https://st2.depositphotos.com/1177973/10312/i/600/depositphotos_103127808-stock-photo-woman-cleaning-with-mop.jpg',
+//       username: 'amine',
+//       image:
+//         'https://www.benjaminfranklinplumbing.com/images/blog/10-Reasons-Why-a-Professional-Plumber-Is-Better-Than-DIY-_-Katy-TX.jpg',
 //      review:22,
 //      price:' 20 DNT',
-//      service: 'plumbing'
+//      service: 'Plumbing'
 //       },
 //   {
-//       name: 'amine',
-//       avatar:
+//       username: 'yosra',
+//       image:
 //         'https://www.o2.fr/documents/20124/2048897/choisir-femme-de-menage-p.jpg/92b09923-a6aa-37fd-d528-404d5d4d2995?t=1633956700178',
 //      review:22,
 //      price:' 20 DNT',
+//      service: 'Cleaning'
 //       },
-// {
-// name: 'thot leader',
-// avatar:
-//   'https://www.tayara.tn/mediaGateway/resize-image?img=6c/6c820727-cbc9-49d2-bb4e-973f841fdf57&w=1000',
-// },
-// // {
-// //   name: 'jsa',
-// //   avatar: 'https://uifaces.co/our-content/donated/bUkmHPKs.jpg',
-// // },
-// {
-// name: 'talhaconcepts',
-// avatar: 'https://www.tayara.tn/mediaGateway/resize-image?img=6c/6c820727-cbc9-49d2-bb4e-973f841fdf57&w=1000',
-// service: 'cleaning'
-// },
-// // {
-// //   name: 'andy vitale',
-// //   avatar: 'https://uifaces.co/our-content/donated/NY9hnAbp.jpg',
-// // },
-// {
-// name: 'katy friedson',
-// avatar:
-//   'https://images-na.ssl-images-amazon.com/images/M/MV5BMTgxMTc1MTYzM15BMl5BanBnXkFtZTgwNzI5NjMwOTE@._V1_UY256_CR16,0,172,256_AL_.jpg',
-// },
+
 // ];
 
 
@@ -121,35 +99,38 @@ function Home() {
     </View>
 
     <View style={styles.categories}>
-      <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('cleaning')} >
-       <Image style={styles.ic} source={icons.cleaning} />
-       <Text style={styles.text}> Cleaning</Text>
+   
+      <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('Cleaning')} >
+       <Image style={styles.ic} source={icons.Cleaning} />
+       <Text style={styles.text}> Cleaning</Text> 
       </TouchableOpacity>
-      <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('Reparing')} >
-      <Image style={styles.ic} source={icons.repair} />
+   
+      <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('Repairing')} >
+      <View style={styles.color}>
+      <Image style={styles.ic} source={icons.Repairing} />
+      </View>
       <Text style={styles.text}> Reparing</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('painting')} >
-      <Image style={styles.ic} source={icons.painting}/>
+      <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('Painting')} >
+      <Image style={styles.ic} source={icons.Painting}/>
       <Text style={styles.text}> Panting</Text>
       </TouchableOpacity>
     </View>
     
     <View style={styles.categories2}>
-    <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('electrecity')} >
-      <Image style={styles.ic} source={icons.elec}/>
-      <Text style={styles.text}> Electricity </Text>
+    <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('Electrical')} >
+      <Image style={styles.ic} source={icons.Electrical }/>
+      <Text style={styles.text}> Electrical </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('plumbing')} >
-      <Image style={styles.ic} source={icons.plumbing}/>
+      <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('Plumbing')} >
+      <Image style={styles.ic} source={icons.Plumbing}/>
       <Text style={styles.text}> Plumbing </Text>
       </TouchableOpacity >
       <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('Hairdressing')} >
-      <Image style={styles.ic} source={icons.hair}/>
+      <Image style={styles.ic} source={icons.Hairdressing}/>
       <Text style={styles.text}> Haidressing </Text>
       </TouchableOpacity>
       </View>
-      {/* <ProviderList providers={filteredProviders} /> */}
       <View style={styles.tit} >
     <Text  style={styles.tet}>Most Popular Services</Text>
      </View>
@@ -165,6 +146,7 @@ const styles = StyleSheet.create({
   container: {
   flex: 1,
   width:400,
+  backgroundColor:"#fff"
   
   },
   cont :{
@@ -245,7 +227,7 @@ const styles = StyleSheet.create({
     tet:{
       fontSize:20,
       fontWeight:'bold',
-      color:'#7210FF'
+     
     },
     class:{
       marginBottom:30,
@@ -290,12 +272,16 @@ const styles = StyleSheet.create({
       paddingLeft:25,
       width:35,
       height:35,
+      // backgroundColor:'#F3EBCF',
+      // borderRadius:40
+      backgroundColor:'#FFFBED',
+      borderRadius:4
+   
     }, 
     text:{
    fontSize:15,
    marginTop:10,
   //  marginRight:10,
     },
-   
-   
+
 });

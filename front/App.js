@@ -14,7 +14,6 @@ import LoginScreenPro from './Component/LoginScreenPro.js';
 import LoginScreenUser from './Component/LoginScreenUser.js';
 import forgetPass from "./Component/forgetPass.js"
 import SignUpPro from "./Component/SignUpPro.js"
-// import HomeScreenPro from './component/Home.js';
 import Home from './components/Home.js'
 import Calendar from './components/Calendar.js';
 import UserProfile from './Component/UserProfile.js'; 
@@ -65,11 +64,11 @@ export default function App() {
        <Stack.Navigator>
     
        
-        {/* <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} /> */}
-        {/* <Stack.Screen name="choises" component={Choises} /> */}
+        <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} />
+        <Stack.Screen name="choises" component={Choises} />
         <Stack.Screen name="LoginScreenPro" component={LoginScreenPro} />
-        {/* <Stack.Screen name="LoginScreenUser" component={LoginScreenUser} />
-        <Stack.Screen name="forgetPass" component={forgetPass} /> */}
+        <Stack.Screen name="LoginScreenUser" component={LoginScreenUser} />
+        <Stack.Screen name="forgetPass" component={forgetPass} />
         <Stack.Screen name="SignUpPro" component={SignUpPro} /> 
          <Stack.Screen name="Home" component={Home} />
          <Stack.Screen name="list" component={ProviderList} />

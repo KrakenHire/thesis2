@@ -32,7 +32,7 @@ function ProviderList({route}) {
           {providers.map((u, i) => {
             return (
               <View key={i} style={styles.user}>
-                 <TouchableOpacity onPress={() =>  navigation.navigate("ProviderProfile")}>
+                 <TouchableOpacity onPress={() =>  navigation.navigate("ProviderProfile", {provider :u})}>
                 <Image
                   style={styles.image}
                   resizeMode="cover"
@@ -41,7 +41,7 @@ function ProviderList({route}) {
                  </TouchableOpacity>
                 <Text style={styles.name}>
                     <Text style={{ fontWeight: 'bold'}}> {u.username}{'\n'}</Text>
-                    <Text style={{ fontWeight: 'bold', color:'#7210FF'}}>{u.price} </Text>{'\n'}
+                    <Text style={{ fontWeight: 'bold', color:'#7210FF'}}>{u.price} DNT </Text>{'\n'}
                     <Image  style={{width:20,height:20}} source={icons.star}/>
                     {u.review}  Reviews {'\n'} 
                     </Text>
