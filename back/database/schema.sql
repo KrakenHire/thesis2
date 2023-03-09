@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `kraken`.`providers` (
   `city` VARCHAR(255) NOT NULL,
   `region` VARCHAR(255) NOT NULL,
   `price` INT NOT NULL,
+  `image` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`idproviders`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
