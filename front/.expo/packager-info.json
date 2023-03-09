@@ -1,6 +1,6 @@
 {
-  "expoServerPort": 19000,
-  "packagerPort": 19000,
+  "expoServerPort": null,
+  "packagerPort": 19001,
   "expoServerNgrokUrl": "https://xp-j8k.anonymous.front.exp.direct",
   "packagerNgrokUrl": "https://xp-j8k.anonymous.front.exp.direct",
   "ngrokPid": 22148,
