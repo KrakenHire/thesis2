@@ -1,27 +1,81 @@
 
-import { StyleSheet, Text, View,Image, SafeAreaView,TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View,Image, SafeAreaView,TextInput,TouchableOpacity,ScrollView } from 'react-native';
 import icons from '../assets/icons/index';
 import Search from './Search';
 import { useNavigation } from '@react-navigation/native';
 import NavBar from './NavBar.js';
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
+import axios from 'axios';
 
+// const providers = [
+//   {
+//       username: 'rania',
+//       image:
+//         'https://fac.img.pmdstatic.net/fit/https.3A.2F.2Fi.2Epmdstatic.2Enet.2Ffac.2F2022.2F08.2F29.2F9fecc4ef-2adb-4778-8987-0bd19806480d.2Ejpeg/1200x900/quality/80/crop-from/center/focus-point/1016%2C797/4-sites-pour-trouver-une-femme-de-menage.jpeg',
+//      review:22,
+//      price:' 20',
+//     service: 'Cleaning',
+//     adress:'133 tboulba Monastir'
+//       },
+//   {
+//       username: 'ines',
+//       image:
+//         'https://www.shutterstock.com/image-photo/young-african-woman-degergent-basket-260nw-2054513045.jpg',
+//      review:22,
+//      price:' 30 ',
+//     service: 'Cleaning'
+//       },
+//   {
+//       username: 'farouk',
+//       image:
+//         'https://www.plumbingbyjake.com/wp-content/uploads/2015/11/VIGILANT-plumber-fixing-a-sink-shutterstock_132523334-e1448389230378.jpg',
+//      review:22,
+//      price:' 20 DNT',
+//      service: 'Plumbing'
+//       },
+//   {
+//       username: 'amine',
+//       image:
+//         'https://www.benjaminfranklinplumbing.com/images/blog/10-Reasons-Why-a-Professional-Plumber-Is-Better-Than-DIY-_-Katy-TX.jpg',
+//      review:22,
+//      price:' 20 DNT',
+//      service: 'Plumbing'
+//       },
+//   {
+//       username: 'yosra',
+//       image:
+//         'https://www.o2.fr/documents/20124/2048897/choisir-femme-de-menage-p.jpg/92b09923-a6aa-37fd-d528-404d5d4d2995?t=1633956700178',
+//      review:22,
+//      price:' 20 DNT',
+//      service: 'Cleaning'
+//       },
 
+// ];
 
 
 function Home() {
-
+  const [providers, setProviders] = useState([]);
   const navigation=useNavigation()
-  
+
+  useEffect(() => {
+    axios.get('//xp-j8k.anonymous.front.exp.direct:3000/provider')
+      .then(response => {setProviders(response.data);
+      console.log(response.data);})
+      .catch(error => console.error(error))
+  }, []);
+
+  const handleIconClick = (service) => {
+  const filteredProviders = providers.filter(provider => provider.service=== service);
+
+    navigation.navigate('list', { providers: filteredProviders ,service:service , source: icons[`${service}`] });};
 
   return (
+    <ScrollView>
+      {console.log("hello",providers)}
     <View style={styles.container}>
       <SafeAreaView  >
     <View style={styles.header}>
-      <TouchableOpacity onPress={() =>
-   
-   navigation.navigate("UserProfile")
- }>
+      <TouchableOpacity onPress={() => navigation.navigate("UserProfile")}>
       <Image style={styles.profile} source={icons.profile}/>
       </TouchableOpacity>
       <View style={styles.name} >
@@ -45,44 +99,44 @@ function Home() {
     </View>
 
     <View style={styles.categories}>
-      <TouchableOpacity style={styles.item} onPress={() =>
    
-        navigation.navigate("ProviderProfile")
-      } >
-      <Image style={styles.ic} source={icons.cleaning}  />
-      <Text style={styles.text}> Cleaning</Text>
+      <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('Cleaning')} >
+       <Image style={styles.ic} source={icons.Cleaning} />
+       <Text style={styles.text}> Cleaning</Text> 
       </TouchableOpacity>
-      <View style={styles.item}>
-      <Image style={styles.ic} source={icons.repair}/>
+   
+      <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('Repairing')} >
+      <View style={styles.color}>
+      <Image style={styles.ic} source={icons.Repairing} />
+      </View>
       <Text style={styles.text}> Reparing</Text>
-      </View>
-      <View style={styles.item}>
-      <Image style={styles.ic} source={icons.painting}/>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('Painting')} >
+      <Image style={styles.ic} source={icons.Painting}/>
       <Text style={styles.text}> Panting</Text>
-      </View>
+      </TouchableOpacity>
     </View>
     
     <View style={styles.categories2}>
-      <View style={styles.item}>
-      <Image style={styles.ic} source={icons.elec}/>
-      <Text style={styles.text}> Electricity </Text>
-      </View>
-      <View style={styles.item}>
-      <Image style={styles.ic} source={icons.plumbing}/>
+    <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('Electrical')} >
+      <Image style={styles.ic} source={icons.Electrical }/>
+      <Text style={styles.text}> Electrical </Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('Plumbing')} >
+      <Image style={styles.ic} source={icons.Plumbing}/>
       <Text style={styles.text}> Plumbing </Text>
-      </View>
-      <View style={styles.item}>
-      <Image style={styles.ic} source={icons.hair}/>
+      </TouchableOpacity >
+      <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('Hairdressing')} >
+      <Image style={styles.ic} source={icons.Hairdressing}/>
       <Text style={styles.text}> Haidressing </Text>
+      </TouchableOpacity>
       </View>
-      </View>
-
       <View style={styles.tit} >
     <Text  style={styles.tet}>Most Popular Services</Text>
      </View>
      <NavBar/>
       </View>
-  
+      </ScrollView>
    
   )
 }
@@ -92,6 +146,7 @@ const styles = StyleSheet.create({
   container: {
   flex: 1,
   width:400,
+  backgroundColor:"#fff"
   
   },
   cont :{
@@ -145,13 +200,15 @@ const styles = StyleSheet.create({
       paddingTop:15,
      flexDirection: 'row',
      flex: 1,
-     paddingHorizontal:4,
+     paddingHorizontal:4, 
+     marginBottom:30
     },
     services:{
      
      flexDirection: 'row',
      flex: 3,
      paddingHorizontal:1,
+    
     },
    
      
@@ -170,10 +227,10 @@ const styles = StyleSheet.create({
     tet:{
       fontSize:20,
       fontWeight:'bold',
-      color:'#7210FF'
+     
     },
     class:{
-      marginBottom:20,
+      marginBottom:30,
 
     },
     categories: {
@@ -215,12 +272,16 @@ const styles = StyleSheet.create({
       paddingLeft:25,
       width:35,
       height:35,
+      // backgroundColor:'#F3EBCF',
+      // borderRadius:40
+      backgroundColor:'#FFFBED',
+      borderRadius:4
+   
     }, 
     text:{
    fontSize:15,
    marginTop:10,
   //  marginRight:10,
     },
-   
-   
+
 });
