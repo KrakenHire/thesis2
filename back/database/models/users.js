@@ -4,12 +4,12 @@ module.exports = function(sequelize, DataTypes) {
     iduser: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      primaryKey: true,
-      defaultValue: ''
+      primaryKey: true
     },
     username: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     },
     FirstName: {
       type: DataTypes.STRING(255),
@@ -21,21 +21,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: ''
     },
-    Age: {
+    age: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
     },
-   
-    longitude: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
-    },
-    latitude: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
+    image: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: ''
     }
   }, {
     sequelize,

@@ -1,21 +1,20 @@
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, ScrollView } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, ScrollView ,TouchableOpacity } from 'react-native';
 import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuthStateChanged  } from '../firebase'
 
 const SignUpPro = () => {
   const [service, setService] = useState('');
   const [username, setUsername] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [age, setAge] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [age, setAge] = useState('');
   const [experience, setExperience] = useState('');
-  const [city, setCity] = useState('');
-  const [region, setRegion] = useState('');
+  const [adresse, setAdresse] = useState('');
   const [price, setPrice] = useState('');
+  const [image, setImage] = useState('');
+  const [bio, setBio] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigation=useNavigation()
@@ -37,16 +36,16 @@ const SignUpPro = () => {
     .then(userCredentials => {
       const user = userCredentials._tokenResponse.localId;
       console.log( userCredentials,"firebase");
-      axios.post('http://xp-j8k.anonymous.front.exp.direct:3000/provider', {
+      axios.post('http://192.168.43.195:3000/provider', {
+
       idproviders:user,
-      service: service,
+      service:service,
       username:username,
-      firstName:firstName,
-      lastName:lastName,
       age:age,
       experience:experience,
-      city:city,
-      region:region,
+      adresse:adresse,
+      image:image,
+      bio:bio,
       price:price
 
     })
@@ -80,33 +79,38 @@ const SignUpPro = () => {
   };
 
   return (
-    <ScrollView>
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
+
       <TextInput
         style={styles.input}
         placeholder="Service"
         value={service}
         onChangeText={setService}
       />
+
       <TextInput
         style={styles.input}
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
       />
+
       <TextInput
         style={styles.input}
-        placeholder="First Name"
-        value={firstName}
-        onChangeText={setFirstName}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
       />
+
       <TextInput
         style={styles.input}
-        placeholder="Last Name"
-        value={lastName}
-        onChangeText={setLastName}
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
       />
+
       <TextInput
         style={styles.input}
         placeholder="Age"
@@ -114,38 +118,21 @@ const SignUpPro = () => {
         onChangeText={setAge}
         keyboardType="numeric"
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-       
-      />
-       <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-       
-      />
+
       <TextInput
         style={styles.input}
         placeholder="Experience"
         value={experience}
         onChangeText={setExperience}
       />
+
       <TextInput
         style={styles.input}
-        placeholder="City"
-        value={city}
-        onChangeText={setCity}
+        placeholder="Adresse"
+        value={adresse}
+        onChangeText={setAdresse}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Region"
-        value={region}
-        onChangeText={setRegion}
-      />
+
       <TextInput
         style={styles.input}
         placeholder="Price"
@@ -153,9 +140,26 @@ const SignUpPro = () => {
         onChangeText={setPrice}
         keyboardType="numeric"
       />
-        {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
-      <Button title="Submit" onPress={handleSubmit} />
-    </View>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Image URL"
+        value={image}
+        onChangeText={setImage}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Bio"
+        value={bio}
+        onChangeText={setBio}
+      />
+
+      {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
+
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>Sign Up</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -164,21 +168,52 @@ export default SignUpPro;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
   },
   title: {
-    fontSize: 24,
+    color:"#7210FF",
+    fontSize: 25,
     fontWeight: 'bold',
     marginBottom: 20,
   },
   input: {
-    width: '80%',
     padding: 10,
-    marginBottom: 10,
     borderWidth: 1,
     borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 10,
+    width: '100%',
   },
-});
-
+  button: {
+    backgroundColor: '#7210FF',
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 20,
+    width: '100%',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  errorMessage: {
+    color: 'red',
+    marginBottom:10},
+    button: {
+      backgroundColor: '#7210FF',
+      borderRadius: 5,
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      marginTop: 20,
+      },
+      buttonText: {
+      color: 'white',
+      fontWeight: 'bold',
+      fontSize: 16,
+      }
+})

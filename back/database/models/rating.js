@@ -1,19 +1,11 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('booking', {
-    idbooking: {
+  return sequelize.define('rating', {
+    idRating: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
-    },
-    start_date: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    status: {
-      type: DataTypes.ENUM('pending','confirmed','cancelled'),
-      allowNull: false
     },
     users_iduser: {
       type: DataTypes.STRING(255),
@@ -31,21 +23,13 @@ module.exports = function(sequelize, DataTypes) {
         key: 'idproviders'
       }
     },
-    adresse: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    workingHours: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    price: {
+    rate: {
       type: DataTypes.INTEGER,
       allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'booking',
+    tableName: 'rating',
     timestamps: false,
     indexes: [
       {
@@ -53,18 +37,18 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "idbooking" },
+          { name: "idRating" },
         ]
       },
       {
-        name: "fk_booking_users1_idx",
+        name: "fk_rating_users1_idx",
         using: "BTREE",
         fields: [
           { name: "users_iduser" },
         ]
       },
       {
-        name: "fk_booking_providers1_idx",
+        name: "fk_rating_providers1_idx",
         using: "BTREE",
         fields: [
           { name: "providers_idproviders" },

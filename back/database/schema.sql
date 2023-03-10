@@ -24,14 +24,12 @@ CREATE TABLE IF NOT EXISTS `kraken`.`providers` (
   `idproviders` VARCHAR(255) NOT NULL,
   `service` VARCHAR(255) NOT NULL,
   `username` VARCHAR(255) NOT NULL,
-  `FirstName` VARCHAR(255) NULL DEFAULT '',
-  `LastName` VARCHAR(255) NOT NULL,
-  `Age` VARCHAR(255) NOT NULL,
+  `age` VARCHAR(255) NOT NULL,
   `experience` VARCHAR(255) NOT NULL,
-  `city` VARCHAR(255) NOT NULL,
-  `region` VARCHAR(255) NOT NULL,
+  `adresse` VARCHAR(255) NOT NULL,
   `price` INT NOT NULL,
   `image` VARCHAR(255) NOT NULL,
+  `aboutMe` LONGTEXT NOT NULL,
   PRIMARY KEY (`idproviders`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
@@ -45,9 +43,8 @@ CREATE TABLE IF NOT EXISTS `kraken`.`users` (
   `username` VARCHAR(255) NOT NULL,
   `FirstName` VARCHAR(255) NOT NULL,
   `LastName` VARCHAR(255) NOT NULL,
-  `Age` INT NOT NULL,
-  `longitude` INT NOT NULL,
-  `latitude` INT NOT NULL,
+  `age` INT NOT NULL,
+  `image` LONGTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`iduser`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
@@ -59,11 +56,12 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `kraken`.`booking` (
   `idbooking` INT NOT NULL AUTO_INCREMENT,
   `start_date` TIMESTAMP NOT NULL,
-  `end_date` TIMESTAMP NOT NULL,
   `status` ENUM('pending', 'confirmed', 'cancelled') NOT NULL,
-  `rating` INT NOT NULL,
   `users_iduser` VARCHAR(255) NOT NULL,
   `providers_idproviders` VARCHAR(255) NOT NULL,
+  `adresse` VARCHAR(255) NOT NULL,
+  `workingHours` INT NOT NULL,
+  `price` INT NOT NULL,
   PRIMARY KEY (`idbooking`),
   INDEX `fk_booking_users1_idx` (`users_iduser` ASC) VISIBLE,
   INDEX `fk_booking_providers1_idx` (`providers_idproviders` ASC) VISIBLE,
@@ -78,65 +76,19 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `kraken`.`posts`
+-- Table `kraken`.`bookmarks`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `kraken`.`posts` (
-  `idposts` INT NOT NULL AUTO_INCREMENT,
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `description` VARCHAR(255) NOT NULL,
-  `title` VARCHAR(255) NOT NULL,
-  `Bookmark` VARCHAR(255) NOT NULL,
+CREATE TABLE IF NOT EXISTS `kraken`.`bookmarks` (
   `providers_idproviders` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`idposts`),
-  INDEX `fk_posts_normalUser1_idx` (`Bookmark` ASC) VISIBLE,
-  INDEX `fk_posts_providers1_idx` (`providers_idproviders` ASC) VISIBLE,
-  CONSTRAINT `fk_posts_normalUser1`
-    FOREIGN KEY (`Bookmark`)
-    REFERENCES `kraken`.`users` (`iduser`),
-  CONSTRAINT `fk_posts_providers1`
-    FOREIGN KEY (`providers_idproviders`)
-    REFERENCES `kraken`.`providers` (`idproviders`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `kraken`.`comments`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `kraken`.`comments` (
-  `idcomments` INT NOT NULL AUTO_INCREMENT,
-  `content` VARCHAR(255) NOT NULL,
-  `created_at` TIMESTAMP NOT NULL,
   `users_iduser` VARCHAR(255) NOT NULL,
-  `posts_idposts` INT NOT NULL,
-  PRIMARY KEY (`idcomments`),
-  INDEX `fk_comments_users1_idx` (`users_iduser` ASC) VISIBLE,
-  INDEX `fk_comments_posts1_idx` (`posts_idposts` ASC) VISIBLE,
-  CONSTRAINT `fk_comments_posts1`
-    FOREIGN KEY (`posts_idposts`)
-    REFERENCES `kraken`.`posts` (`idposts`),
-  CONSTRAINT `fk_comments_users1`
-    FOREIGN KEY (`users_iduser`)
-    REFERENCES `kraken`.`users` (`iduser`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `kraken`.`followers`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `kraken`.`followers` (
-  `users_iduser` VARCHAR(255) NOT NULL,
-  `providers_idproviders` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`users_iduser`),
-  INDEX `fk_users_has_providers_users1_idx` (`users_iduser` ASC) VISIBLE,
   INDEX `fk_followers_providers1_idx` (`providers_idproviders` ASC) VISIBLE,
+  INDEX `fk_bookmarks_users1_idx` (`users_iduser` ASC) VISIBLE,
+  CONSTRAINT `fk_bookmarks_users1`
+    FOREIGN KEY (`users_iduser`)
+    REFERENCES `kraken`.`users` (`iduser`),
   CONSTRAINT `fk_followers_providers1`
     FOREIGN KEY (`providers_idproviders`)
-    REFERENCES `kraken`.`providers` (`idproviders`),
-  CONSTRAINT `fk_users_has_providers_users1`
-    FOREIGN KEY (`users_iduser`)
-    REFERENCES `kraken`.`users` (`iduser`))
+    REFERENCES `kraken`.`providers` (`idproviders`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -146,13 +98,35 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kraken`.`images` (
   `idimages` INT NOT NULL AUTO_INCREMENT,
-  `data` LONGBLOB NULL DEFAULT NULL,
-  `posts_idposts` INT NOT NULL,
+  `data` LONGTEXT NULL DEFAULT NULL,
+  `providers_idproviders` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`idimages`),
-  INDEX `fk_images_posts1_idx` (`posts_idposts` ASC) VISIBLE,
-  CONSTRAINT `fk_images_posts1`
-    FOREIGN KEY (`posts_idposts`)
-    REFERENCES `kraken`.`posts` (`idposts`))
+  INDEX `fk_images_providers1_idx` (`providers_idproviders` ASC) VISIBLE,
+  CONSTRAINT `fk_images_providers1`
+    FOREIGN KEY (`providers_idproviders`)
+    REFERENCES `kraken`.`providers` (`idproviders`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `kraken`.`reviews`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `kraken`.`reviews` (
+  `idreview` INT NOT NULL AUTO_INCREMENT,
+  `content` VARCHAR(255) NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `users_iduser` VARCHAR(255) NOT NULL,
+  `providers_idproviders` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`idreview`),
+  INDEX `fk_comments_users1_idx` (`users_iduser` ASC) VISIBLE,
+  INDEX `fk_reviews_providers1_idx` (`providers_idproviders` ASC) VISIBLE,
+  CONSTRAINT `fk_comments_users1`
+    FOREIGN KEY (`users_iduser`)
+    REFERENCES `kraken`.`users` (`iduser`),
+  CONSTRAINT `fk_reviews_providers1`
+    FOREIGN KEY (`providers_idproviders`)
+    REFERENCES `kraken`.`providers` (`idproviders`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -163,14 +137,35 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `kraken`.`likes` (
   `idlikes` INT NOT NULL AUTO_INCREMENT,
   `users_iduser` VARCHAR(255) NOT NULL,
-  `posts_idposts` INT NOT NULL,
+  `reviews_idreview` INT NOT NULL,
   PRIMARY KEY (`idlikes`),
   INDEX `fk_likes_users1_idx` (`users_iduser` ASC) VISIBLE,
-  INDEX `fk_likes_posts1_idx` (`posts_idposts` ASC) VISIBLE,
-  CONSTRAINT `fk_likes_posts1`
-    FOREIGN KEY (`posts_idposts`)
-    REFERENCES `kraken`.`posts` (`idposts`),
+  INDEX `fk_likes_reviews1_idx` (`reviews_idreview` ASC) VISIBLE,
+  CONSTRAINT `fk_likes_reviews1`
+    FOREIGN KEY (`reviews_idreview`)
+    REFERENCES `kraken`.`reviews` (`idreview`),
   CONSTRAINT `fk_likes_users1`
+    FOREIGN KEY (`users_iduser`)
+    REFERENCES `kraken`.`users` (`iduser`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `kraken`.`rating`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `kraken`.`rating` (
+  `idRating` INT NOT NULL AUTO_INCREMENT,
+  `users_iduser` VARCHAR(255) NOT NULL,
+  `providers_idproviders` VARCHAR(255) NOT NULL,
+  `rate` INT NOT NULL,
+  PRIMARY KEY (`idRating`),
+  INDEX `fk_rating_users1_idx` (`users_iduser` ASC) VISIBLE,
+  INDEX `fk_rating_providers1_idx` (`providers_idproviders` ASC) VISIBLE,
+  CONSTRAINT `fk_rating_providers1`
+    FOREIGN KEY (`providers_idproviders`)
+    REFERENCES `kraken`.`providers` (`idproviders`),
+  CONSTRAINT `fk_rating_users1`
     FOREIGN KEY (`users_iduser`)
     REFERENCES `kraken`.`users` (`iduser`))
 ENGINE = InnoDB

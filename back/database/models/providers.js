@@ -16,16 +16,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: ''
     },
-    firstName: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      defaultValue: ''
-    },
-    lastName: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      defaultValue: ''
-    },
     age: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -36,12 +26,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: ''
     },
-    city: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-      defaultValue: ''
-    },
-    region: {
+    adresse: {
       type: DataTypes.STRING(255),
       allowNull: false,
       defaultValue: ''
@@ -55,16 +40,21 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false,
       defaultValue: ''
+    },
+    aboutMe: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      defaultValue: ''
     }
   }, {
     sequelize,
     tableName: 'providers',
     timestamps: false,
-    indexes: [   //Indexes are used to improve the performance of database queries by allowing the database to quickly locate rows based on the values of one or more columns.
+    indexes: [
       {
         name: "PRIMARY",
         unique: true,
-        using: "BTREE", //the idproviders column should be unique and indexed using a B-tree data structure.
+        using: "BTREE",
         fields: [
           { name: "idproviders" },
         ]

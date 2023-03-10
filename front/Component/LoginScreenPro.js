@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { Component, useEffect, useState } from 'react'
-import { KeyboardAvoidingView, Text, TextInput, View ,StyleSheet, TouchableOpacity} from 'react-native'
+import { KeyboardAvoidingView, Text, TextInput, View ,StyleSheet, TouchableOpacity,Image} from 'react-native'
 import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuthStateChanged  } from '../firebase'
 
 
@@ -51,104 +51,136 @@ import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuth
 
 
     return (
-      <KeyboardAvoidingView style={styles.container}
-      behavior="padding"
-      >
-       
-
-       <View style={styles.inputContainer}>
-         <TextInput
-         placeholder='email'
-         value={email}
-         onChangeText={text => setEmail(text)}
-         style={styles.input}
-         />
-         <TextInput
-         placeholder='password'
-         value={password}
-         onChangeText={text => setPassword(text)}
-         style={styles.input}
-         secureTextEntry
-         />
-       </View>
-       {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
-       <View  style={styles.buttonContainer}>
-        <TouchableOpacity
-        onPress={handleLogin}
-        style={styles.button}
-        >
-         <Text style={styles.buttonText}>Login</Text>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <View style={styles.imgContainer}>
+          <Image source={require('../assets/reg.png')} style={styles.img} />
+        </View>
+        <View>
+          <Text style={styles.welcome}>Your next job is just a login away. Join us now!</Text>
+        </View>
+  
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            onChangeText={(text) => setEmail(text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            onChangeText={(text) => setPassword(text)}
+            secureTextEntry
+          />
+        </View>
+  
+        {errorMessage && (
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
+        )}
+  
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-
+  
+        <View style={styles.account}>
+          <Text style={styles.acc}>
+            Don't have an account?
+            <Text
+              style={[styles.acc, styles.link]}
+              onPress={() => navigation.navigate('SignUpPro')}
+            >
+              Sign Up
+            </Text>
+          </Text>
+        </View>
+  
         <TouchableOpacity
-        onPress={()=>{navigation.navigate('SignUpPro')}}
-        style={[styles.button , styles.buttonOutLine]}
+          onPress={() => {
+            navigation.navigate('forgetPass');
+          }}
         >
-         <Text style={styles.buttonOutLineText}>SignUp !</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>{navigation.navigate('forgetPass')}}>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
         </TouchableOpacity>
-
-       </View>
       </KeyboardAvoidingView>
-    )
-  }
-
-
-export default LoginScreenPro
-const styles=StyleSheet.create({
-  container:{
-    flex:1,
-    justifyContent:"center",
-    alignItems:"center",
-  },
-  inputContainer:{
-   width:"80%"
-  },
-  input:{
-    backgroundColor:"white",
-    paddingHorizontal: 15,
-    paddingVertical :10,
-    borderRadius :10,
-    marginTop: 5,
-  },
-  buttonContainer:{
-   width:"60%",
-   justifyContent:"center",
-   alignItems:"center",
-   marginTop:40,
-  },
-  button:{
-    backgroundColor: '#7210FF',
-    width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  buttonOutLine:{
-    backgroundColor: 'white',
-    marginTop: 5,
-    borderColor: '#7210FF',
-    borderWidth: 2,
-  },
-  buttonOutLineText:{
-    color: '#7210FF',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  buttonText:{
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
-
-  },
-  forgotPassword: {
-    color: "black",
-    fontSize: 16,
-    marginTop: 5,
-    textAlign: 'right',
-    textDecorationLine: 'underline',
-  },
- 
-})
+    );
+  };
+  
+  export default LoginScreenPro;
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    imgContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 30,
+    },
+    img: {
+      width: 250,
+      height: 250,
+    },
+    welcome: {
+      fontSize: 20,
+      textAlign: 'center',
+      margin: 20,
+      fontWeight: 'bold',
+      color: '#333',
+    },
+    inputContainer: {
+      width: '80%',
+      alignItems: 'center',
+    },
+    input: {
+      padding: 15,
+      borderWidth: 1,
+      borderColor: 'gray',
+      marginBottom: 20,
+      fontSize: 18,
+      borderRadius: 20,
+      width: '100%',
+      color: '#333',
+      backgroundColor: '#f7f7f7',
+    },
+    button: {
+      backgroundColor: '#7210FF',
+      padding: 15,
+      borderRadius: 20,
+      marginTop: 20,
+      width: '80%',
+      alignItems: 'center',
+    },
+    buttonText: {
+      color: 'white',
+      fontSize: 18,
+      fontWeight: 'bold',
+    },
+    account: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: 40,
+      marginBottom: 20,
+      fontSize: 18,
+    },
+    acc: {
+      fontWeight: 'bold',
+      marginRight: 5,
+      color: '#333',
+    },
+    link: {
+      color: '#7210FF',
+      fontWeight: 'bold',
+      textDecorationLine: 'underline',
+    },
+    forgotPassword: {
+      marginTop: 20,
+      fontSize: 16,
+      color: 'gray',
+    },
+    errorMessage: {
+      color: 'red',
+      marginBottom: 20,
+    },
+  });

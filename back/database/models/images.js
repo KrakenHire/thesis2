@@ -8,17 +8,15 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     data: {
-      type: DataTypes.BLOB,
+      type: DataTypes.TEXT,
       allowNull: true
     },
-    posts_idposts: {
-      type: DataTypes.INTEGER,
+    providers_idproviders: {
+      type: DataTypes.STRING(255),
       allowNull: false,
-      references: {
-        model: 'posts',
-        key: 'idposts'
-      }
-    }
+      primaryKey: true
+    },
+    
   }, {
     sequelize,
     tableName: 'images',
@@ -30,15 +28,10 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "idimages" },
+          { name: "providers_idproviders" },
         ]
       },
-      {
-        name: "fk_images_posts1_idx",
-        using: "BTREE",
-        fields: [
-          { name: "posts_idposts" },
-        ]
-      },
+    
     ]
   });
 };

@@ -87,7 +87,7 @@ function ProviderProfile({route}) {
  {/* <TouchableOpacity style={styles.button} >
         <Text style={styles.buttonText}>MESSAGE</Text>
    </TouchableOpacity> */}
-  <TouchableOpacity style={styles.button} onPress={() =>  navigation.navigate("Calendar")}>
+  <TouchableOpacity style={styles.button} onPress={() =>  navigation.navigate("Booking Details")}>
         <Text style={styles.buttonText}>BOOK NOW</Text>
    </TouchableOpacity>
   </View>
