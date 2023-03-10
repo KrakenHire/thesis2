@@ -11,6 +11,7 @@ import {
 import { Calendar } from 'react-native-calendars';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useNavigation } from '@react-navigation/native'
 
 
 const data = [
@@ -55,6 +56,7 @@ const data = [
   }
 
 function BookingDate(props) {
+  const navigation=useNavigation()
 
 
     const [selectedDate, setSelectedDate] = useState(new Date('2023-03-31'));
@@ -163,7 +165,7 @@ function BookingDate(props) {
         renderItem={renderItem}
       />
         </View>
-        <Pressable style={styles.button} onPress={() => Alert.alert('Your Booking was made')}>
+        <Pressable style={styles.button} onPress={() =>navigation.navigate("Pay")}>
       <Text style={styles.text}>{title}</Text>
     </Pressable>
       </SafeAreaView> 

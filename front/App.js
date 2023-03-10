@@ -20,6 +20,7 @@ import Calendar from './components/Calendar.js';
 import UserProfile from './Component/UserProfile.js'; 
 import Chat from './Component/Chat.js';
 import ProviderList from './components/ProviderList.js';
+import Pay from './components/Pay.js'
 
 
 
@@ -76,6 +77,7 @@ export default function App() {
         <Stack.Screen name="Booking Details" component={Calendar} />
          <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="Chat" component={Chat} /> 
+        <Stack.Screen name="Pay" component={Pay} /> 
    
     </Stack.Navigator>
     </NavigationContainer>
