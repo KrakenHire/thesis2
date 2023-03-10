@@ -37,7 +37,8 @@ const SignUpPro = () => {
     .then(userCredentials => {
       const user = userCredentials._tokenResponse.localId;
       console.log( userCredentials,"firebase");
-      axios.post('http://xp-j8k.anonymous.front.exp.direct:3000/provider', {
+      axios.post('http://192.168.100.8:3000/provider', {
+
       idproviders:user,
       service: service,
       username:username,
