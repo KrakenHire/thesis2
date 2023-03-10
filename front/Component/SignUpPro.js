@@ -23,7 +23,7 @@ const SignUpPro = () => {
     useEffect (() => {
       const unsubscribe = onAuthStateChanged(auth, user => {
         if (user) {
-          navigation.replace("Home")
+          navigation.replace("Chat")
         }
       })
     
