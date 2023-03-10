@@ -19,9 +19,8 @@ import Home from './components/Home.js'
 import Calendar from './components/Calendar.js';
 import UserProfile from './Component/UserProfile.js'; 
 import Chat from './Component/Chat.js';
+import Mapplocation from './Component/Mapplocation.js'
 import ProviderList from './components/ProviderList.js';
-
-
 
 
 
@@ -76,6 +75,7 @@ export default function App() {
         <Stack.Screen name="Booking Details" component={Calendar} />
          <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="Chat" component={Chat} /> 
+        <Stack.Screen name="Map" component={Mapplocation} /> 
    
     </Stack.Navigator>
     </NavigationContainer>
