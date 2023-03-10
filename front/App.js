@@ -20,7 +20,7 @@ import Calendar from './components/Calendar.js';
 import UserProfile from './Component/UserProfile.js'; 
 import Chat from './Component/Chat.js';
 import ProviderList from './components/ProviderList.js';
-
+import SignUpUser from "./Component/SignUpUser.js"
 
 
 
@@ -62,20 +62,28 @@ export default function App() {
 
     <NavigationContainer style={styles.container}>
        <Stack.Navigator>
-    
-       
+
+
+      
+     
+      
          <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} />
         <Stack.Screen name="choises" component={Choises} />
         <Stack.Screen name="LoginScreenPro" component={LoginScreenPro} />
-        <Stack.Screen name="LoginScreenUser" component={LoginScreenUser} />
+
         <Stack.Screen name="forgetPass" component={forgetPass} />
         <Stack.Screen name="SignUpPro" component={SignUpPro} />
+     
         <Stack.Screen name="Home" component={Home} /> 
         <Stack.Screen name="list" component={ProviderList} /> 
          <Stack.Screen name="ProviderProfile" component={ProviderProfile} />  
         <Stack.Screen name="Booking Details" component={Calendar} />
          <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="Chat" component={Chat} /> 
+        
+       <Stack.Screen name="LoginScreenUser" component={LoginScreenUser} />
+       <Stack.Screen name="SignUpUser" component={SignUpUser} />
+         
    
     </Stack.Navigator>
     </NavigationContainer>
