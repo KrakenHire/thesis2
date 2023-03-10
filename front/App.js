@@ -19,10 +19,9 @@ import Home from './components/Home.js'
 import Calendar from './components/Calendar.js';
 import UserProfile from './Component/UserProfile.js'; 
 import Chat from './Component/Chat.js';
+import Mapplocation from './Component/Mapplocation.js'
 import ProviderList from './components/ProviderList.js';
 import SignUpUser from "./Component/SignUpUser.js"
-
-
 
 
 const Stack = createNativeStackNavigator();
@@ -84,6 +83,7 @@ export default function App() {
        <Stack.Screen name="LoginScreenUser" component={LoginScreenUser} />
        <Stack.Screen name="SignUpUser" component={SignUpUser} />
          
+        <Stack.Screen name="Map" component={Mapplocation} /> 
    
     </Stack.Navigator>
     </NavigationContainer>
