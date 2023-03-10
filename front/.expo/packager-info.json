@@ -1,9 +1,14 @@
 {
+<<<<<<< HEAD
   "expoServerPort": null,
   "packagerPort": 19001,
+=======
+  "expoServerPort": 19003,
+  "packagerPort": 19003,
+>>>>>>> main
   "expoServerNgrokUrl": "https://xp-j8k.anonymous.front.exp.direct",
   "packagerNgrokUrl": "https://xp-j8k.anonymous.front.exp.direct",
-  "ngrokPid": 22148,
+  "ngrokPid": 20620,
   "packagerPid": null,
   "webpackServerPort": null
 }

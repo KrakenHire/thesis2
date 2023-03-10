@@ -14,7 +14,6 @@ import LoginScreenPro from './Component/LoginScreenPro.js';
 import LoginScreenUser from './Component/LoginScreenUser.js';
 import forgetPass from "./Component/forgetPass.js"
 import SignUpPro from "./Component/SignUpPro.js"
-// import HomeScreenPro from './component/Home.js';
 import Home from './components/Home.js'
 import Calendar from './components/Calendar.js';
 import UserProfile from './Component/UserProfile.js'; 
@@ -45,6 +44,7 @@ export default function App() {
 
   //   </TouchableOpacity>
   // )
+  
 
   return (
  
