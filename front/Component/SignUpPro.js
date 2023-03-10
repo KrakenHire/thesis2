@@ -22,7 +22,7 @@ const SignUpPro = () => {
     useEffect (() => {
       const unsubscribe = onAuthStateChanged(auth, user => {
         if (user) {
-          navigation.replace("Chat")
+          navigation.replace("Home")
         }
       })
     
@@ -36,7 +36,7 @@ const SignUpPro = () => {
     .then(userCredentials => {
       const user = userCredentials._tokenResponse.localId;
       console.log( userCredentials,"firebase");
-      axios.post('http://192.168.43.169:3000/provider', {
+      axios.post('http://192.168.43.54:3000/provider', {
 
       idproviders:user,
       service:service,

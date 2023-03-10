@@ -164,7 +164,7 @@ const data = [
         renderItem={renderItem}
       />
         </View>
-        <Pressable style={styles.button}onPress={() =>navigation.navigate("Map")}>
+        <Pressable style={styles.button}onPress={() =>navigation.navigate("Pay")}>
       <Text style={styles.text}>{title}</Text>
     </Pressable>
       </SafeAreaView> 
