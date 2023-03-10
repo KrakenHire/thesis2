@@ -58,7 +58,7 @@ function Home() {
   const navigation=useNavigation()
 
   useEffect(() => {
-    axios.get('//xp-j8k.anonymous.front.exp.direct:3000/provider')
+    axios.get('http://192.168.43.195:3000/provider')
       .then(response => {setProviders(response.data);
       console.log(response.data);})
       .catch(error => console.error(error))

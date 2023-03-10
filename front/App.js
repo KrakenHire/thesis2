@@ -64,11 +64,11 @@ export default function App() {
        <Stack.Navigator>
     
        
-        <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} />
+        {/* <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} />
         <Stack.Screen name="choises" component={Choises} />
         <Stack.Screen name="LoginScreenPro" component={LoginScreenPro} />
         <Stack.Screen name="LoginScreenUser" component={LoginScreenUser} />
-        <Stack.Screen name="forgetPass" component={forgetPass} />
+        <Stack.Screen name="forgetPass" component={forgetPass} /> */}
         <Stack.Screen name="SignUpPro" component={SignUpPro} /> 
          <Stack.Screen name="Home" component={Home} />
          <Stack.Screen name="list" component={ProviderList} />
