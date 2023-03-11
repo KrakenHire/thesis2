@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
-import MapView, { Marker,Callout, Circle , PROVIDER_GOOGLE} from 'react-native-maps';
-import { Dimensions, StyleSheet, View,Text} from 'react-native';
+import MapView, { Marker,Callout, Circle , PROVIDER_GOOGLE, CalloutSubview} from 'react-native-maps';
+import { Dimensions, StyleSheet, View,Text, TouchableOpacity,Button} from 'react-native';
 import * as Location from 'expo-location';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Geocoder from 'react-native-geocoding';
@@ -8,9 +8,13 @@ import Geocoder from 'react-native-geocoding';
 import { GOOGLE_API_KEY } from '../envirment';
 
 
+
 export default function Mapplocation() {
  const [pin, setpin] = React.useState({ latitude: 36.8189700,
   longitude: 10.1657900,})
+  const[adresse, setAdresse] =React.useState("")
+
+
   var addressComponent;
   onChangeValue = pin =>{
     
@@ -25,6 +29,7 @@ export default function Mapplocation() {
          console.log(json,"json");
     console.log(json.results[0].address_components);
     alert(addressComponent.long_name)
+    setAdresse(addressComponent.long_name)
    
   })
   .catch(error => {console.warn(error)
@@ -49,10 +54,11 @@ export default function Mapplocation() {
 }, []);
   return (
     <View style={styles.container}>
+      
       <MapView 
       style={styles.map} 
       provider={PROVIDER_GOOGLE}
-   
+    
       initialRegion={{
           latitude: 36.8189700,
           longitude: 10.1657900,
@@ -62,9 +68,9 @@ export default function Mapplocation() {
     showsUserLocation={true}
    
     onRegionChangeComplete ={(e)=>onChangeValue(e)}
-   
+     
     >
-      
+<Button title={ 'Facebook' }  />
      
       <Marker 
         coordinate={pin} 
@@ -81,23 +87,30 @@ export default function Mapplocation() {
        <Callout>
         <Text> hello </Text>
         
+   
        </Callout>
        </Marker>
        <Circle
         center={pin}
           radius={100}
           />
-       
+          
+  
+    
+        
+
     </MapView>
+<Button title={ 'Facebook' }  />
+
     <View style={styles.searchContainer}>
-    <GooglePlacesAutocomplete
+  <GooglePlacesAutocomplete
       placeholder='Search'
     
       query={{
         key: GOOGLE_API_KEY,
         language: 'en',
       }}
-    />
+    /> 
 
     </View>
    
