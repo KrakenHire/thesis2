@@ -1,69 +1,66 @@
-import React from 'react';
-import { StyleSheet, Text, View, Platform, ScrollView } from 'react-native';
-import { AirbnbRating } from 'react-native-ratings';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button } from 'react-native';
+import { Rating } from 'react-native-ratings';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+const RatingForm = ({provider }) => {
+  const [userId, setUserId] = useState(null);
+  const [rating, setRating] = useState(0);
+  // const [comments, setComments] = useState('');
 
-const Ratings = () => {
-  const ratingCompleted = (rating) => {
-    console.log('Rating is: ' + rating);
+  useEffect(() => {
+    const getUserId = async () => {
+      try {
+        const value = await AsyncStorage.getItem('userr');
+        if (value !== null) {
+          setUserId(value);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    getUserId();
+  }, [userId]);
+
+  const handleSubmit = () => {
+   
+    axios.post('http://192.168.43.169:3000/rating',{
+      users_iduser:userId,
+      providers_idproviders:provider.idproviders,
+      rate:rating
+    })
+    .then((res) => {
+      setRating(0);
+      // setComments('');
+
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   };
-
+  
+ 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.viewContainer}>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginBottom: 20,
-          }}
-        >
-    
-         <AirbnbRating
-            count={5}
-            reviews={[
-              'Bad',
-              'Meh',
-              'OK',
-              'Good',
-              'Great.',
-            ]}
-            defaultRating={3}
-            size={25} />
-        
-        </View>
-      </ScrollView>
+    <View>
+      <Text>Rating:{userId}</Text>
+      <Rating
+        startingValue={rating}
+        onFinishRating={setRating}
+        imageSize={40}
+        ratingCount={5}
+        style={{ paddingVertical: 10 }}
+      />
+
+      {/* <Text>Comments:</Text>
+      <TextInput
+        value={comments}
+        onChangeText={setComments}
+      /> */}
+
+      <Button title="Submit" onPress={handleSubmit} />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  headingContainer: {
-    paddingTop: 10,
-  },
-  titleText: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    paddingVertical: 5,
-    fontFamily: Platform.OS === 'ios' ? 'Menlo-Bold' : '',
-    color: '#27ae60',
-  },
-  subtitleText: {
-    fontSize: 14,
-    fontWeight: '250',
-    textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'Trebuchet MS' : '',
-    color: '#34495e',
-  },
-  viewContainer: {
-    flex: 1,
-  },
-  rating: {
-    paddingVertical: 10,
-  },
-});
-
-export default Ratings;
+export default RatingForm;

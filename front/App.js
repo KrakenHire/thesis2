@@ -22,8 +22,8 @@ import Chat from './Component/Chat.js';
 import Mapplocation from './Component/Mapplocation.js'
 import ProviderList from './components/ProviderList.js';
 import SignUpUser from "./Component/SignUpUser.js"
-
-
+import ServiceProProfile from "./components/ServiceProProfile.js"
+import ProviderSetting from "./Component/ProviderSetting.js"
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -84,6 +84,10 @@ export default function App() {
        <Stack.Screen name="SignUpUser" component={SignUpUser} />
          
         <Stack.Screen name="Map" component={Mapplocation} /> 
+          
+        <Stack.Screen name="ServiceProProfile" component={ServiceProProfile} /> 
+           
+        <Stack.Screen name="ProviderSetting" component={ProviderSetting} /> 
    
     </Stack.Navigator>
     </NavigationContainer>

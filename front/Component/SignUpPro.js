@@ -1,28 +1,30 @@
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, ScrollView ,TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, ScrollView ,TouchableOpacity ,Alert} from 'react-native';
 import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuthStateChanged  } from '../firebase'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Picker } from '@react-native-picker/picker';
 const SignUpPro = () => {
   const [service, setService] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [age, setAge] = useState('');
   const [experience, setExperience] = useState('');
   const [adresse, setAdresse] = useState('');
   const [price, setPrice] = useState('');
-  const [image, setImage] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [bio, setBio] = useState('');
+ 
   const [errorMessage, setErrorMessage] = useState(null);
+  const [services, setServices] = useState("services");
 
   const navigation=useNavigation()
 
     useEffect (() => {
       const unsubscribe = onAuthStateChanged(auth, user => {
         if (user) {
-          navigation.replace("Chat")
+          navigation.replace("ServiceProProfile")
         }
       })
     
@@ -30,33 +32,29 @@ const SignUpPro = () => {
     }, [auth, navigation]);
 
 
-  const handleSubmit = () => {
-    
-    createUserWithEmailAndPassword( auth,email, password)
-    .then(userCredentials => {
-      const user = userCredentials._tokenResponse.localId;
-      console.log( userCredentials,"firebase");
-      axios.post('http://192.168.43.169:3000/provider', {
-
-      idproviders:user,
-      service:service,
-      username:username,
-      age:age,
-      experience:experience,
-      adresse:adresse,
-      image:image,
-      bio:bio,
-      price:price
-
-    })
-    .then(function (response) {
-      console.log(response.data,"response");
-    })
-    .catch(function (error) {
-      console.log(error,"error");
-    });
-    })
-    .catch( (error)=> {
+  const handleSubmit = async () => {
+    if (!service || !username || !email || !password  || !adresse || !price || !phoneNumber) {
+      Alert.alert('Error', 'Please fill in all required fields.');
+      return;
+    }
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+      const providerId = userCredentials._tokenResponse.localId;
+      console.log(userCredentials, "firebase");
+      await AsyncStorage.setItem("providerId", JSON.stringify(userCredentials._tokenResponse.localId));
+      const response = await axios.post('http://192.168.43.169:3000/provider', {
+        idproviders:providerId,
+        service:service,
+        username:username,
+        adresse:adresse,
+        price:price,
+        phoneNumber:phoneNumber,
+        aboutMe:bio,
+      });
+  
+      console.log(response.data, "response");
+      Alert.alert('Success', 'Your form has been submitted.');
+    } catch (error) {
       switch (error.code) {
         case 'auth/email-already-in-use':
           setErrorMessage('Email already in use');
@@ -71,23 +69,42 @@ const SignUpPro = () => {
           setErrorMessage('An unknown error occurred');
           break;
       }
-    })
-    // Send form data to backend 
+      console.log(error, "error");
+      Alert.alert('Error', 'An error occurred while submitting the form.');
+    }
+  }
   
-    
-   
-  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Service"
-        value={service}
-        onChangeText={setService}
-      />
+     
+      <Picker
+  style={styles.input}
+  selectedValue={services}
+  onValueChange={(itemValue) => setService(itemValue)}
+>
+  <Picker.Item label="Services" value="" enabled={false} />
+  <Picker.Item label="Cleaning" value="Cleaning" />
+  <Picker.Item label="Plumbing" value="Plumbing" />
+  <Picker.Item label="Repairing" value="Repairing" />
+  <Picker.Item label="Painting" value="Painting" />
+  <Picker.Item label="Electrical" value="Electrical" />
+  <Picker.Item label="Hairdressing" value="Hairdressing" />
+  <Picker.Item label="Security" value="Security" />
+  <Picker.Item label="Roofing" value="Roofing" />
+  <Picker.Item label="Design" value="Design" />
+  <Picker.Item label="Handyman" value="Handyman" />
+  <Picker.Item label="Land scaping" value="Land scaping" />
+  <Picker.Item label="Renovation" value="Renovation" />
+  <Picker.Item label="Wood man" value="Wood man" />
+  <Picker.Item label="Welding" value="Welding" />
+  <Picker.Item label="Masonry" value="Masonry" />
+  <Picker.Item label="Wallpapering" value="Wallpapering" />
+</Picker>
+
+
 
       <TextInput
         style={styles.input}
@@ -110,22 +127,6 @@ const SignUpPro = () => {
         onChangeText={setPassword}
         secureTextEntry
       />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Age"
-        value={age}
-        onChangeText={setAge}
-        keyboardType="numeric"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Experience"
-        value={experience}
-        onChangeText={setExperience}
-      />
-
       <TextInput
         style={styles.input}
         placeholder="Adresse"
@@ -140,12 +141,13 @@ const SignUpPro = () => {
         onChangeText={setPrice}
         keyboardType="numeric"
       />
-
-      <TextInput
+       
+       <TextInput
         style={styles.input}
-        placeholder="Image URL"
-        value={image}
-        onChangeText={setImage}
+        placeholder="PhoneNumber"
+        value={phoneNumber}
+        onChangeText={setPhoneNumber}
+        keyboardType="numeric"
       />
 
       <TextInput

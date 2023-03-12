@@ -25,8 +25,10 @@ function initModels(sequelize) {
   providers.hasMany(booking, { foreignKey: "providers_idproviders"});
   bookmarks.belongsTo(providers, {foreignKey: "providers_idproviders"});
   providers.hasMany(bookmarks, { foreignKey: "providers_idproviders"});
-  rating.belongsTo(providers, {foreignKey: "providers_idproviders"});
-  providers.hasMany(rating, {foreignKey: "providers_idproviders"});
+  rating.belongsTo(providers, {foreignKey: "providers_idproviders" ,onUpdate: 'CASCADE',
+  onDelete: 'CASCADE'});
+  providers.hasMany(rating, {foreignKey: "providers_idproviders", onUpdate: 'CASCADE',
+  onDelete: 'CASCADE'});
   reviews.belongsTo(providers, {foreignKey: "providers_idproviders"});
   providers.hasMany(reviews, { foreignKey: "providers_idproviders"});
   likes.belongsTo(reviews, { foreignKey: "reviews_idreview"});
@@ -37,8 +39,10 @@ function initModels(sequelize) {
   users.hasMany(bookmarks, { foreignKey: "users_iduser"});
   likes.belongsTo(users, {foreignKey: "users_iduser"});
   users.hasMany(likes, { foreignKey: "users_iduser"});
-  rating.belongsTo(users, { foreignKey: "users_iduser"});
-  users.hasMany(rating, { foreignKey: "users_iduser"});
+  rating.belongsTo(users, { foreignKey: "users_iduser", onUpdate: 'CASCADE',
+  onDelete: 'CASCADE'});
+  users.hasMany(rating, { foreignKey: "users_iduser", onUpdate: 'CASCADE',
+  onDelete: 'CASCADE'});
   reviews.belongsTo(users, {  foreignKey: "users_iduser"});
   users.hasMany(reviews, { foreignKey: "users_iduser"});
 
