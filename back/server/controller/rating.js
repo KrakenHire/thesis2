@@ -14,18 +14,18 @@ module.exports={
       res.status(500).send('Internal Server Error');
     }
   },
-//   getUserById: async (req, res) => {
-//     try {
-//       console.log("ppppppppppppppppppp",req.params.iduser);
-//       const user = await User.findByPk(req.params.iduser, {
-//         attributes: ['username']
-//       });
-//       res.json(user);
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).send('Internal Server Error');
-//     }
-//   }
+  getratingById: async (req, res) => {
+    try {
+      console.log(req.params);
+      const rate = await Rating.findAll({
+        where: { providers_idproviders: req.params.providers_idproviders},
+      });
+      res.json(rate);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  }
   
 
 }

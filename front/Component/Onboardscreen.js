@@ -3,9 +3,9 @@ import { StyleSheet, Text, View,FlatList,Animated } from 'react-native';
 
 import React,{useState,useRef} from 'react'
 import damyData from '../damyData.js';
-import OnboardingItem from '../Component/OnboardingItem.js';
-import Paginator from '../Component/Paginator.js';
-import NextButton from '../Component/NextButton.js';
+import OnboardingItem from './OnboardingItem.js';
+import Paginator from './Paginator.js';
+import NextButton from './NextButton.js';
 import { useNavigation } from '@react-navigation/native';
 
 

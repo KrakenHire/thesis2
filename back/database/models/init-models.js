@@ -19,15 +19,15 @@ function initModels(sequelize) {
   var users = _users(sequelize, DataTypes);
 
   
-  providers.hasMany(images, { foreignKey: "providers_idproviders" });
+  providers.hasMany(images, { foreignKey: "providers_idproviders", hook:true,onDelete: 'CASCADE'});
   images.belongsTo(providers, { foreignKey: "providers_idproviders" });
   booking.belongsTo(providers, {foreignKey: "providers_idproviders"});
-  providers.hasMany(booking, { foreignKey: "providers_idproviders"});
+  providers.hasMany(booking, { foreignKey: "providers_idproviders",hook:true});
   bookmarks.belongsTo(providers, {foreignKey: "providers_idproviders"});
-  providers.hasMany(bookmarks, { foreignKey: "providers_idproviders"});
-  rating.belongsTo(providers, {foreignKey: "providers_idproviders" ,onUpdate: 'CASCADE',
+  providers.hasMany(bookmarks, { foreignKey: "providers_idproviders" ,hook:true,onDelete: 'CASCADE'});
+  rating.belongsTo(providers, {foreignKey: "providers_idproviders" ,
   onDelete: 'CASCADE'});
-  providers.hasMany(rating, {foreignKey: "providers_idproviders", onUpdate: 'CASCADE',
+  providers.hasMany(rating, {foreignKey: "providers_idproviders",
   onDelete: 'CASCADE'});
   reviews.belongsTo(providers, {foreignKey: "providers_idproviders"});
   providers.hasMany(reviews, { foreignKey: "providers_idproviders"});

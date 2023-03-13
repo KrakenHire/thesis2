@@ -5,7 +5,7 @@ const rating= require("../controller/rating");
 
 // router.get('/',rating.getAllratings);
 router.post('/',rating.postRate);
-// router.get('/:idratings',rating.getratingById);
+router.get('/:providers_idproviders',rating.getratingById);
 
 
 

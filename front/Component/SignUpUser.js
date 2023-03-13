@@ -3,6 +3,7 @@ import React, { Component, useEffect, useState } from 'react'
 import { KeyboardAvoidingView, Text, TextInput, View ,StyleSheet, TouchableOpacity} from 'react-native'
 import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuthStateChanged  } from '../firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import config from '../config';
 
 import axios from 'axios'
   const SignUpUser =()=> {
@@ -33,7 +34,7 @@ import axios from 'axios'
           console.log(userCredentials, "firebase");
     
           await AsyncStorage.setItem("userr", JSON.stringify(userCredentials._tokenResponse.localId));
-          await axios.post('http://192.168.43.169:3000/user', {
+          await axios.post(`${config}/user`, {
             iduser: userr,
             username: userName,
            

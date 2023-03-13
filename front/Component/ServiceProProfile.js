@@ -14,14 +14,16 @@ import { Rating } from 'react-native-ratings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import config from '../config';
 
 const ServiceProProfile = () => {
 
-    const [ratingValue, setRatingValue] = useState(1);
+    const [ratingValue, setRatingValue] = useState([]);
      
       const [providerId, setProviderId] = useState("");
       const [provider, setProvider] = useState("");
       const [isLoading, setIsLoading] = useState(true);
+      const [averageRating, setAverageRating] = useState(null);
       const navigation=useNavigation()
     
       useEffect(() => {
@@ -43,7 +45,7 @@ const ServiceProProfile = () => {
       
           if (providerIdFromStorage && providerIdFromStorage !== providerId) {
             try {
-              const response = await axios.get(`http://192.168.43.169:3000/provider/${providerIdFromStorage}`);
+              const response = await axios.get(`${config}/provider/${providerIdFromStorage}`);
               setProvider(response.data);
               setProviderId(providerIdFromStorage);
               setIsLoading(false);
@@ -58,8 +60,32 @@ const ServiceProProfile = () => {
       
         fetchData();
       },[providerId]);
+
+
+
+      useEffect(() => {
+        axios.get(`${config}/rating/${providerId}`)
+          .then((res) => {
+            setRatingValue(res.data);
+            console.log("raaaaaate", res.data);
       
+            const total = res.data.map((el) => el.rate)
+              .reduce((acc, curr) => acc += curr, 0);
+            const avg = total / res.data.length;
+            setAverageRating(Math.round(avg) > 5 ? 5 : Math.round(avg));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, [providerId]);
       
+          
+
+      // const total = ratingValue.map((el) =>(el.rate))
+      // .reduce((acc, curr) => acc +=curr, 0);
+      // const avg = total /ratingValue.length;
+      // setAverageRating(Math.round(avg));
+     
       
 
     if (isLoading) {
@@ -78,7 +104,8 @@ const ServiceProProfile = () => {
 
   return (
     <ScrollView>
-        {console.log(provider,"proooooooooooooooooooooooooooooooooooooooooooo")}
+  
+        {console.log(ratingValue,"proooooooooooooooooooooooooooooooooooooooooooo")}
     <SafeAreaView style={styles.container}>
 
       <View style={styles.userInfoSection}>
@@ -114,7 +141,7 @@ const ServiceProProfile = () => {
         </View>
         <View style={styles.row}>
             {provider.service === 'Cleaning' && <MaterialIcons name="cleaning-services" size={24} color="black" />}
-            {provider.service === 'Plumbig' && <MaterialIcons name="plumbing" size={24} color="black" />}
+            {provider.service === 'Plumbig' && <Image source={require('../assets/plum.jpg')}  style={{width: 24, height: 24, marginRight: 10}} />}
             {provider.service === 'Repairing' && <MaterialIcons name="home-repair-service" size={24} color="black" />}
             {provider.service === 'Painting' && <MaterialIcons name="format-paint" size={24} color="black" />}
             {provider.service === 'Electrical' && <MaterialIcons name="electrical-services" size={24} color="black" />}
@@ -135,11 +162,11 @@ const ServiceProProfile = () => {
         <View style={styles.containerr}>
         <Text style={styles.label}>Rating:</Text>
         <View style={styles.rating}>
-          <AntDesign name="star" size={24} color={ratingValue >= 1 ? '#FFC107' : '#E4E5E9'} />
-          <AntDesign name="star" size={24} color={ratingValue >= 2 ? '#FFC107' : '#E4E5E9'} />
-          <AntDesign name="star" size={24} color={ratingValue >= 3 ? '#FFC107' : '#E4E5E9'} />
-          <AntDesign name="star" size={24} color={ratingValue >= 4 ? '#FFC107' : '#E4E5E9'} />
-          <AntDesign name="star" size={24} color={ratingValue >= 5 ? '#FFC107' : '#E4E5E9'} />
+          <AntDesign name="star" size={24} color={averageRating >= 1 ? '#FFC107' : '#E4E5E9'} />
+          <AntDesign name="star" size={24} color={averageRating >= 2 ? '#FFC107' : '#E4E5E9'} />
+          <AntDesign name="star" size={24} color={averageRating >= 3 ? '#FFC107' : '#E4E5E9'} />
+          <AntDesign name="star" size={24} color={averageRating >= 4 ? '#FFC107' : '#E4E5E9'} />
+          <AntDesign name="star" size={24} color={averageRating >= 5 ? '#FFC107' : '#E4E5E9'} />
         </View>
       </View>
       </View>

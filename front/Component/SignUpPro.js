@@ -5,6 +5,13 @@ import { StyleSheet, Text, TextInput, View, Button, ScrollView ,TouchableOpacity
 import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuthStateChanged  } from '../firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
+import config from '../config';
+
+
+
+
+
+
 const SignUpPro = () => {
   const [service, setService] = useState('');
   const [username, setUsername] = useState('');
@@ -42,7 +49,7 @@ const SignUpPro = () => {
       const providerId = userCredentials._tokenResponse.localId;
       console.log(userCredentials, "firebase");
       await AsyncStorage.setItem("providerId", JSON.stringify(userCredentials._tokenResponse.localId));
-      const response = await axios.post('http://192.168.43.169:3000/provider', {
+      const response = await axios.post(`${config}/provider`, {
         idproviders:providerId,
         service:service,
         username:username,

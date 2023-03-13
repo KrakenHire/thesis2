@@ -3,7 +3,8 @@ import { View, Text, TextInput, Button } from 'react-native';
 import { Rating } from 'react-native-ratings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-const RatingForm = ({provider }) => {
+import config from '../config';
+const RatingForm = ({provider}) => {
   const [userId, setUserId] = useState(null);
   const [rating, setRating] = useState(0);
   // const [comments, setComments] = useState('');
@@ -24,9 +25,11 @@ const RatingForm = ({provider }) => {
   }, [userId]);
 
   const handleSubmit = () => {
-   
-    axios.post('http://192.168.43.169:3000/rating',{
-      users_iduser:userId,
+   console.log({
+    users_iduser:JSON.parse(userId),
+  },"mehdiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+    axios.post(`${config}/rating`,{
+      users_iduser:JSON.parse(userId),
       providers_idproviders:provider.idproviders,
       rate:rating
     })
@@ -43,7 +46,7 @@ const RatingForm = ({provider }) => {
  
   return (
     <View>
-      <Text>Rating:{userId}</Text>
+      <Text>Rating:</Text>
       <Rating
         startingValue={rating}
         onFinishRating={setRating}
