@@ -22,7 +22,9 @@ import Chat from './Component/Chat.js';
 import Mapplocation from './Component/Mapplocation.js'
 import ProviderList from './components/ProviderList.js';
 import SignUpUser from "./Component/SignUpUser.js"
-import Pay from "./Component/Pay.js"
+import Confirmation from './components/Confirmation.js';
+import Pay from './components/Pay.js'
+
 
 const Stack = createNativeStackNavigator();
 
@@ -66,20 +68,20 @@ export default function App() {
       
      
       
-         <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Mapplocation} />
+         <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} />
         <Stack.Screen name="choises" component={Choises} />
         <Stack.Screen name="LoginScreenPro" component={LoginScreenPro} />
-
         <Stack.Screen name="forgetPass" component={forgetPass} />
         <Stack.Screen name="SignUpPro" component={SignUpPro} />
-     
         <Stack.Screen name="Home" component={Home} /> 
         <Stack.Screen name="list" component={ProviderList} /> 
          <Stack.Screen name="ProviderProfile" component={ProviderProfile} />  
         <Stack.Screen name="Booking Details" component={Calendar} />
          <Stack.Screen name="UserProfile" component={UserProfile} />
-        <Stack.Screen name="Chat" component={Chat} /> 
-        
+        <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="Rev" component={Confirmation} /> 
+        <Stack.Screen name="Pay" component={Pay} /> 
+
        <Stack.Screen name="LoginScreenUser" component={LoginScreenUser} />
        <Stack.Screen name="SignUpUser" component={SignUpUser} />
          

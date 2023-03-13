@@ -61,7 +61,7 @@ function Home() {
   const [providers, setProviders] = useState([]);
 
   useEffect(() => {
-    axios.get('http://192.168.100.17:3000/provider')
+    axios.get('http:///192.168.100.2:3000/provider')
       .then(response => {setProviders(response.data);
       console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkk",response.data);})
       .catch(error => console.error(error))
@@ -93,7 +93,7 @@ function Home() {
       const userId = await getUser();
       if (userId !== null) {
         try {
-          const response = await axios.get(`http://192.168.100.17:3000/user/${userId}`);
+          const response = await axios.get(`http:///192.168.100.2:3000/user/${userId}`);
           setName(response.data.username);
           setIsLoading(false);
         } catch (error) {
