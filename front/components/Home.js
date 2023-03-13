@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Swiper from 'react-native-swiper';
+import SimpleLottie from '../Component/SimpleLottie.js';
 
 
 // const providers = [
@@ -79,7 +80,7 @@ function Home() {
           setUserr(JSON.parse(userr));
           console.log("hello im a user id ",userr);
           return JSON.parse(userr);
-         
+        
         }
         return null;
       } catch (error) {
@@ -114,9 +115,7 @@ function Home() {
   if (isLoading) {
     // Render a loading indicator
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" />
-      </View>
+      <SimpleLottie/>
     );
   }
 
