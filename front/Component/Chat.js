@@ -4,8 +4,9 @@ import React, {
   useLayoutEffect,
   useCallback
 } from 'react';
-import { TouchableOpacity, Text,View} from 'react-native';
+import { TouchableOpacity, Text,View, StyleSheet} from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
+import SimpleLottie from "./SimpleLottie";
 import {
   collection,
   addDoc,
@@ -17,13 +18,22 @@ import { auth, database } from '../firebase.js';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 import colors from '../colors.js';
-
+import { LogBox } from "react-native";
 
 export default function Chat() {
-
+  LogBox.ignoreAllLogs();
   const [messages, setMessages] = useState([]);
+  const [messagesLength, setMessagesLength] = useState(0);
+
   const navigation = useNavigation();
 
+
+
+
+
+
+
+  
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -38,7 +48,7 @@ export default function Chat() {
     });
   }, [navigation]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
 
       const collectionRef = collection(database, 'chats');
       const q = query(collectionRef, orderBy('createdAt', 'desc'));
@@ -46,21 +56,28 @@ export default function Chat() {
   const unsubscribe = onSnapshot(q, querySnapshot => {
       console.log('querySnapshot unsusbscribe');
         setMessages(
-          querySnapshot.docs.map(doc => ({
+          querySnapshot.docs.map((doc,i) => {
+            i-1?setMessagesLength(messages.length)  :undefined
+            return{
             _id: doc.data()._id,
             createdAt: doc.data().createdAt.toDate(),
             text: doc.data().text,
             user: doc.data().user
-          }))
+          }
+        })
         );
+        
       });
-  return unsubscribe;
-    }, []);
-
-  const onSend = useCallback((messages = []) => {
+  return unsubscribe; 
+    }, [messagesLength,messages.length]);
+ 
+  const onSend = useCallback((messages ) => {  
+   //alert(JSON.stringify(messages))
       setMessages(previousMessages =>
         GiftedChat.append(previousMessages, messages)
       );
+      setMessagesLength(messages.length)
+
       // setMessages([...messages, ...messages]);
       const { _id, createdAt, text, user } = messages[0];    
       addDoc(collection(database, 'chats'), {
@@ -69,20 +86,28 @@ export default function Chat() {
         text,
         user
       });
+    
     }, []);
 
     return (
-      // <View></View>
+      // <View>
+      //         {messages && messages.map((message) => (
+      //   <Text key={message}>{message.text}</Text>
+      // ))}
+      // </View>
       // <>
       //   {messages.map(message => (
       //     <Text key={message._id}>{message.text}</Text>
       //   ))}
       // </>
-      <GiftedChat
+      <> 
+        {console.log(messagesLength,"mehdiiiiiiiiiiiiiiiiiiiiiiiiiiii")}
+        { messagesLength?<GiftedChat
         messages={messages}
-        showAvatarForEveryMessage={false}
+        showAvatarForEveryMessage={true}
         showUserAvatar={false}
-        onSend={messages => onSend(messages)}
+        keyboardShouldPersistTaps='never'
+         onSend={messages => onSend(messages)}
         messagesContainerStyle={{
           backgroundColor: '#fff'
         }}
@@ -94,6 +119,13 @@ export default function Chat() {
           _id: auth?.currentUser?.email,
           avatar: 'https://i.pravatar.cc/300'
         }}
-      />
+      />:
+      
+      <SimpleLottie />
+      
+   }
+      </>
     );
 }
+
+
