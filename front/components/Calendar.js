@@ -6,7 +6,8 @@ import {
     StyleSheet,
     Alert,
     TouchableOpacity,
-    Pressable 
+    Pressable ,
+    ScrollView
 } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -40,6 +41,7 @@ const data = [
       }
     }), [selected]);
     return (
+      <ScrollView>
       <Calendar 
         initialDate={initDate}
         markedDates={marked}
@@ -53,6 +55,7 @@ const data = [
          
         }}
       />
+      </ScrollView>
     );
   }
   
