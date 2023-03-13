@@ -66,7 +66,7 @@ export default function App() {
       
      
       
-         <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} />
+         <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Mapplocation} />
         <Stack.Screen name="choises" component={Choises} />
         <Stack.Screen name="LoginScreenPro" component={LoginScreenPro} />
 
@@ -85,7 +85,7 @@ export default function App() {
        <Stack.Screen name="SignUpUser" component={SignUpUser} />
          
         <Stack.Screen name="Map" component={Mapplocation} /> 
-   
+        <Stack.Screen name="Pay" component={Pay} /> 
     </Stack.Navigator>
     </NavigationContainer>
   

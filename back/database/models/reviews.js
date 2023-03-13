@@ -32,14 +32,8 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'reviews',
     timestamps: true,
     indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "idreview" },
-        ]
-      },
+     
+
       {
         name: "fk_comments_users1_idx",
         using: "BTREE",

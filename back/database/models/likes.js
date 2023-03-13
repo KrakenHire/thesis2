@@ -44,13 +44,6 @@ module.exports = function(sequelize, DataTypes) {
           { name: "users_iduser" },
         ]
       },
-      {
-        name: "fk_likes_reviews1_idx",
-        using: "BTREE",
-        fields: [
-          { name: "reviews_idreview" },
-        ]
-      },
     ]
   });
 };
