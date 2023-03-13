@@ -57,7 +57,7 @@ import Swiper from 'react-native-swiper';
 
 
 function Home() {
-  // const [providers, setProviders] = useState([]);
+  const [providers, setProviders] = useState([]);
 
   useEffect(() => {
     axios.get('http://192.168.100.18:3000/provider')
