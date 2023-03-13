@@ -86,7 +86,7 @@ export default function App() {
        <Stack.Screen name="SignUpUser" component={SignUpUser} />
          
         <Stack.Screen name="Map" component={Mapplocation} /> 
-   
+        <Stack.Screen name="Pay" component={Pay} /> 
     </Stack.Navigator>
     </NavigationContainer>
   

@@ -33,7 +33,7 @@ import axios from 'axios'
           console.log(userCredentials, "firebase");
     
           await AsyncStorage.setItem("userr", JSON.stringify(userCredentials._tokenResponse.localId));
-          await axios.post('http://192.168.43.169:3000/user', {
+          await axios.post('http:///192.168.100.2:3000/user', {
             iduser: userr,
             username: userName,
            

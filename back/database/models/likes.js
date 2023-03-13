@@ -37,7 +37,13 @@ module.exports = function(sequelize, DataTypes) {
           { name: "comments_idcomments" },
         ]
       },
-     
+      {
+        name: "fk_likes_users1_idx",
+        using: "BTREE",
+        fields: [
+          { name: "users_iduser" },
+        ]
+      },
     ]
   });
 };
