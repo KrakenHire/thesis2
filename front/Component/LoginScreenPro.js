@@ -3,6 +3,7 @@ import React, { Component, useEffect, useState } from 'react'
 import { KeyboardAvoidingView, Text, TextInput, View ,StyleSheet, TouchableOpacity,Image} from 'react-native'
 import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuthStateChanged  } from '../firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ScrollView } from 'react-native-gesture-handler';
 
   const LoginScreenPro =()=> {
     const [email, setEmail] = useState('')
@@ -49,6 +50,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
     return (
+      <ScrollView>
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={styles.imgContainer}>
           <Image source={require('../assets/reg.png')} style={styles.img} />
@@ -99,6 +101,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
+      </ScrollView>
     );
   };
   

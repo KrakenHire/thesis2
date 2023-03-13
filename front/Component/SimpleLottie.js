@@ -16,6 +16,9 @@ export default function SimpleLottie() {
 }
 const styles = StyleSheet.create({
   animation: {
+    position:"relative",
+    top:150,
+    left : 70,
     width: 100,
     height: 100,
   },

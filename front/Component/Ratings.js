@@ -34,7 +34,9 @@ const RatingForm = ({provider}) => {
       rate:rating
     })
     .then((res) => {
+     
       setRating(0);
+      alert('well pressed')
       // setComments('');
 
     })

@@ -5,6 +5,7 @@ import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuth
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import axios from 'axios'
+import { ScrollView } from 'react-native-gesture-handler';
   const LoginScreenUser =()=> {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -60,6 +61,7 @@ import axios from 'axios'
 
 
       return (
+        <ScrollView>
         <KeyboardAvoidingView style={styles.container} behavior="padding">
           <View style={styles.imgContainer}>
             <Image source={require('../assets/reg2.png')} style={styles.img} />
@@ -110,6 +112,7 @@ import axios from 'axios'
             <Text style={styles.forgotPassword}>Forgot Password?</Text>
           </TouchableOpacity>
         </KeyboardAvoidingView>
+        </ScrollView>
       );
     };
     

@@ -111,12 +111,10 @@ const ServiceProProfile = () => {
       <View style={styles.userInfoSection}>
         <View style={{flexDirection: 'row', marginTop: 15}}>
             <TouchableOpacity onPress={()=>{navigation.navigate('ProviderSetting')}}>
-          <Avatar.Image 
-            source={{
-              uri: 'https://cours-informatique-gratuit.fr/wp-content/uploads/2017/10/avatar.png',
-            }}
-            size={80}
-          />
+            <Avatar.Image 
+  source={provider.image}
+  style={{ width: 80, height: 80, borderRadius: 40 }}
+/>
           </TouchableOpacity>
           <View style={{marginLeft: 20}}>
             <Title style={[styles.title, {
@@ -141,7 +139,7 @@ const ServiceProProfile = () => {
         </View>
         <View style={styles.row}>
             {provider.service === 'Cleaning' && <MaterialIcons name="cleaning-services" size={24} color="black" />}
-            {provider.service === 'Plumbig' && <Image source={require('../assets/plum.jpg')}  style={{width: 24, height: 24, marginRight: 10}} />}
+            {provider.service === 'Plumbig' && <MaterialIcons name="plumbing" size={24} color="black" />}
             {provider.service === 'Repairing' && <MaterialIcons name="home-repair-service" size={24} color="black" />}
             {provider.service === 'Painting' && <MaterialIcons name="format-paint" size={24} color="black" />}
             {provider.service === 'Electrical' && <MaterialIcons name="electrical-services" size={24} color="black" />}

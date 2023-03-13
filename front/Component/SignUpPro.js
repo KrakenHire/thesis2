@@ -22,6 +22,7 @@ const SignUpPro = () => {
   const [price, setPrice] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [bio, setBio] = useState('');
+  const [image, setImage] = useState('');
  
   const [errorMessage, setErrorMessage] = useState(null);
   const [services, setServices] = useState("services");
@@ -57,6 +58,7 @@ const SignUpPro = () => {
         price:price,
         phoneNumber:phoneNumber,
         aboutMe:bio,
+        image:image,
       });
   
       console.log(response.data, "response");
@@ -162,6 +164,12 @@ const SignUpPro = () => {
         placeholder="Bio"
         value={bio}
         onChangeText={setBio}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="image"
+        value={image}
+        onChangeText={setImage}
       />
 
       {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
