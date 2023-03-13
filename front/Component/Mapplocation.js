@@ -130,7 +130,7 @@ export default function Mapplocation() {
 
     </View> 
     <View style={{position:'absolute' ,bottom:50,zIndex:1,left:110,borderRadius:70,}}>
-         <Button title='confirm your position ' onPress={()=>navigation.navigate('Pay',{adresse:loc})} >
+         <Button title='confirm your position ' onPress={()=>navigation.navigate('Confirmation',{adresse:loc})} >
         </Button>
         
         </View>
