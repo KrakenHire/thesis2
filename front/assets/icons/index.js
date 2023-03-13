@@ -20,6 +20,19 @@ export const edit=require('./edit.png')
 export const clean1=require('./clean.jpg')
 export const clean2=require('./clean2.webp')
 export const star=require('./star.png')
+export const Roofing=require('./Roofing.png')
+export const Security=require('./Security.png')
+export const Woodman=require('./wood.png')
+export const Gardening=require('./gardenig.png')
+export const Renovation=require('./renovation.png')
+export const Welding=require('./welding.png')
+export const Design=require('./design.png')
+export const Wallpapering=require('./wall.png')
+export const service2=require('./service2.jpg')
+export const service3=require('./service3.jpg')
+export const service4=require('./service4.jpeg')
 
 
-export default {chatB,profile,notification,bookMark,homeh,greeting,Cleaning,Painting,Repairing,Hairdressing,star,adress,Electrical,edit,Plumbing,booking,home,calender,imbox,avatar,clean1,clean2}
+
+
+export default {chatB,profile,notification,bookMark,homeh,service3,service2,service4,Design,greeting,Wallpapering,Cleaning,Welding,Painting,Repairing,Hairdressing,Renovation,Woodman,Gardening,star,adress,Electrical,edit,Plumbing,booking,home,calender,imbox,avatar,clean1,clean2,Roofing,Security}
