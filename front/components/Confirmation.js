@@ -8,7 +8,8 @@ StyleSheet,
 Alert,
 TouchableOpacity,
 Pressable,
-ImageBackground
+ImageBackground,
+ScrollView
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -28,6 +29,7 @@ Alert.alert('Payment Successful!');
 };
 
 return (
+  <ScrollView>
 <SafeAreaView style={styles.container}>
   <View style={styles.card}>
     <View style={styles.cardHeader}>
@@ -79,6 +81,7 @@ return (
     </Pressable>
   </View>
 </SafeAreaView>
+</ScrollView>
 );
 };
 

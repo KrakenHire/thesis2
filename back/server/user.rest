@@ -1,0 +1,12 @@
+POST http://localhost:3000/user/
+Content-Type: application/json
+
+{
+    "iduser":"15",
+    "username": "Iheb12",
+    "FirstName": "Iheb",
+    "LastName": "Kadri",
+    "Age": 99,
+    "longitude":4,
+    "latitude":9
+}

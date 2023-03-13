@@ -1,0 +1,20 @@
+GET http://localhost:3000/provider
+
+###
+
+GET http://localhost:3000/provider/2
+
+###
+
+POST http://localhost:3000/provider
+Content-Type: application/json
+
+{
+  "idproviders": "1",
+  "service": "Electrician",
+  "username": "FaroukMestiri",
+  "age": 24,
+  "experience": "2 Years",
+  "adresse": "RBK-07",
+  "price": 80
+}
