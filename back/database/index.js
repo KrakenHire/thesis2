@@ -1,6 +1,6 @@
 const { Sequelize } = require("sequelize");
 const modelinit=require("./models/init-models")
-const sequelize = new Sequelize("kraken", "root", "mySql123456@", {  host: "localhost",
+const sequelize = new Sequelize("kraken", "root", "fa07me96&*", {  host: "localhost",
   dialect: "mysql",
   define: {
     timestamps: false,
