@@ -3,8 +3,10 @@ import React, { Component, useEffect, useState } from 'react'
 import { KeyboardAvoidingView, Text, TextInput, View ,StyleSheet, TouchableOpacity} from 'react-native'
 import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuthStateChanged  } from '../firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import config from '../config';
 
 import axios from 'axios'
+import { ScrollView } from 'react-native-gesture-handler';
   const SignUpUser =()=> {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -33,7 +35,7 @@ import axios from 'axios'
           console.log(userCredentials, "firebase");
     
           await AsyncStorage.setItem("userr", JSON.stringify(userCredentials._tokenResponse.localId));
-          await axios.post('http://192.168.100.18:3000/user', {
+          await axios.post(`${config}/user`, {
             iduser: userr,
             username: userName,
            
@@ -63,6 +65,7 @@ import axios from 'axios'
 
 
       return (
+        <ScrollView>
         <KeyboardAvoidingView style={styles.container}
         behavior="padding"
         >
@@ -98,6 +101,7 @@ import axios from 'axios'
           </TouchableOpacity>
          </View>
         </KeyboardAvoidingView>
+        </ScrollView>
       )
     }
   
@@ -158,3 +162,4 @@ import axios from 'axios'
     },
   })
 
+   

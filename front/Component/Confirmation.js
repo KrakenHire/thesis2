@@ -42,7 +42,7 @@ return (
     <View style={styles.cardBody}>
       <View style={styles.section}>
         <Text style={styles.sectionLabel}>Address :</Text>
-        <Text style={styles.sectionValue}>123 Main St</Text>
+        <Text style={styles.sectionValue}>Cebalat Ben Ammar/Gouvernorat de l'Ariana/Tunisia</Text>
       </View>
       <View style={styles.section}>
         <Text style={styles.sectionLabel}>PhoneNumber :</Text>
@@ -50,11 +50,11 @@ return (
       </View>
       <View style={styles.section}>
         <Text style={styles.sectionLabel}>Service :</Text>
-        <Text style={styles.sectionValue}>Cleaning</Text>
+        <Text style={styles.sectionValue}>Plumber</Text>
       </View>
       <View style={styles.section}>
         <Text style={styles.sectionLabel}>Date :</Text>
-        <Text style={styles.sectionValue}>{randomDate}</Text>
+        <Text style={styles.sectionValue}>3/13/2023</Text>
       </View>
       <View style={styles.section}>
         <Text style={styles.sectionLabel}>Time :</Text>
@@ -62,15 +62,15 @@ return (
       </View>
       <View style={styles.section}>
         <Text style={styles.sectionLabel}>Working hours :</Text>
-        <Text style={styles.sectionValue}>{randomWorkingHours}</Text>
+        <Text style={styles.sectionValue}>3</Text>
       </View>
       <View style={styles.section}>
         <Text style={styles.sectionLabel}>Worker Price :</Text>
-        <Text style={styles.sectionValue}>${startingPrice}</Text>
+        <Text style={styles.sectionValue}>$120</Text>
       </View>
       <View style={styles.section}>
         <Text style={styles.sectionLabel}>Total Price :</Text>
-        <Text style={styles.sectionValue}>${totalPrice.toFixed(2)}</Text>
+        <Text style={styles.sectionValue}>${120*3}</Text>
       </View>
     </View>
     <Pressable

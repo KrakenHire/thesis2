@@ -101,6 +101,7 @@ const data = [
 
  
     return (
+      <ScrollView>
       
        <SafeAreaView style={styles.container}>
         <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 1,marginLeft:20 }}>
@@ -171,6 +172,7 @@ const data = [
       <Text style={styles.text}>{title}</Text>
     </Pressable>
       </SafeAreaView> 
+      </ScrollView>
    
     );
    

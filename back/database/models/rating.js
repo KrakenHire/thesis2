@@ -27,33 +27,5 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     }
-  }, {
-    sequelize,
-    tableName: 'rating',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "idRating" },
-        ]
-      },
-      {
-        name: "fk_rating_users1_idx",
-        using: "BTREE",
-        fields: [
-          { name: "users_iduser" },
-        ]
-      },
-      {
-        name: "fk_rating_providers1_idx",
-        using: "BTREE",
-        fields: [
-          { name: "providers_idproviders" },
-        ]
-      },
-    ]
   });
-};
+}

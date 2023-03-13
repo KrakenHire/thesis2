@@ -69,7 +69,7 @@ function ProviderProfile({route}) {
 </View>
 
 <View style={styles.rate}>
- <Ratings/>
+ <Ratings provider={provider}/>
  <Text style={{fontSize:15, fontWeight:'bold'}}>55 Reviews</Text>
 </View>
  

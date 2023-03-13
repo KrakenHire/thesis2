@@ -7,8 +7,10 @@ import Search from './Search';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import config from '../config.js';
+
 import Swiper from 'react-native-swiper';
-import SimpleLottie from '../Component/SimpleLottie.js';
+import SimpleLottie from '../component/SimpleLottie.js';
 
 
 // const providers = [
@@ -61,7 +63,7 @@ function Home() {
   const [providers, setProviders] = useState([]);
 
   useEffect(() => {
-    axios.get('http://192.168.100.18:3000/provider')
+    axios.get(`${config}/provider`)
       .then(response => {setProviders(response.data);
       console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkk",response.data);})
       .catch(error => console.error(error))
@@ -93,7 +95,7 @@ function Home() {
       const userId = await getUser();
       if (userId !== null) {
         try {
-          const response = await axios.get(`http://192.168.100.18:3000/user/${userId}`);
+          const response = await axios.get(`${config}/user/${userId}`);
           setName(response.data.username);
           setIsLoading(false);
         } catch (error) {
@@ -106,7 +108,7 @@ function Home() {
     };
     
     fetchData();
-  }, [userr]);
+  },[userr]);
   
   const press = () => {
     navigation.navigate("UserProfile");

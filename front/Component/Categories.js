@@ -5,6 +5,7 @@ import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import icons from '../assets/icons';
+import config from '../config';
 
 // const providers = [
 //     {
@@ -58,7 +59,7 @@ function Categories() {
 
 
     useEffect(() => {
-        axios.get('http://192.168.43.169:3000/provider')
+        axios.get(`${config}/provider`)
           .then(response => {setProviders(response.data);
           console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkk",response.data);})
           .catch(error => console.error(error))

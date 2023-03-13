@@ -31,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
           { name: "providers_idproviders" },
         ]
       },
-     
+      
     ]
   });
 };

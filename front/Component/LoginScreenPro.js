@@ -2,7 +2,8 @@ import { useNavigation } from '@react-navigation/native'
 import React, { Component, useEffect, useState } from 'react'
 import { KeyboardAvoidingView, Text, TextInput, View ,StyleSheet, TouchableOpacity,Image} from 'react-native'
 import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuthStateChanged  } from '../firebase'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ScrollView } from 'react-native-gesture-handler';
 
   const LoginScreenPro =()=> {
     const [email, setEmail] = useState('')
@@ -14,43 +15,42 @@ import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuth
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, user => {
         if (user) {
-          navigation.replace("Home")
+          navigation.replace("ServiceProProfile")
         }
       })
     
       return unsubscribe;
     }, [auth, navigation]);
 
-    const handleLogin = () => {
-      signInWithEmailAndPassword(auth ,email, password)
-        .then(userCredentials => {
-          // const user = userCredentials.user;
-          console.log(userCredentials);
-        })
-        .catch ((error)=> {
-          switch (error.code) {
-            case 'auth/invalid-email':
-              setErrorMessage('Invalid email address');
-              break;
-            case 'auth/user-disabled':
-              setErrorMessage('Your account has been disabled');
-              break;
-            case 'auth/user-not-found':
-              setErrorMessage('Account not found');
-              break;
-            case 'auth/wrong-password':
-              setErrorMessage('Incorrect password');
-              break;
-            default:
-              setErrorMessage('An unknown error occurred');
-              break;
-          }
+    const handleLogin = async () => {
+      try {
+        const userCredentials = await signInWithEmailAndPassword(auth ,email, password);
+        const providerId= userCredentials._tokenResponse.localId;
+        await AsyncStorage.setItem("providerId", JSON.stringify(userCredentials._tokenResponse.localId));
+      } catch (error) {
+        switch (error.code) {
+          case 'auth/invalid-email':
+            setErrorMessage('Invalid email address');
+            break;
+          case 'auth/user-disabled':
+            setErrorMessage('Your account has been disabled');
+            break;
+          case 'auth/user-not-found':
+            setErrorMessage('Account not found');
+            break;
+          case 'auth/wrong-password':
+            setErrorMessage('Incorrect password');
+            break;
+          default:
+            setErrorMessage('An unknown error occurred');
+            break;
         }
-    )}
-
+      }
+    };
 
 
     return (
+      <ScrollView>
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={styles.imgContainer}>
           <Image source={require('../assets/reg.png')} style={styles.img} />
@@ -101,6 +101,7 @@ import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuth
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
+      </ScrollView>
     );
   };
   
