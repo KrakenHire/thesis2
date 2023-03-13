@@ -10,61 +10,61 @@ import axios from 'axios';
 import Swiper from 'react-native-swiper';
 
 
-// const providers = [
-//   {
-//       username: 'rania',
-//       image:
-//         'https://fac.img.pmdstatic.net/fit/https.3A.2F.2Fi.2Epmdstatic.2Enet.2Ffac.2F2022.2F08.2F29.2F9fecc4ef-2adb-4778-8987-0bd19806480d.2Ejpeg/1200x900/quality/80/crop-from/center/focus-point/1016%2C797/4-sites-pour-trouver-une-femme-de-menage.jpeg',
-//      review:22,
-//      price:' 20',
-//     service: 'Cleaning',
-//     adress:'133 tboulba Monastir'
-//       },
-//   {
-//       username: 'ines',
-//       image:
-//         'https://www.shutterstock.com/image-photo/young-african-woman-degergent-basket-260nw-2054513045.jpg',
-//      review:22,
-//      price:' 30 ',
-//     service: 'Cleaning'
-//       },
-//   {
-//       username: 'farouk',
-//       image:
-//         'https://www.plumbingbyjake.com/wp-content/uploads/2015/11/VIGILANT-plumber-fixing-a-sink-shutterstock_132523334-e1448389230378.jpg',
-//      review:22,
-//      price:' 20 DNT',
-//      service: 'Plumbing'
-//       },
-//   {
-//       username: 'amine',
-//       image:
-//         'https://www.benjaminfranklinplumbing.com/images/blog/10-Reasons-Why-a-Professional-Plumber-Is-Better-Than-DIY-_-Katy-TX.jpg',
-//      review:22,
-//      price:' 20 DNT',
-//      service: 'Plumbing'
-//       },
-//   {
-//       username: 'yosra',
-//       image:
-//         'https://www.o2.fr/documents/20124/2048897/choisir-femme-de-menage-p.jpg/92b09923-a6aa-37fd-d528-404d5d4d2995?t=1633956700178',
-//      review:22,
-//      price:' 20 DNT',
-//      service: 'Cleaning'
-//       },
+const providers = [
+  {
+      username: 'rania',
+      image:
+        'https://fac.img.pmdstatic.net/fit/https.3A.2F.2Fi.2Epmdstatic.2Enet.2Ffac.2F2022.2F08.2F29.2F9fecc4ef-2adb-4778-8987-0bd19806480d.2Ejpeg/1200x900/quality/80/crop-from/center/focus-point/1016%2C797/4-sites-pour-trouver-une-femme-de-menage.jpeg',
+     review:22,
+     price:' 20',
+    service: 'Cleaning',
+    adress:'133 tboulba Monastir'
+      },
+  {
+      username: 'ines',
+      image:
+        'https://www.shutterstock.com/image-photo/young-african-woman-degergent-basket-260nw-2054513045.jpg',
+     review:22,
+     price:' 30 ',
+    service: 'Cleaning'
+      },
+  {
+      username: 'farouk',
+      image:
+        'https://www.plumbingbyjake.com/wp-content/uploads/2015/11/VIGILANT-plumber-fixing-a-sink-shutterstock_132523334-e1448389230378.jpg',
+     review:22,
+     price:' 20 DNT',
+     service: 'Plumbing'
+      },
+  {
+      username: 'amine',
+      image:
+        'https://www.benjaminfranklinplumbing.com/images/blog/10-Reasons-Why-a-Professional-Plumber-Is-Better-Than-DIY-_-Katy-TX.jpg',
+     review:22,
+     price:' 20 DNT',
+     service: 'Plumbing'
+      },
+  {
+      username: 'yosra',
+      image:
+        'https://www.o2.fr/documents/20124/2048897/choisir-femme-de-menage-p.jpg/92b09923-a6aa-37fd-d528-404d5d4d2995?t=1633956700178',
+     review:22,
+     price:' 20 DNT',
+     service: 'Cleaning'
+      },
 
-// ];
+];
 
 
 function Home() {
-  const [providers, setProviders] = useState([]);
+  // const [providers, setProviders] = useState([]);
 
-  useEffect(() => {
-    axios.get('http://192.168.43.169:3000/provider')
-      .then(response => {setProviders(response.data);
-      console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkk",response.data);})
-      .catch(error => console.error(error))
-  }, []);
+  // useEffect(() => {
+  //   axios.get('http://192.168.100.18:3000/provider')
+  //     .then(response => {setProviders(response.data);
+  //     console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkk",response.data);})
+  //     .catch(error => console.error(error))
+  // }, []);
 
   const navigation=useNavigation();
   const [userr, setUserr] = useState(null);
@@ -92,7 +92,7 @@ function Home() {
       const userId = await getUser();
       if (userId !== null) {
         try {
-          const response = await axios.get(`http://192.168.43.169:3000/user/${userId}`);
+          const response = await axios.get(`http://192.168.100.18:3000/user/${userId}`);
           setName(response.data.username);
           setIsLoading(false);
         } catch (error) {
@@ -121,11 +121,6 @@ function Home() {
   }
 
 
-
-
-
-
-
   const handleIconClick = (service) => {
   const filteredProviders = providers.filter(provider => provider.service=== service);
 
@@ -142,7 +137,7 @@ function Home() {
         </TouchableOpacity>
         <View style={styles.name} >
         <Text >Welcome<Image style={styles.img} source={icons.greeting}/></Text>
-        <Text style={{fontWeight: 'bold'}}>{name} </Text>
+        <Text style={{fontWeight: 'bold', fontSize:18}}>{name} </Text>
          </View>
         <View style={styles.icon}>
         <Image style={styles.notification} source={icons.notification}/>
