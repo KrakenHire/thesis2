@@ -148,7 +148,8 @@ const styles = StyleSheet.create({
   },
   searchContainer:{
     position:"absolute",
-    width:"50%",
+    width:250,
+    height:60,
     backgroundColor:"white",
     shadowColor:"black",
     shadowOffset:{width:2,height:2},
@@ -157,8 +158,8 @@ const styles = StyleSheet.create({
     elevation:4,
     padding:8,
     borderRadius:40,
-    top:10,
-    
+    top:50,
+    left:20,
 
   },
   input:{
