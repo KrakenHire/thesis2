@@ -22,6 +22,7 @@ import Chat from './Component/Chat.js';
 import Mapplocation from './Component/Mapplocation.js'
 import ProviderList from './components/ProviderList.js';
 import SignUpUser from "./Component/SignUpUser.js"
+import Categories from './components/Categories.js';
 import Confirmation from './components/Confirmation.js';
 import Pay from './components/Pay.js'
 
@@ -78,7 +79,8 @@ export default function App() {
          <Stack.Screen name="ProviderProfile" component={ProviderProfile} />  
         <Stack.Screen name="Booking Details" component={Calendar} />
          <Stack.Screen name="UserProfile" component={UserProfile} />
-        <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="Chat" component={Chat} /> 
+        <Stack.Screen name="See ALL" component={Categories} /> 
         <Stack.Screen name="Rev" component={Confirmation} /> 
         <Stack.Screen name="Pay" component={Pay} /> 
 

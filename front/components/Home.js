@@ -1,8 +1,5 @@
 
-import { StyleSheet, Text, View,Image, SafeAreaView,TextInput,TouchableOpacity,ScrollView,ActivityIndicator } from 'react-native';
-
-
-
+import { StyleSheet, Text, View,Image, SafeAreaView,TextInput,TouchableOpacity,ScrollView,ActivityIndicator,} from 'react-native';
 import NavBar from './NavBar.js';
 import React, { useEffect,useState } from 'react';
 import icons from '../assets/icons/index';
@@ -10,6 +7,7 @@ import Search from './Search';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import Swiper from 'react-native-swiper';
 import SimpleLottie from '../Component/SimpleLottie.js';
 
 
@@ -63,7 +61,7 @@ function Home() {
   const [providers, setProviders] = useState([]);
 
   useEffect(() => {
-    axios.get('http:///192.168.100.2:3000/provider')
+    axios.get('http://192.168.100.18:3000/provider')
       .then(response => {setProviders(response.data);
       console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkk",response.data);})
       .catch(error => console.error(error))
@@ -82,7 +80,7 @@ function Home() {
           setUserr(JSON.parse(userr));
           console.log("hello im a user id ",userr);
           return JSON.parse(userr);
-         
+        
         }
         return null;
       } catch (error) {
@@ -95,7 +93,7 @@ function Home() {
       const userId = await getUser();
       if (userId !== null) {
         try {
-          const response = await axios.get(`http:///192.168.100.2:3000/user/${userId}`);
+          const response = await axios.get(`http://192.168.100.18:3000/user/${userId}`);
           setName(response.data.username);
           setIsLoading(false);
         } catch (error) {
@@ -122,11 +120,6 @@ function Home() {
   }
 
 
-
-
-
-
-
   const handleIconClick = (service) => {
   const filteredProviders = providers.filter(provider => provider.service=== service);
 
@@ -143,7 +136,7 @@ function Home() {
         </TouchableOpacity>
         <View style={styles.name} >
         <Text >Welcome<Image style={styles.img} source={icons.greeting}/></Text>
-        <Text style={{fontWeight: 'bold'}}>{name} </Text>
+        <Text style={{fontWeight: 'bold', fontSize:18}}>{name} </Text>
          </View>
         <View style={styles.icon}>
         <Image style={styles.notification} source={icons.notification}/>
@@ -152,10 +145,54 @@ function Home() {
       </View>
       </SafeAreaView>
      <Search/>
-     <Image style={styles.home} source={icons.homeh}/>
+     {/* <Image style={styles.home} source={icons.homeh}/> */}
+     
+
+    <View style={styles.sliderContainer}>
+        <Swiper
+          autoplay
+          horizontal={true}
+          height={200}
+          activeDotColor="gray">
+          <View style={styles.slide}>
+            <Image
+              source={icons.service3}
+              resizeMode="cover"
+            style={styles.home}
+            />
+          </View>
+          <View style={styles.slide}>
+            <Image
+              source={icons.homeh}
+              resizeMode="cover"
+              style={styles.home}
+            />
+          </View>
+          <View style={styles.slide}>
+            <Image
+              source={icons.service2}
+              resizeMode="cover"
+              style={styles.home}
+            />
+          </View>
+          <View style={styles.slide}>
+            <Image
+              source={icons.service4}
+              resizeMode="cover"
+            style={styles.home}
+            />
+          </View>
+      
+        </Swiper>
+      </View> 
+
+
+
      <View style={styles.service} >
       <Text style={styles.bold}>Services</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("See ALL")}>
       <Text style={{fontSize:18, color: '#7210FF',   fontWeight: 'bold' }}>See All</Text>
+      </TouchableOpacity>
       </View>
       <View style={styles.categories}>
         <TouchableOpacity style={styles.item}  onPress={() => handleIconClick('Cleaning')} >
@@ -316,4 +353,21 @@ function Home() {
      marginTop:10,
     //  marginRight:10,
       },
+      sliderContainer: {
+        height:200 ,
+        width: 390,
+        borderRadius: 15,
+        marginTop: 10,
+        justifyContent: 'center',
+        alignSelf: 'center',
+        
+      },
+      wrapper: {},
+      slide: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
+        borderRadius: 8,
+      },
+    
   });
