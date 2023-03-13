@@ -23,6 +23,8 @@ import Mapplocation from './Component/Mapplocation.js'
 import ProviderList from './components/ProviderList.js';
 import SignUpUser from "./Component/SignUpUser.js"
 import Categories from './components/Categories.js';
+import Confirmation from './components/Confirmation.js';
+import Pay from './components/Pay.js'
 
 
 const Stack = createNativeStackNavigator();
@@ -70,10 +72,8 @@ export default function App() {
          <Stack.Screen options={{headerShown:false}} name="Onboardscreen" component={Onboardscreen} />
         <Stack.Screen name="choises" component={Choises} />
         <Stack.Screen name="LoginScreenPro" component={LoginScreenPro} />
-
         <Stack.Screen name="forgetPass" component={forgetPass} />
         <Stack.Screen name="SignUpPro" component={SignUpPro} />
-     
         <Stack.Screen name="Home" component={Home} /> 
         <Stack.Screen name="list" component={ProviderList} /> 
          <Stack.Screen name="ProviderProfile" component={ProviderProfile} />  
@@ -81,11 +81,14 @@ export default function App() {
          <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="Chat" component={Chat} /> 
         <Stack.Screen name="See ALL" component={Categories} /> 
+        <Stack.Screen name="Rev" component={Confirmation} /> 
+        <Stack.Screen name="Pay" component={Pay} /> 
+
        <Stack.Screen name="LoginScreenUser" component={LoginScreenUser} />
        <Stack.Screen name="SignUpUser" component={SignUpUser} />
          
         <Stack.Screen name="Map" component={Mapplocation} /> 
-   
+        
     </Stack.Navigator>
     </NavigationContainer>
   

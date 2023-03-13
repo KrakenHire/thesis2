@@ -1,4 +1,5 @@
 node_modules/
+envirment.js/
 package-lock.json/
 .expo/
 dist/

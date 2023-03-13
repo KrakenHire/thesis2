@@ -17,6 +17,21 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     
-  }, 
-  );
+  }, {
+    sequelize,
+    tableName: 'images',
+    timestamps: false,
+    indexes: [
+      {
+        name: "PRIMARY",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "idimages" },
+          { name: "providers_idproviders" },
+        ]
+      },
+     
+    ]
+  });
 };
