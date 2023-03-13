@@ -11,6 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import config from '../config.js';
+import SimpleLottie from '../component/SimpleLottie.js';
+
 
 // const providers = [
 //   {
@@ -116,9 +118,7 @@ function Home() {
   if (isLoading) {
     // Render a loading indicator
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" />
-      </View>
+      <SimpleLottie/>
     );
   }
 

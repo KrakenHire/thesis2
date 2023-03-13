@@ -1,17 +1,25 @@
 import React,{useState} from 'react';
-import MapView, { Marker,Callout, Circle , PROVIDER_GOOGLE} from 'react-native-maps';
-import { Dimensions, StyleSheet, View,Text} from 'react-native';
+
+import MapView, { Marker,Callout, Circle , PROVIDER_GOOGLE,} from 'react-native-maps';
+import { Dimensions, StyleSheet, View,Text, Button, } from 'react-native';
 import * as Location from 'expo-location';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Geocoder from 'react-native-geocoding';
 
+
 import { GOOGLE_API_KEY } from '../envirment';
+
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function Mapplocation() {
+  const navigation=useNavigation()
+  const[loc,setLoc] =React.useState({streetAddress:"",city:"",state:"",country:""})
  const [pin, setpin] = React.useState({ latitude: 36.8189700,
   longitude: 10.1657900,})
   var addressComponent;
+
+  
   onChangeValue = pin =>{
     
      setpin({
@@ -19,13 +27,32 @@ export default function Mapplocation() {
    
   })
   Geocoder.init(GOOGLE_API_KEY)
-   Geocoder.from(pin)
+  Geocoder.from(pin)
   .then(json => {
-         addressComponent = json.results[0].address_components[3];
-         console.log(json,"json");
-    console.log(json.results[0].address_components);
-    alert(addressComponent.long_name)
-   
+    const addressComponents = json.results[0].address_components;
+    let streetNumber, streetName, city, state, country;
+
+    // Loop through the address components to extract the relevant information
+    addressComponents.forEach(component => {
+      const types = component.types;
+      if (types.includes('street_number')) {
+        streetNumber = component.long_name;
+      } else if (types.includes('route')) {
+        streetName = component.long_name;
+      } else if (types.includes('locality')) {
+        city = component.long_name;
+      } else if (types.includes('administrative_area_level_1')) {
+        state = component.long_name;
+      } else if (types.includes('country')) {
+        country = component.long_name;
+      }
+  })
+  const streetAddress = `${streetNumber} ${streetName}`;
+    console.log(`Street Address: ${streetAddress}`);
+    console.log(`City: ${city}`);
+    console.log(`State/Province: ${state}`);
+    console.log(`Country: ${country}`);
+    setLoc({streetAddress: `${streetAddress}`,city: `${city}`,state: `${state}`,country: `${country}`})
   })
   .catch(error => {console.warn(error)
         alert(error)})
@@ -89,7 +116,8 @@ export default function Mapplocation() {
           />
        
     </MapView>
-    <View style={styles.searchContainer}>
+   
+     <View style={styles.searchContainer}>
     <GooglePlacesAutocomplete
       placeholder='Search'
     
@@ -98,9 +126,14 @@ export default function Mapplocation() {
         language: 'en',
       }}
     />
+     
 
-    </View>
-   
+    </View> 
+    <View style={{position:'absolute' ,bottom:50,zIndex:1,left:110,borderRadius:70,}}>
+         <Button title='confirm your position ' onPress={()=>navigation.navigate('Rev',{adresse:loc})} >
+        </Button>
+        
+        </View>
     </View>
   );
 }
@@ -115,7 +148,8 @@ const styles = StyleSheet.create({
   },
   searchContainer:{
     position:"absolute",
-    width:"100%",
+    width:250,
+    height:60,
     backgroundColor:"white",
     shadowColor:"black",
     shadowOffset:{width:2,height:2},
@@ -123,8 +157,9 @@ const styles = StyleSheet.create({
     shadowRadius:4,
     elevation:4,
     padding:8,
-    borderRadius:8,
-    bottom:0,
+    borderRadius:40,
+    top:50,
+    left:20,
 
   },
   input:{
