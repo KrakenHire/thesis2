@@ -27,6 +27,7 @@ function ProviderProfile({route}) {
 
 
 
+
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -42,15 +43,7 @@ function ProviderProfile({route}) {
         return null;
       }
     };
-  
-    axios.get(`${config}/reviews/${provider.idproviders}`)
-      .then((res) => {
-        setAllReviews(res.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  
+    
     const fetchData = async () => {
       const userId = await getUser();
       if (userId !== null) {
@@ -66,9 +59,9 @@ function ProviderProfile({route}) {
         setIsLoading(false);
       }
     };
-  
+    
     fetchData();
-  }, [provider.idproviders, userr]);
+  }, [userr]);
   
 
 
@@ -86,7 +79,7 @@ function ProviderProfile({route}) {
      .then((res) => {
       
       
-      alert('review posted successfully!')
+       
        setReviews('');
        // setComments('');
  
@@ -100,15 +93,21 @@ function ProviderProfile({route}) {
  
 
 
-  if (isLoading) {
-    // Render a loading indicator
-    return (
-      <SimpleLottie/>
-    );
-  }
+  useEffect(() => {
+    axios.get(`${config}/reviews/include/${provider.idproviders}`)
+      .then((res) => {
+        console.log(res.data,"res2");
+        setAllReviews(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      }); 
+  }, [reviews]);
+
 
   return (
     <ScrollView>
+      
    <View style={styles.container}>
       <Image style={styles.profile} source={{ uri:provider.image}}/>
       <View style={styles.header}>
@@ -157,7 +156,7 @@ function ProviderProfile({route}) {
 
 <View style={styles.rate}>
  <Ratings provider={provider}/>
- <Text style={{fontSize:15, fontWeight:'bold'}}>55 Reviews</Text>
+ <Text style={{fontSize:15, fontWeight:'bold'}}>{allReviews.length} Reviews</Text>
 </View>
  
 {/* <Comments
@@ -172,23 +171,33 @@ function ProviderProfile({route}) {
   onDelete={() => console.log('Delete pressed')} 
 /> */}
 
-<TextInput
-  value={reviews}
-  onChangeText={text => setReviews(text)}
-/>
-<Button
-  title="Submit"
-  onPress={handleSubmit}
-/>
-<View>
-      {allReviews.map((review, i) => (
-        <View key={i}>
-          <Text>{review.content}</Text>
-          <Text>{review.users_iduser}</Text>
-          <Text>{review.providers_idproviders}</Text>
-        </View>
-      ))}
+<View style={styles.containerr}>
+  <TextInput
+    style={styles.input}
+    value={reviews}
+    onChangeText={text => setReviews(text)}
+    placeholder="Enter your review"
+    placeholderTextColor="#A6A6A6"
+    multiline={true}
+    numberOfLines={4}
+  />
+  <TouchableOpacity
+    style={styles.button}
+    onPress={handleSubmit}
+  >
+    <Text style={styles.buttonText}>Submit</Text>
+  </TouchableOpacity>
+</View>
+
+<View style={styles.containerrr}>
+  {allReviews.map((review, i) => (
+    <View key={i} style={styles.review}>
+      <Text style={styles.content}>{review.content}</Text>
+      <Text style={styles.name}>{review.user.username}</Text>
+      <Image style={styles.photo} source={{uri:"https://th.bing.com/th/id/OIP.pZXdFEuHenvMQcex1XAHAAHaE8?pid=ImgDet&rs=1"}} />
     </View>
+  ))}
+</View>
 
  <View style={styles.buttons}>
  {/* <TouchableOpacity style={styles.button} >
@@ -323,5 +332,64 @@ const styles = StyleSheet.create({
       marginTop:3
    
 },
+CSSContainerRule: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginHorizontal: 20,
+  marginTop: 20,
+  borderWidth: 1,
+  borderColor: '#A6A6A6',
+  borderRadius: 5,
+  padding: 10,
+},
+input: {
+  flex: 1,
+  fontSize: 16,
+  color: '#333333',
+  textAlignVertical: 'top',
+},
+button: {
+  backgroundColor: '#0080FF',
+  borderRadius: 5,
+  paddingVertical: 10,
+  paddingHorizontal: 20,
+},
+buttonText: {
+  fontSize: 16,
+  color: '#FFFFFF',
+  textAlign: 'center',
+},
+containerrr: {
+  flex: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: '#f9f9f9',
+  padding: 20
+},
+review: {
+  backgroundColor: '#fff',
+  borderRadius: 10,
+  padding: 10,
+  marginBottom: 10,
+  width: '100%',
+  flexDirection: 'row',
+  alignItems: 'center'
+},
+content: {
+  flex: 1,
+  fontSize: 16,
+  color: '#444',
+  marginRight: 10
+},
+name: {
+  fontSize: 14,
+  color: '#999'
+},
+photo: {
+  width: 50,
+  height: 50,
+  borderRadius: 25,
+  marginLeft: 10
+}
    
 })

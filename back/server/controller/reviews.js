@@ -1,6 +1,6 @@
 const modelinit= require('../../database/index');
 const Reviews= modelinit.models.reviews
-
+const Users= modelinit.models.users
 
 module.exports={
 
@@ -32,6 +32,21 @@ module.exports={
         where: { providers_idproviders: req.params.providers_idproviders},
       });
       res.json(review);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  },
+  getReviewsById: async (req, res) => {
+    try {
+      const reviews = await Reviews.findAll({
+        where: { providers_idproviders: req.params.providers_idproviders },
+        include: {
+          model: Users,
+          attributes: ['username']
+        }
+      });
+      res.json(reviews);
     } catch (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');
