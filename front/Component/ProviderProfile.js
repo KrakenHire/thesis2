@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, View,Image,Text,ScrollView,TouchableOpacity  } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { StyleSheet, View,Image,Text,ScrollView,TouchableOpacity ,TextInput ,Button} from 'react-native';
 import icons from '../assets/icons/index';
 import { FontAwesome } from 'react-native-vector-icons';
 import Ratings from './Ratings.js';
@@ -7,18 +7,105 @@ import Comments from './Comments.js';
 import { useNavigation } from '@react-navigation/native';
 import NavBar from './NavBar'
 import { CheckBox } from '@rneui/themed';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import SimpleLottie from './SimpleLottie';
 
-
-
-
+import axios from 'axios';
 function ProviderProfile({route}) {
   const navigation=useNavigation()
   const [checked, setChecked] = useState(true);
+  const [userr, setUserr] = useState(null);
+  const [name, setName] = useState(null);
+  const [reviews, setReviews] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [allReviews, setAllReviews] = useState([]);
   const toggleCheckbox = () => setChecked(!checked);
 
   const { provider } = route.params;
 
+
+
+
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const userr = await AsyncStorage.getItem("userr");
+        if (userr !== null) {
+          setUserr(JSON.parse(userr));
+          console.log("hello im a user id ",userr);
+          return JSON.parse(userr);
+        }
+        return null;
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    };
   
+    axios.get(`${config}/reviews/${provider.idproviders}`)
+      .then((res) => {
+        setAllReviews(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  
+    const fetchData = async () => {
+      const userId = await getUser();
+      if (userId !== null) {
+        try {
+          const response = await axios.get(`${config}/user/${userId}`);
+          setName(response.data.username);
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error);
+          setIsLoading(false);
+        }
+      } else {
+        setIsLoading(false);
+      }
+    };
+  
+    fetchData();
+  }, [provider.idproviders, userr]);
+  
+
+
+
+  const handleSubmit = () => {
+    console.log("im here");
+  //   console.log({
+  //    users_iduser:JSON.parse(userId),
+  //  },"mehdiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+     axios.post(`${config}/reviews`,{
+      content:reviews ,
+      users_iduser: userr,
+      providers_idproviders: provider.idproviders
+     })
+     .then((res) => {
+      
+      
+      alert('review posted successfully!')
+       setReviews('');
+       // setComments('');
+ 
+     })
+     .catch((error) => {
+       console.error(error);
+     });
+   };
+
+
+ 
+
+
+  if (isLoading) {
+    // Render a loading indicator
+    return (
+      <SimpleLottie/>
+    );
+  }
 
   return (
     <ScrollView>
@@ -73,15 +160,35 @@ function ProviderProfile({route}) {
  <Text style={{fontSize:15, fontWeight:'bold'}}>55 Reviews</Text>
 </View>
  
- <Comments
- username='ghada'
- profileImage = "icons.profile"
- status="This is' a sample comment" 
+{/* <Comments
+  username={name}
+  profileImage="icons.profile"
+  status={reviews}
+  handleSubmit={handleSubmit}
+  setReviews={setReviews}
   likes={10} 
   onLike={() => console.log('Like pressed')} 
   onEdit={() => console.log('Edit pressed')} 
   onDelete={() => console.log('Delete pressed')} 
+/> */}
+
+<TextInput
+  value={reviews}
+  onChangeText={text => setReviews(text)}
 />
+<Button
+  title="Submit"
+  onPress={handleSubmit}
+/>
+<View>
+      {allReviews.map((review, i) => (
+        <View key={i}>
+          <Text>{review.content}</Text>
+          <Text>{review.users_iduser}</Text>
+          <Text>{review.providers_idproviders}</Text>
+        </View>
+      ))}
+    </View>
 
  <View style={styles.buttons}>
  {/* <TouchableOpacity style={styles.button} >

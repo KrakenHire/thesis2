@@ -19,6 +19,19 @@ module.exports = function(sequelize, DataTypes) {
         key: 'iduser'
       }
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      allowNull: false,
+      field: 'created_at'
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      allowNull: false,
+      field: 'updated_at'
+    }
+    ,
     providers_idproviders: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -26,7 +39,8 @@ module.exports = function(sequelize, DataTypes) {
         model: 'providers',
         key: 'idproviders'
       }
-    }
+    },
+  
   }, {
     sequelize,
     tableName: 'reviews',

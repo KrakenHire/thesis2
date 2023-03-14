@@ -4,6 +4,7 @@ const {}=require ('../database/index')
 const providerRoutes = require("./routes/provider")
 const userRoutes=require('./routes/user')
 const ratingRoutes=require('./routes/rating')
+const reviewsRoutes=require('./routes/reviews')
 // var models = require('../database/models');
 const PORT = 3000
 const app = express();
@@ -48,7 +49,8 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use("/provider",providerRoutes )
 app.use("/user",userRoutes )
-app.use("/rating",ratingRoutes )
+app.use("/rating",ratingRoutes)
+app.use("/reviews",reviewsRoutes)
 
 
 app.listen(PORT, () => {

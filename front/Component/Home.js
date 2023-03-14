@@ -65,7 +65,7 @@ function Home() {
   useEffect(() => {
     axios.get(`${config}/provider`)
       .then(response => {setProviders(response.data);
-      console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkk",response.data);})
+    })
       .catch(error => console.error(error))
   }, []);
 
