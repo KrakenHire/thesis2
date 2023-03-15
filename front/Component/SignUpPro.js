@@ -1,11 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, ScrollView ,TouchableOpacity ,Alert} from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, ScrollView ,TouchableOpacity ,Alert,Image} from 'react-native';
 import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuthStateChanged  } from '../firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
 import config from '../config';
+import * as ImagePicker from 'expo-image-picker';
 
 
 
@@ -26,6 +27,54 @@ const SignUpPro = () => {
  
   const [errorMessage, setErrorMessage] = useState(null);
   const [services, setServices] = useState("services");
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const pickImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (status === 'granted') {
+  
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        quality: 1,
+      });
+
+      if (!result.cancelled) {
+    
+        // Create a FormData object to send the image to the server
+        const formData = new FormData();
+
+        // Get the file extension of the selected image
+        const fileName = result.uri.split('/').pop();
+        const fileType = fileName.split('.').pop().toLowerCase();
+  
+        // Append the selected image to the FormData object with the correct MIME type
+        formData.append('image', {
+          uri: result.uri,
+          name: fileName,
+          type: `image/${fileType}`,
+        });
+
+        // Send the image to the server using fetch()
+        const response = await fetch(`${config}/provider/uploadImage`, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          body: formData,
+        });
+
+        // Get the ID of the uploaded image from the server's response
+        const data = await response.json();
+        const iduser = data.iduser;
+
+        // Set the selected image and its ID on the screen
+        setSelectedImage({ uri: result.uri, iduser});
+      }
+    }
+  };
 
   const navigation=useNavigation()
 
@@ -58,7 +107,7 @@ const SignUpPro = () => {
         price:price,
         phoneNumber:phoneNumber,
         aboutMe:bio,
-        image:image,
+        image:selectedImage.uri,
       });
   
       console.log(response.data, "response");
@@ -88,7 +137,11 @@ const SignUpPro = () => {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
 
-     
+      {selectedImage && (
+  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <Image source={selectedImage} style={{ width: 200, height: 200, borderRadius: 100, marginBottom: 10 }} />
+  </View>
+)}
       <Picker
   style={styles.input}
   selectedValue={services}
@@ -165,15 +218,19 @@ const SignUpPro = () => {
         value={bio}
         onChangeText={setBio}
       />
-      <TextInput
+      {/* <TextInput
         style={styles.input}
         placeholder="image"
         value={image}
         onChangeText={setImage}
-      />
+      /> */}
 
       {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
-
+      <View style={styles.pick}>
+     <TouchableOpacity onPress={pickImage}>
+       <Text style={ {color: 'white', fontWeight: '400', fontSize: 16}}>  Choose your profile image</Text>
+       </TouchableOpacity>
+        </View>
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
@@ -232,5 +289,16 @@ const styles = StyleSheet.create({
       color: 'white',
       fontWeight: 'bold',
       fontSize: 16,
+      },
+      pick:{
+        flex: 1, 
+        alignItems: 'center',
+         justifyContent: 'center' ,
+         backgroundColor:"#7210FF",
+         height:50,
+         borderRadius:10,
+         width:250,
+         marginBottom:20
+      
       }
 })

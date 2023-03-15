@@ -8,9 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import config from '../config.js';
-
 import Swiper from 'react-native-swiper';
-import SimpleLottie from '../component/SimpleLottie.js';
+import SimpleLottie from '../Component/SimpleLottie.js';
 
 
 // const providers = [
@@ -60,7 +59,19 @@ import SimpleLottie from '../component/SimpleLottie.js';
 
 
 function Home() {
+ 
   const [providers, setProviders] = useState([]);
+  const [imageUri, setImageUri] = useState(null);
+
+  useEffect(() => {
+    fetch(`${config}/user//getImage/${userr}`)
+      .then(response => response.blob())
+      .then(blob => {
+        const uri = URL.createObjectURL(blob);
+        setImageUri(uri);
+      })
+      .catch(error => console.log(error));
+  }, [userr]);
 
   useEffect(() => {
     axios.get(`${config}/provider`)
@@ -71,7 +82,7 @@ function Home() {
 
   const navigation=useNavigation();
   const [userr, setUserr] = useState(null);
-  const [name, setName] = useState(null);
+  const [user, setUser] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -96,7 +107,8 @@ function Home() {
       if (userId !== null) {
         try {
           const response = await axios.get(`${config}/user/${userId}`);
-          setName(response.data.username);
+          setUser(response.data);
+          console.log("hiiiii im user",response.data);
           setIsLoading(false);
         } catch (error) {
           console.log(error);
@@ -134,11 +146,11 @@ function Home() {
         <SafeAreaView  >
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.navigate("UserProfile")}>
-        <Image style={styles.profile} source={icons.profile}/>
+        <Image style={styles.profile} source={{ uri: user.image? user.image:"https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper-thumbnail.png"}}/>
         </TouchableOpacity>
         <View style={styles.name} >
         <Text >Welcome<Image style={styles.img} source={icons.greeting}/></Text>
-        <Text style={{fontWeight: 'bold', fontSize:18}}>{name} </Text>
+        <Text style={{fontWeight: 'bold', fontSize:18}}>{user.username} </Text>
          </View>
         <View style={styles.icon}>
         <Image style={styles.notification} source={icons.notification}/>
@@ -249,13 +261,14 @@ function Home() {
         justifyContent: 'space-between' ,
         alignItems:'center',
         paddingTop:10,
+        paddingLeft:10
       },
       profile:{
-        // marginTop:70,
-        // marginRight:20,
-        height:50 ,
-        width: 50,
-        borderRadius: 40,
+         marginTop:10,
+        marginRight:20,
+        height:65 ,
+        width: 65,
+        borderRadius: 35,
       },
       notification: {
         paddingHorizontal:10,
@@ -287,7 +300,8 @@ function Home() {
        flexDirection: 'row',
        flex: 1,
        paddingHorizontal:4,
-       marginBottom:30
+       marginBottom:30,
+       paddingLeft:10
       },
       services:{
        flexDirection: 'row',

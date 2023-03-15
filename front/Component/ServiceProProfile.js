@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import config from '../config';
+// import Posts from './Posts';
 
 const ServiceProProfile = () => {
 
@@ -25,6 +26,16 @@ const ServiceProProfile = () => {
       const [isLoading, setIsLoading] = useState(true);
       const [averageRating, setAverageRating] = useState(null);
       const navigation=useNavigation()
+
+      useEffect(() => {
+        fetch(`${config}/user//getImage/${providerId}`)
+          .then(response => response.blob())
+          .then(blob => {
+            const uri = URL.createObjectURL(blob);
+            setImageUri(uri);
+          })
+          .catch(error => console.log(error));
+      }, [providerId]);
     
       useEffect(() => {
         const getProviderId = async () => {
@@ -111,8 +122,8 @@ const ServiceProProfile = () => {
       <View style={styles.userInfoSection}>
         <View style={{flexDirection: 'row', marginTop: 15}}>
             <TouchableOpacity onPress={()=>{navigation.navigate('ProviderSetting')}}>
-            <Avatar.Image 
-  source={provider.image}
+            <Image 
+  source={{ uri: provider.image? provider.image:"https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper-thumbnail.png"}}
   style={{ width: 80, height: 80, borderRadius: 40 }}
 />
           </TouchableOpacity>
@@ -121,7 +132,7 @@ const ServiceProProfile = () => {
               marginTop:15,
               marginBottom: 5,
             }]}>{provider.username}</Title>
-            <Caption style={styles.caption}>{provider.aboutMe}</Caption>
+            
           </View>
         </View>
       </View>
@@ -167,6 +178,10 @@ const ServiceProProfile = () => {
           <AntDesign name="star" size={24} color={averageRating >= 5 ? '#FFC107' : '#E4E5E9'} />
         </View>
       </View>
+      <View>
+      <Text style={styles.label}>About Me:</Text>
+      <Text style={styles.caption}>{provider.aboutMe}</Text>
+      </View>
       </View>
       <View style={{marginBottom:110}}>
       <View style={styles.infoBoxWrapper}>
@@ -174,6 +189,7 @@ const ServiceProProfile = () => {
       <Title style={styles.title}>₹140.50</Title>
       <Caption style={styles.caption}>Wallet</Caption>
       </View>
+      
       <View style={styles.infoBox}>
       <Title style={styles.title}>12</Title>
       <Caption style={styles.caption}>Orders</Caption>
@@ -216,7 +232,7 @@ const ServiceProProfile = () => {
         style={styles.image}
       />
     </View>
-
+{/* <Posts/> */}
      
     </SafeAreaView>
     </ScrollView>

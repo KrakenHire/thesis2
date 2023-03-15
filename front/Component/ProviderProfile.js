@@ -41,7 +41,7 @@ function ProviderProfile({route}) {
       </View>
     <View style={styles.adress}>
         <Image style={styles.adressic} source={icons.adress}/>
-        <Text style={{fontSize: 15}}>{provider.adress} </Text>
+        <Text style={{fontSize: 15}}>{provider.adresse} </Text>
     </View>
     <View style={styles.about}>
    
