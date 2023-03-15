@@ -24,8 +24,18 @@ const ServiceProProfile = () => {
       const [provider, setProvider] = useState("");
       const [isLoading, setIsLoading] = useState(true);
       const [averageRating, setAverageRating] = useState(null);
+      const [reviews, setReviews] = useState([]);
+      const [showReviews, setShowReviews] = useState(false);
+      const [upReviews, setUpReviews] = useState(false);
+      const [showAllReviews, setShowAllReviews] = useState(false);
       const navigation=useNavigation()
     
+
+      const toggleShowAllReviews = () => {
+        setShowReviews(!showReviews);
+      };
+
+
       useEffect(() => {
         const getProviderId = async () => {
           try {
@@ -79,7 +89,17 @@ const ServiceProProfile = () => {
           });
       }, [providerId]);
       
-          
+      useEffect(() => {
+        axios.get(`${config}/reviews/include/${providerId}`)
+          .then((res) => {
+            console.log(res.data,"res3");
+            setReviews(res.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          }); 
+      }, [upReviews,providerId]);
+    
 
       // const total = ratingValue.map((el) =>(el.rate))
       // .reduce((acc, curr) => acc +=curr, 0);
@@ -105,7 +125,7 @@ const ServiceProProfile = () => {
   return (
     <ScrollView>
   
-        {console.log(ratingValue,"proooooooooooooooooooooooooooooooooooooooooooo")}
+     {  console.log(reviews,"hi im reviews")}
     <SafeAreaView style={styles.container}>
 
       <View style={styles.userInfoSection}>
@@ -217,7 +237,36 @@ const ServiceProProfile = () => {
       />
     </View>
 
-     
+    {/* <View style={styles.containerrr}>
+      {reviews.map((review, i) => (
+        <View key={i} style={styles.review}>
+          <Text style={styles.content}>{review.content}</Text>
+          <Text style={styles.name}>{review.user.username}</Text>
+          <Image style={styles.photo} source={{ uri: "https://th.bing.com/th/id/OIP.pZXdFEuHenvMQcex1XAHAAHaE8?pid=ImgDet&rs=1" }} />
+        </View>
+      ))}
+    </View> */}
+
+
+     <View style={styles.containerrr}>
+      {reviews.slice(0, showAllReviews ? reviews.length : 3).map((review, i) => (
+        <View key={i} style={styles.review}>
+          <Image style={styles.photo} source={{ uri: "https://th.bing.com/th/id/OIP.pZXdFEuHenvMQcex1XAHAAHaE8?pid=ImgDet&rs=1" }} />
+          <View style={styles.info}>
+
+          <Text style={styles.name}>{review.user.username}</Text>
+          <Text style={styles.content}>{review.content}</Text>
+          </View>
+          
+        </View>
+      ))}
+      {reviews.length > 3 && (
+        <TouchableOpacity onPress={toggleShowAllReviews}>
+          <Text style={styles.showMoreLessButton}>{showAllReviews ? "Show Less" : "Show More"}</Text>
+        </TouchableOpacity>
+      )}
+        <Text style={{fontSize:15, fontWeight:'bold',marginLeft:280}}>{reviews.length} Reviews</Text>
+    </View> 
     </SafeAreaView>
     </ScrollView>
   );
@@ -332,5 +381,54 @@ const styles = StyleSheet.create({
     color: '#777777',
     marginLeft: 10,
     textAlign: 'center', // this line to center horizontally
+  },
+  containerrr: {
+    backgroundColor: "#f5f5f5",
+    padding: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  review: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  content: {
+    flex: 1,
+    fontSize: 16,
+    lineHeight: 20,
+    marginBottom: 5,
+    marginLeft: 3,
+    width:280
+  },
+  name: {
+    fontWeight: "bold",
+    fontSize: 14,
+    marginBottom: 5,
+    marginRight: 5,
+    marginTop:10
+  },
+  photo: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    resizeMode: "cover",
+  },
+  showMoreLessButton: {
+    alignSelf: "center",
+    marginTop: 10,
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#007aff",
+    textDecorationLine: "underline",
+  },
+  info:{
+    
+    paddingHorizontal: 10,
+    
   }
 });

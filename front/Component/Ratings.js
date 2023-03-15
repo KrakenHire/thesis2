@@ -1,12 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
-import { Rating } from 'react-native-ratings';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState,useEffect} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  Animated,
+   TouchableOpacity 
+} from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
-import config from '../config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+AsyncStorage
 const RatingForm = ({provider}) => {
   const [userId, setUserId] = useState(null);
   const [rating, setRating] = useState(0);
+
+
+  const starRatingOptions = [1, 2, 3, 4, 5];
+
+  const [starRating, setStarRating] = useState(null);
+
+  const animatedButtonScale = new Animated.Value(1);
+
+  const handlePressIn = () => {
+    Animated.spring(animatedButtonScale, {
+      toValue: 1.5,
+      useNativeDriver: true,
+      speed: 50,
+      bounciness: 4,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(animatedButtonScale, {
+      toValue: 1,
+      useNativeDriver: true,
+      speed: 50,
+      bounciness: 4,
+    }).start();
+  };
+
+  const animatedScaleStyle = {
+    transform: [{ scale: animatedButtonScale }],
+  };
+
   // const [comments, setComments] = useState('');
 
   useEffect(() => {
@@ -35,7 +73,7 @@ const RatingForm = ({provider}) => {
     })
     .then((res) => {
      
-      setRating(0);
+      setRating(null);
       alert('well pressed')
       // setComments('');
 
@@ -47,25 +85,80 @@ const RatingForm = ({provider}) => {
   
  
   return (
-    <View>
-      <Text>Rating:</Text>
-      <Rating
-        startingValue={rating}
-        onFinishRating={setRating}
-        imageSize={40}
-        ratingCount={5}
-        style={{ paddingVertical: 10 }}
-      />
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Text style={styles.heading}>{starRating ? `${starRating}*` : 'Tap to rate'}</Text>
+        <View style={styles.stars}>
+          {starRatingOptions.map((option) => (
+            <TouchableWithoutFeedback
+              onPressIn={() => handlePressIn(option)}
+              onPressOut={() => handlePressOut(option)}
+              onPress={() => {
+                setStarRating(option);
+                setRating(option); // Update the rating state
+              }}
+              key={option}
+            >
+              <Animated.View style={animatedScaleStyle}>
+                <MaterialIcons
+                  name={starRating >= option ? 'star' : 'star-border'}
+                  size={32}
+                  style={starRating >= option ? styles.starSelected : styles.starUnselected}
+                />
+              </Animated.View>
+            </TouchableWithoutFeedback>
+          ))}
+        </View>
+        <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText} onPress={handleSubmit}>Submit</Text>
+      </TouchableOpacity>
+      </View>
 
-      {/* <Text>Comments:</Text>
-      <TextInput
-        value={comments}
-        onChangeText={setComments}
-      /> */}
-
-      <Button title="Submit" onPress={handleSubmit} />
-    </View>
+    </SafeAreaView>
   );
 };
+export default RatingForm
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
 
-export default RatingForm;
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  heading: {
+    fontSize: 14,
+    fontWeight:'normal',
+    marginBottom: 10,
+  },
+  stars: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  starUnselected: {
+    color: '#aaa',
+  },
+  starSelected: {
+    color: '#ffb300',
+  },
+  button: {
+    backgroundColor: '#7010ff',
+    paddingVertical: 1,
+    paddingHorizontal: 3,
+    borderRadius: 5,
+    marginTop:10,
+    shadowColor: '#000',
+    shadowOffset: { width: 9, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'normal',
+    textShadowColor: 'rgba(0, 0, 0, 0.4)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 1,
+  }
+});
