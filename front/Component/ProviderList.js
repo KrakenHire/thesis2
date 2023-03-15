@@ -42,9 +42,12 @@ function ProviderList({route}) {
                 <Text style={styles.name}>
                     <Text style={{ fontWeight: 'bold'}}> {u.username}{'\n'}</Text>
                     <Text style={{ fontWeight: 'bold', color:'#7210FF'}}>{u.price} DNT </Text>{'\n'}
+                    <Image style={{width:20,height:20}} source={icons.adress}/> {u.adresse}{'\n'} 
                     <Image  style={{width:20,height:20}} source={icons.star}/>
                     {u.review}  Reviews {'\n'} 
+                    
                     </Text>
+                    
                     <CheckBox       
         checked={checked}
         checkedIcon="bookmark"
@@ -75,14 +78,15 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between'
     },
     image: {
-      width: 100,
-      height: 100,
+      width: 110,
+      height: 110,
       marginRight: 10,
       borderRadius:10
     },
     name: {
       fontSize: 16,
       marginTop: 5,
+      marginRight:30
       
     },
     ic:{
@@ -90,4 +94,5 @@ const styles = StyleSheet.create({
         width:35,
         height:35,
       },
+     
     });

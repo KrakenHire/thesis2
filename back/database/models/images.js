@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     data: {
-      type: DataTypes.TEXT,
+      type: DataTypes.BLOB,
       allowNull: true
     },
     providers_idproviders: {

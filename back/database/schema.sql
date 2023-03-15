@@ -28,8 +28,9 @@ CREATE TABLE IF NOT EXISTS `kraken`.`providers` (
   `experience` VARCHAR(255) NOT NULL,
   `adresse` VARCHAR(255) NOT NULL,
   `price` INT NOT NULL,
-  `image` VARCHAR(255) NOT NULL,
+  `image` BLOB NOT NULL,
   `aboutMe` LONGTEXT NOT NULL,
+  `phoneNumber` INT NOT NULL,
   PRIMARY KEY (`idproviders`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
@@ -44,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `kraken`.`users` (
   `FirstName` VARCHAR(255) NOT NULL,
   `LastName` VARCHAR(255) NOT NULL,
   `age` INT NOT NULL,
-  `image` LONGTEXT NULL DEFAULT NULL,
+  `image` BLOB NOT NULL,
   PRIMARY KEY (`iduser`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
@@ -98,7 +99,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kraken`.`images` (
   `idimages` INT NOT NULL AUTO_INCREMENT,
-  `data` LONGTEXT NULL DEFAULT NULL,
+  `data` BLOB NOT NULL,
   `providers_idproviders` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`idimages`),
   INDEX `fk_images_providers1_idx` (`providers_idproviders` ASC) VISIBLE,
@@ -137,8 +138,9 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `kraken`.`likes` (
   `idlikes` INT NOT NULL AUTO_INCREMENT,
   `users_iduser` VARCHAR(255) NOT NULL,
+  `comments_idcomments` INT NOT NULL,
   `reviews_idreview` INT NOT NULL,
-  PRIMARY KEY (`idlikes`),
+  PRIMARY KEY (`idlikes`, `comments_idcomments`),
   INDEX `fk_likes_users1_idx` (`users_iduser` ASC) VISIBLE,
   INDEX `fk_likes_reviews1_idx` (`reviews_idreview` ASC) VISIBLE,
   CONSTRAINT `fk_likes_reviews1`
@@ -169,6 +171,31 @@ CREATE TABLE IF NOT EXISTS `kraken`.`rating` (
     FOREIGN KEY (`users_iduser`)
     REFERENCES `kraken`.`users` (`iduser`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `kraken`.`ratings`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `kraken`.`ratings` (
+  `idRating` INT NOT NULL AUTO_INCREMENT,
+  `users_iduser` VARCHAR(255) NOT NULL,
+  `providers_idproviders` VARCHAR(255) NOT NULL,
+  `rate` INT NOT NULL,
+  PRIMARY KEY (`idRating`),
+  INDEX `users_iduser` (`users_iduser` ASC) VISIBLE,
+  INDEX `providers_idproviders` (`providers_idproviders` ASC) VISIBLE,
+  CONSTRAINT `ratings_ibfk_1`
+    FOREIGN KEY (`users_iduser`)
+    REFERENCES `kraken`.`users` (`iduser`)
+    ON UPDATE CASCADE,
+  CONSTRAINT `ratings_ibfk_2`
+    FOREIGN KEY (`providers_idproviders`)
+    REFERENCES `kraken`.`providers` (`idproviders`)
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 30
 DEFAULT CHARACTER SET = utf8mb3;
 
 
