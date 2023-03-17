@@ -7,7 +7,7 @@ export default function SimpleLottie() {
   return (
     <View>
       <LottieView
-        source={require("../assets/67834-ssssttt-shut-up-the-cat-is-sleeping.json")}
+        source={require("../assets/135022-jellyfish.json")}
         style={styles.animation}
         autoPlay
       />

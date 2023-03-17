@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
   },
    button: {
     backgroundColor: '#0782F9',
-    width: '60%',
-    padding: 15,
+    width: '100%',
+    padding:20,
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 40,

@@ -8,9 +8,10 @@ const fs = require('fs');
 
 module.exports={
   post : async (req, res) => {
-    console.log(req.body,"boddddddddddddddddddy");
     try {
       const user = await User.create(req.body);
+      console.log(user,"boddddddddddddddddddy");
+
       res.json(user);
     } catch (error) {
       console.error(error);

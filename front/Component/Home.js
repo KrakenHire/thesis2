@@ -1,4 +1,3 @@
-
 import { StyleSheet, Text, View,Image, SafeAreaView,TextInput,TouchableOpacity,ScrollView,ActivityIndicator,} from 'react-native';
 import NavBar from './NavBar.js';
 import React, { useEffect,useState } from 'react';
@@ -73,16 +72,12 @@ function Home() {
       .catch(error => console.log(error));
   }, [userr]);
 
-  useEffect(() => {
-    axios.get(`${config}/provider`)
-      .then(response => {setProviders(response.data);
-      console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkk",response.data);})
-      .catch(error => console.error(error))
-  }, []);
+ 
 
   const navigation=useNavigation();
   const [userr, setUserr] = useState(null);
   const [user, setUser] = useState([]);
+ 
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -108,19 +103,26 @@ function Home() {
         try {
           const response = await axios.get(`${config}/user/${userId}`);
           setUser(response.data);
-          console.log("hiiiii im user",response.data);
           setIsLoading(false);
-        } catch (error) {
+          axios.get(`${config}/provider`)
+              .then(response => {
+              setProviders(response.data);
+                console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkk",response.data);
+    })
+      .catch(error => console.error(error))
+        } 
+        catch (error) {
           console.log(error);
-          setIsLoading(false);
+          setIsLoading(true);
         }
       } else {
-        setIsLoading(false);
+        setIsLoading(!isLoading);
       }
     };
     
     fetchData();
-  },[userr]);
+  },[userr,providers.length,isLoading]);
+  
   
   const press = () => {
     navigation.navigate("UserProfile");
@@ -387,3 +389,4 @@ function Home() {
       },
     
   });
+  

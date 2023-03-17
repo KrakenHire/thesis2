@@ -23,7 +23,7 @@ const SignUpPro = () => {
   const [price, setPrice] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [bio, setBio] = useState('');
-  const [image, setImage] = useState('');
+  
  
   const [errorMessage, setErrorMessage] = useState(null);
   const [services, setServices] = useState("services");
