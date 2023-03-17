@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import {View, SafeAreaView, Image,StyleSheet,  TouchableOpacity,ActivityIndicator} from 'react-native';
+import {View, SafeAreaView, Image,StyleSheet,  TouchableOpacity,ActivityIndicator,FlatList} from 'react-native';
 import {
  Avatar,
   Title,
@@ -15,9 +15,139 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import config from '../config';
-// import Posts from './Posts';
+import * as ImagePicker from 'expo-image-picker';
+
 
 const ServiceProProfile = () => {
+
+
+  const [images, setImages] = useState([]);
+
+  // fetch images when component mounts
+  useEffect(() => {
+    axios.get(`${config}/images/${providerId}`)
+      .then(response => {
+        setImages(response.data);
+        console.log("ghadaaaaa", response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [providerId]);
+
+  
+  const handleUpload = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Sorry, we need camera roll permissions to make this work!');
+      return;
+    }
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+      base64: true // set this to true to get the image data as base64-encoded string
+    });
+    if (!result.cancelled) {
+      const image = { uri: result.uri, data: result.base64 };
+      setImages([...images, image]);
+      // console.log(image,"i m that imaaaaage");
+      // console.log('Hello, I am a provideeeer ID: ', providerId);
+      // make POST request to server to save image
+      axios.post(`${config}/images/${providerId}`, { data: image, providers_idproviders: providerId })
+        .then(response => {
+          console.log("poooooooooooooooooooooooooooooooossst",response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+
+
+  // const handleUpload = async () => {
+  //   const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  //   if (status !== 'granted') {
+  //     alert('Sorry, we need camera roll permissions to make this work!');
+  //     return;
+  //   }
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //     allowsEditing: true,
+  //     quality: 1,
+  //     base64: true // set this to true to get the image data as base64-encoded string
+  //   });
+  //   if (!result.cancelled) {
+  //     const imageData = { data: result.base64, providers_idproviders: {providerId} };
+  //     axios.post(`${config}/images`, imageData)
+  //       .then(response => {
+  //         console.log("theeeere",response)
+  //         // update the images state with the newly uploaded image
+  //         setImages([...images, { uri: result.uri, data: result.base64 }]);
+  //       })
+  //       .catch(error => {
+  //         console.error(error);
+  //         alert('Failed to upload image. Please try again.');
+  //       });
+  //   }
+  // };
+
+  // const handleUpload = async () => {
+  //   const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  //   if (status !== 'granted') {
+  //     alert('Sorry, we need camera roll permissions to make this work!');
+  //     return;
+  //   }
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //     allowsEditing: true,
+  //     quality: 1,
+  //     base64: true // set this to true to get the image data as base64-encoded string
+  //   });
+  //   if (!result.cancelled) {
+  //     const imageData = { data: result.base64 };
+  //     axios.post(`${config}/images`, imageData)
+  //       .then(response => {
+  //         console.log("theeeere",response)
+  //         const createdImage = response.data;
+  //         setImages([...images, { uri: result.uri, data: createdImage.data }]);
+  //       })
+  //       .catch(error => console.log(error));
+  //       alert('Failed to upload image. Please try again.')
+  //   }
+  // };
+  // const handleUpload = async () => {
+  //   const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  //   if (status !== 'granted') {
+  //     alert('Sorry, we need camera roll permissions to make this work!');
+  //     return;
+  //   }
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //     allowsEditing: true,
+  //     quality: 1,
+  //     base64: true // set this to true to get the image data as base64-encoded string
+  //   });
+  //   if (!result.cancelled) {
+  //     try {
+  //       const response = await axios.post(`${config}/images/uploadImage`, {
+  //         data: result.base64,
+  //         providers_idproviders: providerId  // replace with the actual provider ID
+  //       });
+  //       console.log(providerId,"i m provider ID");
+  //       console.log(data,'i am the image you need ');
+  //       setImages([...images, { uri: result.uri, id: response.data.idimages }]);
+  //     } catch (error) {
+  //       console.error(error);
+  //       alert('Failed to upload image. Please try again.');
+  //     }
+  //   }
+  // };
+  
+  
+  
+
+
 
     const [ratingValue, setRatingValue] = useState([]);
      
@@ -28,7 +158,7 @@ const ServiceProProfile = () => {
       const navigation=useNavigation()
 
       useEffect(() => {
-        fetch(`${config}/user//getImage/${providerId}`)
+        fetch(`${config}/provider/getImage/${providerId}`)
           .then(response => response.blob())
           .then(blob => {
             const uri = URL.createObjectURL(blob);
@@ -52,7 +182,7 @@ const ServiceProProfile = () => {
       
         const fetchData = async () => {
           const providerIdFromStorage = await getProviderId();
-          console.log('Hello, I am a provider ID: ', providerIdFromStorage);
+          // console.log('Hello, I am a provider ID: ', providerIdFromStorage);
       
           if (providerIdFromStorage && providerIdFromStorage !== providerId) {
             try {
@@ -113,10 +243,22 @@ const ServiceProProfile = () => {
 
 
 
+
+    
+    
+    
+    
+
+
+
+
+
+
+
   return (
     <ScrollView>
   
-        {console.log(ratingValue,"proooooooooooooooooooooooooooooooooooooooooooo")}
+        {/* {console.log(ratingValue,"proooooooooooooooooooooooooooooooooooooooooooo")} */}
     <SafeAreaView style={styles.container}>
 
       <View style={styles.userInfoSection}>
@@ -200,12 +342,12 @@ const ServiceProProfile = () => {
       <MaterialIcons name="notifications" size={24} color="#777777" />
       </View>
       <View style={{marginBottom:1 , marginTop:1}}>
-      <TouchableOpacity style={styles.uploadButton} >
+      <TouchableOpacity style={styles.uploadButton} onPress={handleUpload}>
       <MaterialIcons name="add-a-photo" size={24} color="#777777" />
       <Text style={styles.uploadButtonText}>Upload Image</Text>
       </TouchableOpacity>
       </View>
-      <View style={styles.imageGrid}>
+      {/* <View style={styles.imageGrid}>
       <Image
         source={{ uri: 'https://st3.depositphotos.com/1138869/16337/i/600/depositphotos_163378314-stock-photo-painter-man-painting-wall-in.jpg' }}
         style={styles.image}
@@ -231,8 +373,21 @@ const ServiceProProfile = () => {
         source={{ uri: 'https://www.mastersroofing.com/wp-content/uploads/2019/10/file-2.jpg' }}
         style={styles.image}
       />
+    </View> */}
+
+<View style={styles.imageGrid}>
+      {images.map((image, index) => (
+        <Image
+          key={index}
+          source={{ uri: image.uri }}
+          style={styles.image}
+
+        />
+      ))}
+
+    
     </View>
-{/* <Posts/> */}
+
      
     </SafeAreaView>
     </ScrollView>
