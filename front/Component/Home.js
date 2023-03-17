@@ -1,4 +1,3 @@
-
 import { StyleSheet, Text, View,Image, SafeAreaView,TextInput,TouchableOpacity,ScrollView,ActivityIndicator,} from 'react-native';
 import NavBar from './NavBar.js';
 import React, { useEffect,useState } from 'react';
@@ -8,9 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import config from '../config.js';
-
 import Swiper from 'react-native-swiper';
-import SimpleLottie from '../component/SimpleLottie.js';
+import SimpleLottie from '../Component/SimpleLottie.js';
 
 
 // const providers = [
@@ -60,24 +58,27 @@ import SimpleLottie from '../component/SimpleLottie.js';
 
 
 function Home() {
+ 
   const [providers, setProviders] = useState([]);
-  // const [upPro, setUpPro] = useState(false);
-  
-
-
+  const [imageUri, setImageUri] = useState(null);
 
   useEffect(() => {
-    axios.get(`${config}/provider`)
-      .then(response => {setProviders(response.data)
-      
-    })
-      .catch(error => console.error(error))
-  }, [ ]);
+    fetch(`${config}/user//getImage/${userr}`)
+      .then(response => response.blob())
+      .then(blob => {
+        const uri = URL.createObjectURL(blob);
+        setImageUri(uri);
+      })
+      .catch(error => console.log(error));
+  }, [userr]);
+
+ 
+
   const navigation=useNavigation();
   const [userr, setUserr] = useState(null);
-  const [name, setName] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState([]);
  
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getUser = async () => {
@@ -101,19 +102,27 @@ function Home() {
       if (userId !== null) {
         try {
           const response = await axios.get(`${config}/user/${userId}`);
-          setName(response.data.username);
+          setUser(response.data);
           setIsLoading(false);
-        } catch (error) {
+          axios.get(`${config}/provider`)
+              .then(response => {
+              setProviders(response.data);
+                console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkk",response.data);
+    })
+      .catch(error => console.error(error))
+        } 
+        catch (error) {
           console.log(error);
-          setIsLoading(false);
+          setIsLoading(true);
         }
       } else {
-        setIsLoading(false);
+        setIsLoading(!isLoading);
       }
     };
     
     fetchData();
-  },[userr]);
+  },[userr,providers.length,isLoading]);
+  
   
   const press = () => {
     navigation.navigate("UserProfile");
@@ -129,8 +138,9 @@ function Home() {
 
   const handleIconClick = (service) => {
   const filteredProviders = providers.filter(provider => provider.service=== service);
-//  setUpPro(!upPro)
+
     navigation.navigate('list', { providers: filteredProviders ,service:service , source: icons[`${service}`] });};
+
     return (
       <ScrollView>
         {console.log("hello",providers)}
@@ -138,11 +148,11 @@ function Home() {
         <SafeAreaView  >
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.navigate("UserProfile")}>
-        <Image style={styles.profile} source={icons.profile}/>
+        <Image style={styles.profile} source={{ uri: user.image? user.image:"https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper-thumbnail.png"}}/>
         </TouchableOpacity>
         <View style={styles.name} >
         <Text >Welcome<Image style={styles.img} source={icons.greeting}/></Text>
-        <Text style={{fontWeight: 'bold', fontSize:18}}>{name} </Text>
+        <Text style={{fontWeight: 'bold', fontSize:18}}>{user.username} </Text>
          </View>
         <View style={styles.icon}>
         <Image style={styles.notification} source={icons.notification}/>
@@ -241,139 +251,142 @@ function Home() {
   export default Home
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      width:400,
-      backgroundColor:"#fff"
+    flex: 1,
+    width:400,
+    backgroundColor:"#fff"
+    },
+    cont :{
+      fontSize:20,
+    },
+    header:{
+        flexDirection: 'row',
+        justifyContent: 'space-between' ,
+        alignItems:'center',
+        paddingTop:10,
+        paddingLeft:10
       },
-      cont :{
+      profile:{
+         marginTop:10,
+        marginRight:20,
+        height:65 ,
+        width: 65,
+        borderRadius: 35,
+      },
+      notification: {
+        paddingHorizontal:10,
+        height:30,
+        width: 30,
+        marginLeft:15,
+      },
+      name:{
+        marginRight:120,
+      },
+      icon:{
+        flexDirection: 'row',
+        justifyContent: 'space-between' ,
+      },
+      home:{
+        height:200 ,
+        width: 390,
+        borderRadius: 15,
+        backgroundColor:'#7210FF',
+        justifyContent:'center',
+        marginLeft:7,
+      },
+      img:{
+        height:30,
+        width:30,
+      },
+      service:{
+        paddingTop:15,
+       flexDirection: 'row',
+       flex: 1,
+       paddingHorizontal:4,
+       marginBottom:30,
+       paddingLeft:10
+      },
+      services:{
+       flexDirection: 'row',
+       flex: 3,
+       paddingHorizontal:1,
+      },
+      bold: {
+        marginRight:245,
+        fontWeight: 'bold',
+        fontSize:18
+      },
+      tit:{
+        paddingBottom:20,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      tet:{
         fontSize:20,
+        fontWeight:'bold',
       },
-      header:{
-          flexDirection: 'row',
-          justifyContent: 'space-between' ,
-          alignItems:'center',
-          paddingTop:10,
-        },
-        profile:{
-          // marginTop:70,
-          // marginRight:20,
-          height:50 ,
-          width: 50,
-          borderRadius: 40,
-        },
-        notification: {
-          paddingHorizontal:10,
-          height:30,
-          width: 30,
-          marginLeft:15,
-        },
-        name:{
-          marginRight:120,
-        },
-        icon:{
-          flexDirection: 'row',
-          justifyContent: 'space-between' ,
-        },
-        home:{
-          height:200 ,
-          width: 390,
-          borderRadius: 15,
-          backgroundColor:'#7210FF',
-          justifyContent:'center',
-          marginLeft:7,
-        },
-        img:{
-          height:30,
-          width:30,
-        },
-        service:{
-          paddingTop:15,
-         flexDirection: 'row',
-         flex: 1,
-         paddingHorizontal:4,
-         marginBottom:30
-        },
-        services:{
-         flexDirection: 'row',
-         flex: 3,
-         paddingHorizontal:1,
-        },
-        bold: {
-          marginRight:245,
-          fontWeight: 'bold',
-          fontSize:18
-        },
-        tit:{
-          paddingBottom:20,
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-        },
-        tet:{
-          fontSize:20,
-          fontWeight:'bold',
-        },
-        class:{
-          marginBottom:30,
-        },
-        categories: {
-          paddingBottom:40,
+      class:{
+        marginBottom:30,
+      },
+      categories: {
+        paddingBottom:40,
+        flexDirection: 'row',
+        flex: 1,
+        paddingHorizontal:7,
+        paddingLeft:20,
+        justifyContent: 'space-around'
+      },
+      categories2: {
           flexDirection: 'row',
           flex: 1,
           paddingHorizontal:7,
           paddingLeft:20,
-          justifyContent: 'space-around'
+          justifyContent: 'space-around',
+          paddingBottom:40,
         },
-        categories2: {
-            flexDirection: 'row',
-            flex: 1,
-            paddingHorizontal:7,
-            paddingLeft:20,
-            justifyContent: 'space-around',
-            paddingBottom:40,
-          },
-          bar:{
-            flexDirection: 'row',
-            flex: 1,
-            paddingHorizontal:7,
-            paddingLeft:20,
-            justifyContent: 'space-around',
-            backgroundColor:'#E5E5E5',
-            borderRadius:20,
-          },
-          item:{
-            justifyContent: 'center',
-            alignItems: 'center'
-          },
-        ic:{
-          paddingLeft:25,
-          width:35,
-          height:35,
-          // backgroundColor:'#F3EBCF',
-          // borderRadius:40
-          backgroundColor:'#FFFBED',
-          borderRadius:4
-        },
-        text:{
-       fontSize:15,
-       marginTop:10,
-      //  marginRight:10,
-        },
-        sliderContainer: {
-          height:200 ,
-          width: 390,
-          borderRadius: 15,
-          marginTop: 10,
-          justifyContent: 'center',
-          alignSelf: 'center',
-          
-        },
-        wrapper: {},
-        slide: {
+        bar:{
+          flexDirection: 'row',
           flex: 1,
-          justifyContent: 'center',
-          backgroundColor: 'transparent',
-          borderRadius: 8,
+          paddingHorizontal:7,
+          paddingLeft:20,
+          justifyContent: 'space-around',
+          backgroundColor:'#E5E5E5',
+          borderRadius:20,
         },
-      
+        item:{
+          justifyContent: 'center',
+          alignItems: 'center'
+        },
+      ic:{
+        paddingLeft:25,
+        width:35,
+        height:35,
+        // backgroundColor:'#F3EBCF',
+        // borderRadius:40
+        backgroundColor:'#FFFBED',
+        borderRadius:4
+      },
+      text:{
+     fontSize:15,
+     marginTop:10,
+    //  marginRight:10,
+      },
+      sliderContainer: {
+        height:200 ,
+        width: 390,
+        borderRadius: 15,
+        marginTop: 10,
+        justifyContent: 'center',
+        alignSelf: 'center',
+        
+      },
+      wrapper: {},
+      slide: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
+        borderRadius: 8,
+      },
+    
   });
+  

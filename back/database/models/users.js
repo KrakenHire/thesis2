@@ -27,9 +27,8 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: 0
     },
     image: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: true,
-      defaultValue: ''
     }
   }, {
     sequelize,

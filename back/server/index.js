@@ -1,11 +1,14 @@
 const express = require('express')
 const cors = require ('cors')
+const multer = require('multer');
 const {}=require ('../database/index')
 const providerRoutes = require("./routes/provider")
 const userRoutes=require('./routes/user')
 const ratingRoutes=require('./routes/rating')
+const imagesRoutes=require('./routes/images')
 const reviewsRoutes=require('./routes/reviews')
 // var models = require('../database/models');
+
 const PORT = 3000
 const app = express();
 const Stripe = require("stripe");
@@ -49,7 +52,9 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use("/provider",providerRoutes )
 app.use("/user",userRoutes )
-app.use("/rating",ratingRoutes)
+app.use("/rating",ratingRoutes )
+app.use("/images",imagesRoutes )
+
 app.use("/reviews",reviewsRoutes)
 
 

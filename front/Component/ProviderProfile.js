@@ -161,7 +161,43 @@ function ProviderProfile({route}) {
 
 <View style>
   
-<View style={styles.inputBlock}>
+
+
+{/* <View style={styles.containerrr}>
+  {allReviews.map((review, i) => (
+    <View key={i} style={styles.review}>
+      <Text style={styles.content}>{review.content}</Text>
+      <Text style={styles.name}>{review.user.username}</Text>
+      <Image style={styles.photo} source={{uri:"https://th.bing.com/th/id/OIP.pZXdFEuHenvMQcex1XAHAAHaE8?pid=ImgDet&rs=1"}} />
+    </View>
+  ))}
+</View> */}
+<View style={styles.containerrr}>
+<Text style={{fontSize:15, fontWeight:'bold',marginLeft:10,marginBottom:15,textDecorationLine: 'underline'}}>{allReviews.length} Reviews</Text>
+      {allReviews.slice(0, showAllReviews ? allReviews.length : 3).map((review, i) => (
+        <View key={i} style={styles.review}>
+           <Image style={styles.photo} source={{uri:review.user.image}} />
+          <View style={styles.info}>
+
+          <Text style={styles.name}>{review.user.username}</Text>
+          <Text style={styles.content}>{review.content}</Text>
+          </View>
+          
+        </View>
+      ))}
+      {allReviews.length > 3 && (
+        <TouchableOpacity onPress={toggleShowAllReviews}>
+          <Text style={styles.showMoreLessButton}>{showAllReviews ? "Show Less" : "Show More"}</Text>
+        </TouchableOpacity>
+      )}
+       
+    </View>
+
+ <View style={styles.buttons}>
+ {/* <TouchableOpacity style={styles.button} >
+        <Text style={styles.buttonText}>MESSAGE</Text>
+   </TouchableOpacity> */}
+   <View style={styles.inputBlock}>
   <TextInput
     style={styles.input}
     value={reviews}
@@ -180,43 +216,11 @@ function ProviderProfile({route}) {
 </View>
 
 </View>
-
-{/* <View style={styles.containerrr}>
-  {allReviews.map((review, i) => (
-    <View key={i} style={styles.review}>
-      <Text style={styles.content}>{review.content}</Text>
-      <Text style={styles.name}>{review.user.username}</Text>
-      <Image style={styles.photo} source={{uri:"https://th.bing.com/th/id/OIP.pZXdFEuHenvMQcex1XAHAAHaE8?pid=ImgDet&rs=1"}} />
-    </View>
-  ))}
-</View> */}
-<View style={styles.containerrr}>
-      {allReviews.slice(0, showAllReviews ? allReviews.length : 3).map((review, i) => (
-        <View key={i} style={styles.review}>
-          <Image style={styles.photo} source={{ uri: "https://th.bing.com/th/id/OIP.pZXdFEuHenvMQcex1XAHAAHaE8?pid=ImgDet&rs=1" }} />
-          <View style={styles.info}>
-
-          <Text style={styles.name}>{review.user.username}</Text>
-          <Text style={styles.content}>{review.content}</Text>
-          </View>
-          
-        </View>
-      ))}
-      {allReviews.length > 3 && (
-        <TouchableOpacity onPress={toggleShowAllReviews}>
-          <Text style={styles.showMoreLessButton}>{showAllReviews ? "Show Less" : "Show More"}</Text>
-        </TouchableOpacity>
-      )}
-        <Text style={{fontSize:15, fontWeight:'bold',marginLeft:280}}>{allReviews.length} Reviews</Text>
-    </View>
-
- <View style={styles.buttons}>
- {/* <TouchableOpacity style={styles.button} >
-        <Text style={styles.buttonText}>MESSAGE</Text>
-   </TouchableOpacity> */}
+  <View style={styles.buttons}>
   <TouchableOpacity style={styles.button} onPress={() =>  navigation.navigate("Booking Details")}>
         <Text style={styles.buttonText}>BOOK NOW</Text>
    </TouchableOpacity>
+  </View>
   </View>
 </View>
 <NavBar/>
@@ -438,20 +442,28 @@ showMoreLessButton: {
   color: "#007aff",
   textDecorationLine: "underline",
 },
-button: {
-  width: '50%',
-  height: 40,
+buttons: {
+  marginTop:50,
+   borderRadius: 10,
+   marginLeft: 10,
+   flexDirection: 'row',
+   justifyContent: 'space-around' ,
+   alignItems:'center',
+ },
+ button: {
   backgroundColor: '#7210FF',
-  borderRadius: 5,
-  alignItems: 'center',
-  justifyContent:"center",
-  marginTop:100,
-  marginLeft:80
+  borderRadius: 20,
+  marginLeft: 10,
+  paddingTop:10,
+  paddingBottom:10,
+  width:180,
+  height:50
 },
 buttonText: {
-  color: '#FFFFFF',
-  fontSize: 16,
+  color: '#fff',
   fontWeight: 'bold',
+  marginLeft:50,
+  marginTop:3
 },
    
 })

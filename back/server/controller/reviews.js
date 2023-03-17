@@ -43,7 +43,8 @@ module.exports={
         where: { providers_idproviders: req.params.providers_idproviders },
         include: {
           model: Users,
-          attributes: ['username']
+          attributes: ['username','image'],
+        
         }
       });
       res.json(reviews);

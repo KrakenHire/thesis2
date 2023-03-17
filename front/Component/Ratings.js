@@ -8,7 +8,7 @@ import {
   Animated,
    TouchableOpacity 
 } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons ,AntDesign} from '@expo/vector-icons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 AsyncStorage
@@ -109,9 +109,9 @@ const RatingForm = ({provider}) => {
             </TouchableWithoutFeedback>
           ))}
         </View>
-        <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText} onPress={handleSubmit}>Submit</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+  <AntDesign name="checkcircle" size={24} color="black" />
+</TouchableOpacity>
       </View>
 
     </SafeAreaView>
@@ -142,16 +142,12 @@ const styles = StyleSheet.create({
     color: '#ffb300',
   },
   button: {
-    backgroundColor: '#7010ff',
+    backgroundColor: 'white',
     paddingVertical: 1,
     paddingHorizontal: 3,
     borderRadius: 5,
     marginTop:10,
-    shadowColor: '#000',
-    shadowOffset: { width: 9, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 5,
+   
   },
   buttonText: {
     color: '#fff',
