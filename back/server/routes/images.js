@@ -7,7 +7,6 @@ const { v4: uuidv4 } = require('uuid');
 
 
 
-// Set up Multer to handle file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/')
@@ -21,8 +20,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-router.get('/getImage/:idproviders',images.getImagebyId)
-router.post('/:providerId', upload.array('images'),images.postImg)
+router.get('/:providers_idproviders',images.getImagebyId)
+router.post('/:providers_idproviders', upload.array('images'),images.postImg)
 router.delete('/:imageId',images.removeImage)
 
 
