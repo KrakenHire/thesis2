@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import config from '../config';
+import SimpleLottie from '../Component/SimpleLottie';
 
 const ServiceProProfile = () => {
 
@@ -31,41 +32,27 @@ const ServiceProProfile = () => {
           try {
             const providerId = await AsyncStorage.getItem('providerId');
             if (providerId !== null) {
+              setProviderId(JSON.parse(providerId));
+              console.log("hello im a proviser id ",providerId);
               return JSON.parse(providerId);
             }
+            return null;
           } catch (error) {
             console.log(error);
+            return null;
           }
-          return null;
+          
         };
       
         const fetchData = async () => {
           const providerIdFromStorage = await getProviderId();
-          console.log('Hello, I am a provider ID: ', providerIdFromStorage);
-      
-          if (providerIdFromStorage && providerIdFromStorage !== providerId) {
-            try {
+          if (providerIdFromStorage !== null) {
+            try{
               const response = await axios.get(`${config}/provider/${providerIdFromStorage}`);
               setProvider(response.data);
-              setProviderId(providerIdFromStorage);
               setIsLoading(false);
-            } catch (error) {
-              console.log(error);
-              setIsLoading(false);
-            }
-          } else {
-            setIsLoading(false);
-          }
-        };
-      
-        fetchData();
-      },[providerId]);
-
-
-
-      useEffect(() => {
-        axios.get(`${config}/rating/${providerId}`)
-          .then((res) => {
+              axios.get(`${config}/rating/${providerId}`)
+          .then(res => {
             setRatingValue(res.data);
             console.log("raaaaaate", res.data);
       
@@ -74,10 +61,23 @@ const ServiceProProfile = () => {
             const avg = total / res.data.length;
             setAverageRating(Math.round(avg) > 5 ? 5 : Math.round(avg));
           })
-          .catch((err) => {
-            console.log(err);
-          });
-      }, [providerId]);
+          .catch(error => console.error(error))
+            }
+            catch (error) {
+              console.log(error);
+              setIsLoading(true);
+            }
+          } else {
+            setIsLoading(!isLoading);
+          }
+        };
+      
+        fetchData();
+      },[providerId,isLoading]);
+
+
+
+      
       
           
 
@@ -91,9 +91,7 @@ const ServiceProProfile = () => {
     if (isLoading) {
         // Render a loading indicator
         return (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" />
-          </View>
+          <SimpleLottie/>
         );
       }
 
@@ -110,7 +108,7 @@ const ServiceProProfile = () => {
 
       <View style={styles.userInfoSection}>
         <View style={{flexDirection: 'row', marginTop: 15}}>
-            <TouchableOpacity onPress={()=>{navigation.navigate('ProviderSetting')}}>
+            <TouchableOpacity onPress={()=>{navigation.navigate('ProviderSetting',{provider:provider})}}>
             <Avatar.Image 
   source={provider.image}
   style={{ width: 80, height: 80, borderRadius: 40 }}
@@ -228,6 +226,7 @@ export default ServiceProProfile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    top:20
   },
   userInfoSection: {
     paddingHorizontal: 30,

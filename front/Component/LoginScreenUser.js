@@ -4,7 +4,7 @@ import { KeyboardAvoidingView, Text, TextInput, View ,StyleSheet, TouchableOpaci
 import { auth ,createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuthStateChanged  } from '../firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import axios from 'axios'
+import axios from 'axios';
 import { ScrollView } from 'react-native-gesture-handler';
   const LoginScreenUser =()=> {
     const [email, setEmail] = useState('')
@@ -18,7 +18,7 @@ import { ScrollView } from 'react-native-gesture-handler';
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, user => {
         if (user) {
-          navigation.replace("Home")
+          navigation.replace("Home",{ replace: true })
         
         }
       })
@@ -31,11 +31,13 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 
     
-
+console.log( AsyncStorage.getItem("userr"), "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
       const handleLogin = async () => {
         try {
+          await AsyncStorage.clear()
           const userCredentials = await signInWithEmailAndPassword(auth ,email, password);
           const userr = userCredentials._tokenResponse.localId;
+          console.log(userr, "sssssssssssssssssssssssssssssssss");
           await AsyncStorage.setItem("userr", JSON.stringify(userCredentials._tokenResponse.localId));
         } catch (error) {
           switch (error.code) {

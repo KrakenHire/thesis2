@@ -34,6 +34,31 @@ module.exports={
       console.error(error);
       res.status(500).send('Internal Server Error');
     }
-  }
+  },
+
+  updateProfilePro: async (req, res) => {
+    try {
+      const  updatedProvider = await Provider.update(
+        {
+          service: req.body.service,
+          username: req.body.username,
+          age: req.body.age,
+          experience: req.body.experience,
+          adresse:req.body.adresse,
+          price:req.body.price,
+          aboutMe:req.body.aboutMe
+         
+        },
+        {
+          where: { idproviders: req.params.idproviders },
+          attributes: ['id', 'service','username','age','experience', 'adresse','price','aboutMe']
+        }
+      );
+      res.json(updatedProvider);
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  
 
 }

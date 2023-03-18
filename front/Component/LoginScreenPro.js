@@ -23,6 +23,7 @@ import { ScrollView } from 'react-native-gesture-handler';
     }, [auth, navigation]);
 
     const handleLogin = async () => {
+      AsyncStorage.clear()
       try {
         const userCredentials = await signInWithEmailAndPassword(auth ,email, password);
         const providerId= userCredentials._tokenResponse.localId;
