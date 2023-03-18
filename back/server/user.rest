@@ -1,0 +1,15 @@
+POST http://localhost:3000/user/
+Content-Type: application/json
+
+{
+    "iduser":"10",
+    "username": "Mei78",
+    "FirstName": "May",
+    "LastName": "Sunday",
+    "Age": 20,
+    "created_at" : "2023-04-02 01:34:48.81+00"
+}
+
+###
+
+GET http://localhost:3000/user/16

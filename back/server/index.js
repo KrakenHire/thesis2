@@ -6,6 +6,10 @@ const providerRoutes = require("./routes/provider")
 const userRoutes=require('./routes/user')
 const ratingRoutes=require('./routes/rating')
 const imagesRoutes=require('./routes/images')
+const reviewRoutes=require('./routes/review')
+const adminRoutes=require('./routes/admin');
+const bookingRoutes=require('./routes/booking');
+const bestSelling=require('./routes/bestSelling');
 // var models = require('../database/models');
 
 const PORT = 3000
@@ -53,6 +57,11 @@ app.use("/provider",providerRoutes )
 app.use("/user",userRoutes )
 app.use("/rating",ratingRoutes )
 app.use("/images",imagesRoutes )
+app.use("/review", reviewRoutes);
+app.use("/admin", adminRoutes);
+app.use("/booking", bookingRoutes);
+app.use("/best", bestSelling);
+
 
 
 app.listen(PORT, () => {

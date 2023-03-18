@@ -23,6 +23,7 @@ const upload = multer({ storage: storage });
 router.get('/',provider.getAllProviders);
 router.post('/',provider.postPro);
 router.get('/:idproviders',provider.getProviderById);
+router.get('/Confirmed/:idproviders',provider.getProviderByIdConfirmed);
 router.get('/getImage/:idproviders',provider.getImagebyId)
 router.post('/uploadImage', upload.single('image'),provider.postImg)
 

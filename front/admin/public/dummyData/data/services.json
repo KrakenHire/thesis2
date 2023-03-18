@@ -1,0 +1,15 @@
+
+{
+    "data": [
+        {"id": "1000","service": "Hajema","name": "Farouk","price": 65,"rating": 5},
+        {"id": "1001","service": "Hajema","name": "Farouk","price": 72,"rating": 4},
+        {"id": "1002","service": "Hajema","name": "Farouk","price": 79,"rating": 3},
+        {"id": "1003","service": "Hajema","name": "Farouk","price": 29,"rating": 5},
+        {"id": "1004","service": "Hajema","name": "Farouk","price": 15,"rating": 4},
+        {"id": "1005","service": "Hajema","name": "Farouk","price": 120,"rating": 4},
+        {"id": "1006","service": "Hajema","name": "Farouk","price": 32,"rating": 3},
+        {"id": "1007","service": "Hajema","name": "Farouk","price": 34,"rating": 5},
+        {"id": "1008","service": "Hajema","name": "Farouk","price": 99,"rating": 4}
+    ]
+}
+    

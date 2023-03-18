@@ -1,0 +1,54 @@
+GET http://localhost:3000/admin/2
+
+###
+
+POST http://localhost:3000/admin
+Content-Type: application/json
+
+{ "username":"FaroukM327327",
+"email":"Ha52a.chess@gmail.com",
+"password":"Azerty123"}
+
+###
+
+DELETE http://localhost:3000/admin/1
+
+###
+
+PUT http://localhost:3000/admin/2
+Content-Type: application/json
+
+{ "username":"FaroukMe52",
+"email":"Haje2.chess@gmail.com",
+"password":"Azerty12345"}
+
+###
+
+GET http://localhost:3000/admin/users
+
+###
+
+GET http://localhost:3000/admin/providers
+
+###
+
+DELETE http://localhost:3000/admin/users/88882
+
+###
+
+DELETE http://localhost:3000/admin/providers/5
+
+###
+
+POST http://localhost:3000/admin/users/ban/2
+
+###
+
+PUT http://localhost:3000/admin/providers/7/confirm
+
+###
+
+PUT http://localhost:3000/admin/users/16
+Content-Type: application/json
+
+{"username":"ghada","FirstName":"ghadsa","LastName":"sghaier","age":28}

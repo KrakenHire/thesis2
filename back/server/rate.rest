@@ -1,0 +1,9 @@
+
+POST http://localhost:3000/rating
+Content-Type: application/json
+
+{
+"rate" : 5,
+"users_iduser" : "16",
+"providers_idproviders" : "33"
+}

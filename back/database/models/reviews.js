@@ -26,14 +26,16 @@ module.exports = function(sequelize, DataTypes) {
         model: 'providers',
         key: 'idproviders'
       }
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     sequelize,
     tableName: 'reviews',
-    timestamps: true,
     indexes: [
-     
-
       {
         name: "fk_comments_users1_idx",
         using: "BTREE",

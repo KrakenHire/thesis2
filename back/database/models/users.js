@@ -27,8 +27,14 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: 0
     },
     image: {
-      type: DataTypes.BLOB,
+      type: DataTypes.TEXT,
       allowNull: true,
+      defaultValue: ''
+    }, 
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW
     }
   }, {
     sequelize,

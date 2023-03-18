@@ -1,0 +1,12 @@
+POST http://localhost:3000/booking
+Content-Type: application/json
+
+{
+"start_date" : "2023-03-19 01:34:48.81+00",
+"status" : "pending",
+"users_iduser" : "2",
+"providers_idproviders" : "31",
+"adresse" : "NY",
+"workingHours" : "2",
+"price" : "250"
+}

@@ -1,0 +1,15 @@
+
+
+{
+    "data": [
+        {"id": "1000","username": "wassim79","fullName": "Wassim Gebsi","email": "test.test@gmail.com","type": "Client"},
+        {"id": "1001","username": "houssem57","fullName": "Houssem Salemi","email": "test.test@gmail.com" ,"type": "Client"},
+        {"id": "1002","username": "farouk","fullName": "Farouk Misteri","email": "test.test@gmail.com","type": "Provider"},
+        {"id": "1003","username": "kaysoccupe","fullName": "Kays Machghoul","email": "test.test@gmail.com","type": "Client"},
+        {"id": "1004","username": "OhNO!","fullName": "I am a troll","email": "troll.troll@gmail.com","type": "client"},
+        {"id": "1005","username": "rania54","fullName": "Rania Gharbi","email": "test.test@gmail.com","type": "Provider"},
+        {"id": "1006","username": "altaf06","fullName": "Altaf Atlas","email": "test.test@gmail.com","type": "Provider"},
+        {"id": "1007","username": "jdidi85","fullName": "Jdidi Daoud","email": "test.test@gmail.com","type": "Client"},
+        {"id": "1008","username": "ahmed987","fullName": "Ahmed Missaoui","email": "test.test@gmail.com","type": "Provider"}
+    ]
+}

@@ -24,9 +24,19 @@ import { ScrollView } from 'react-native-gesture-handler';
 
     const handleLogin = async () => {
       try {
-        const userCredentials = await signInWithEmailAndPassword(auth ,email, password);
-        const providerId= userCredentials._tokenResponse.localId;
-        await AsyncStorage.setItem("providerId", JSON.stringify(userCredentials._tokenResponse.localId));
+        const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+        const providerId = userCredentials._tokenResponse.localId;
+    
+        const providerResponse = await fetch(`http://localhost:3000/provider/Confirmed/${providerId}`);
+        const providerData = await providerResponse.json();
+        if (!providerData.confirmed) {
+          setErrorMessage('Your account has not been confirmed yet');
+          return;
+        }
+    
+        await AsyncStorage.setItem('providerId', JSON.stringify(providerId));
+    
+        navigation.replace('ServiceProProfile');
       } catch (error) {
         switch (error.code) {
           case 'auth/invalid-email':

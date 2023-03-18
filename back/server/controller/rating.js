@@ -25,6 +25,15 @@ module.exports={
       console.error(error);
       res.status(500).send('Internal Server Error');
     }
+  },
+  getRating : async (req, res) => {
+    try {
+      const ratings = await Rating.findAll();
+      res.status(200).json(ratings);
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("Error getting ratings");
+    }
   }
   
 

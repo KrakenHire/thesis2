@@ -1,0 +1,21 @@
+GET http://localhost:3000/provider
+
+###
+
+GET http://localhost:3000/provider/11
+
+###
+
+POST http://localhost:3000/provider
+Content-Type: application/json
+
+{
+  "idproviders": "22",
+  "service": "Hairdressing Service",
+  "username": "Ines",
+  "age": 27,
+  "experience": "3 Years",
+  "adresse": "Hajeb el ayoun",
+  "price": 15,
+  "phoneNumber": "21598768"
+}

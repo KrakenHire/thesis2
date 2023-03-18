@@ -36,6 +36,20 @@ module.exports={
       res.status(500).send('Internal Server Error');
     }
   },
+  getProviderByIdConfirmed:async (req, res) => {
+    try {
+      const provider = await Provider.findByPk(req.params.idproviders);
+      if (!provider) {
+        res.status(404).send('Provider not found');
+      } else {
+        const { id, name, email, confirmed } = provider;
+        res.json({ id, name, email, confirmed });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  },
   postImg: async (req, res) => {
     console.log(req.file);
     const { idproviders  } = req.body; 

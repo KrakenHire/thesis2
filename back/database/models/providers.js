@@ -37,9 +37,9 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: 0
     },
     image: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING(255),
       allowNull: false,
-     
+      defaultValue: ''
     },
     aboutMe: {
       type: DataTypes.TEXT,
@@ -50,6 +50,16 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    confirmed: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW
     }
   }, {
     sequelize,

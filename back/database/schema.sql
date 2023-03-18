@@ -31,6 +31,8 @@ CREATE TABLE IF NOT EXISTS `kraken`.`providers` (
   `image` BLOB NOT NULL,
   `aboutMe` LONGTEXT NOT NULL,
   `phoneNumber` INT NOT NULL,
+  `confirmed` BOOLEAN NOT NULL DEFAULT FALSE,
+  `created_at` TIMESTAMP NOT NULL,
   PRIMARY KEY (`idproviders`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
@@ -46,6 +48,7 @@ CREATE TABLE IF NOT EXISTS `kraken`.`users` (
   `LastName` VARCHAR(255) NOT NULL,
   `age` INT NOT NULL,
   `image` BLOB NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
   PRIMARY KEY (`iduser`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
