@@ -38,7 +38,7 @@ module.exports={
 
   updateProfilePro: async (req, res) => {
     try {
-      const  updatedProvider = await Provider.update(
+      const  [updatedProvider] = await Provider.update(
         {
           service: req.body.service,
           username: req.body.username,
@@ -50,15 +50,19 @@ module.exports={
          
         },
         {
+          returning: true,
           where: { idproviders: req.params.idproviders },
-          attributes: ['id', 'service','username','age','experience', 'adresse','price','aboutMe']
+          
         }
       );
-      res.json(updatedProvider);
+      if(updatedProvider===0){
+        return res.status(404).json({error:"provider not found"});
+      }
+      const updatedPro = await Provider.findByPk(req.params.idproviders); // fetch the updated record
+      res.json(updatedPro);
+      
     } catch (err) {
       console.log(err);
+      res.status(500).json({ error: 'Something went wrong' });
     }
-  },
-  
-
-}
+  }}

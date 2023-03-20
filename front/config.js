@@ -1,2 +1,2 @@
 
-export default config='http://192.168.100.19:3000' 
+export default config='http://192.168.100.10:3000' 
